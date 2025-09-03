@@ -4,7 +4,7 @@ import React from "react";
 function Navbar(){
     return(
         <nav>
-            <Link to="/" >Home</Link>
+            <Link to="/home" >Home</Link>
         </nav>
     )
 }

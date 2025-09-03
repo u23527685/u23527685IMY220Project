@@ -1,11 +1,11 @@
 import Landing from "../components/Landing";
 import React from "react";
-
+import Home from "./Home";
 
 function SplashPage(){
     return(
         <div>
-            <Landing/>
+            <Landing onauth={<Home/>}/>
         </div>
         
     )

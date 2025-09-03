@@ -1,6 +1,7 @@
 import React from "react";
 import Login from "./Login";
 import Singup from "./Signup";
+import { useNavigate } from 'react-router-dom';
 const { useRef, useState } = React;
 
 const user={
@@ -10,6 +11,7 @@ const user={
 }
 
 function Landing(){
+    const navigate = useNavigate();
     const [login, setlogin] = useState(false);
     const [signup, setsignup] = useState(false);
     function toggleLogin() {
@@ -27,6 +29,7 @@ function Landing(){
     function handleSignup(event){
         event.preventDefault();
         setsignup(false);
+        navigate('/home');
     }
     return(
         <main>
