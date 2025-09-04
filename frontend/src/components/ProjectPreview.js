@@ -26,12 +26,12 @@ function ProjectPreview({project,ondownload,onlike,onunlike}){
             </div>
             <div className="projectinf">
                 <p>{project.name}</p>
-                <button onClick={toggleLike}>
+                {onlike && onunlike && <button onClick={toggleLike}>
                     {liked ? "Unlike":"Like"}
-                </button>
-                <span>{project.likes}</span>
-                <button onClick={download}>Download</button>
-                <span>{project.downloads}</span>
+                </button>}
+                <span>{project.likes} Likes</span>
+                {ondownload && <button onClick={download}>Download</button>}
+                <span>{project.downloads} Downloads</span>
             </div>
         </div>
     )

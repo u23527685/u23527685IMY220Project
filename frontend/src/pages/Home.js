@@ -36,9 +36,9 @@ const otheruser={
     company:"D1Demo Holdings",
     owned_projects:[{
         name:"Grim town",
-        owner:"Dan Grimm"
+        owner:"DanGrimm"
     }],
-    contributed_ptojects:[],
+    contributed_projects:[],
     following:[
         {username:"Ben10"}
     ],
@@ -53,9 +53,9 @@ const user={
     email:"Ben10@gmail.com",
     company:"D1Demo Holdings",
     owned_projects:[],
-    contributed_ptojects:[{
+    contributed_projects:[{
         name:"Grim town",
-        owner:"Dan Grimm"
+        owner:"DanGrimm"
     }
     ],
     following:[
@@ -139,7 +139,7 @@ function Home(){
     };
     return(
         <div>
-            <Navbar/>
+            <Navbar user={user} otheruser={otheruser} projects={projects} />
             <Search onsearch={onSearch} />
             <h1>Home Page</h1>
             <div className="LocGlobchoose" >

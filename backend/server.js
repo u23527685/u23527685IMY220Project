@@ -6,6 +6,10 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static("frontend/public"));
 
+app.get('/profile', (req, res) => {
+  res.sendFile(path.resolve('frontend', 'public', 'index.html'));
+});
+
 app.get('/home', (req, res) => {
   res.sendFile(path.resolve('frontend', 'public', 'index.html'));
 });
