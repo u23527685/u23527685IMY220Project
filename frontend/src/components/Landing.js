@@ -32,12 +32,12 @@ function Landing(){
         navigate('/home');
     }
     return(
-        <main>
+        <div id="landing">
             <button onClick={toggleLogin} >Login</button>
             <button onClick={toggleSignup}>Signup</button>
             {login && (<Login onlogin={handleLogin} />)}
             {signup && (<Singup onsignup={handleSignup}/>)}
-        </main>
+        </div>
     )
 }
 
