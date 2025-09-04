@@ -20,10 +20,12 @@ const router=createBrowserRouter([{
 {
     path:"/profile",
     element:<MyProfile />,
-},
-{
-    paths:"/:username",
-    element:<OtherProfile/>
+    children:[
+        {
+            paths:":username",
+            element:<OtherProfile/>
+        }
+    ]
 }
 ])
 

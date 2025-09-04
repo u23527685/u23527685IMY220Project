@@ -9,7 +9,7 @@ const Projects=[
     {
     owner:"AlexCoder",
     likes:22,
-    name:"Alex's Tressure",
+    name:"Smart Budget",
     downloads:2,
     datecreated: new Date(2024, 6, 4)
 },
@@ -23,7 +23,7 @@ const Projects=[
 {
     owner:"SarahDev",
     likes:2,
-    name:"Sarah says who",
+    name:"Weather App",
     downloads:0,
     datecreated: new Date(2024, 8, 14)
 }
@@ -48,9 +48,16 @@ const otheruser={
     likes:[{
         name:"Grim town",
         owner:"DanGrimm"
+    },{
+        name: "Smart Budget",
+        owner: "AlexCoder"
     }],
     name:"Dan",
-    surname:'Grimm'
+    surname:'Grimm',
+    pinnedprojects:[{
+        name:"Grim town",
+        owner:"DanGrimm"
+    }]
 }
 
 const user={
@@ -76,7 +83,11 @@ const user={
         owner:"DanGrimm"
     }],
     name:"Ben",
-    surname:'10'
+    surname:'10',
+    pinnedprojects:[{
+        name:"Grim town",
+        owner:"DanGrimm"
+    }]
 }
 
 const user2 = {
@@ -101,7 +112,15 @@ const user2 = {
     likes: [{
     }],
     name: "AlexCoder",
-    surname: "Johnson"
+    surname: "Johnson",
+    pinnedprojects:[{
+        name:"Grim town",
+        owner:"DanGrimm"
+    },{
+        name: "Smart Budget",
+        owner: "AlexCoder"
+    }
+    ]
 }
 
 const user3 = {
@@ -114,10 +133,6 @@ const user3 = {
             name: "Weather App",
             owner: "SarahDev"
         },
-        {
-            name: "Task Manager",
-            owner: "SarahDev"
-        }
     ],
     contributed_projects: [{
         name: "Smart Budget",
@@ -142,7 +157,15 @@ const user3 = {
         }
     ],
     name: "Sarah",
-    surname: "Williams"
+    surname: "Williams",
+    pinnedprojects:[ {
+            name: "Weather App",
+            owner: "SarahDev"
+        },{
+        name: "Smart Budget",
+        owner: "AlexCoder"
+    }
+    ]
 }
 
 const users=[

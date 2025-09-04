@@ -4,6 +4,7 @@ import UserProjectsView from "../components/UserProjectsView";
 import Likes from "../components/Likes";
 import Followers from "../components/Followers";
 import Following from "../components/Following";
+import PinnedProjects from "../components/PinnedProjects";
 import { useState } from "react";
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
@@ -108,6 +109,8 @@ function MyProfile(){
                 </p>
             </div>
             <div onClick={gotohom} >Home Icon</div>
+            <h3>Pinned Projects</h3>
+            <PinnedProjects pinprojects={user.pinnedprojects} />
             <div className="tabs" >
                 <span onClick={toggledetails} >Details</span>
                 {" | "}
