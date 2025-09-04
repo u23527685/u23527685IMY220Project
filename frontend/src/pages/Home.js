@@ -7,14 +7,14 @@ import Search from "../components/Search";
 
 const Projects=[
     {
-    owner:"Keny Ken",
+    owner:"KenyKen",
     likes:22,
     name:"Kenny Kens Tressure",
     downloads:2,
     datecreated: new Date(2024, 6, 4)
 },
 {
-    owner:"Dan gtrimm",
+    owner:"DanGrimm",
     likes:34,
     name:"Grim town",
     downloads:15,
@@ -28,6 +28,43 @@ const Projects=[
     datecreated: new Date(2024, 8, 14)
 }
 ]
+
+const otheruser={
+    username:"DanGrimm",
+    paswword:"DanGrimm44#*",
+    email:"DanGrimm@gmail.com",
+    company:"D1Demo Holdings",
+    owned_projects:[{
+        name:"Grim town",
+        owner:"Dan Grimm"
+    }],
+    contributed_ptojects:[],
+    following:[
+        {username:"Ben10"}
+    ],
+    followers:[
+        {username:"Ben10"}
+    ]
+}
+
+const user={
+    username:"Ben10",
+    paswword:"benLook11#",
+    email:"Ben10@gmail.com",
+    company:"D1Demo Holdings",
+    owned_projects:[],
+    contributed_ptojects:[{
+        name:"Grim town",
+        owner:"Dan Grimm"
+    }
+    ],
+    following:[
+        {username:"DanGrimm"}
+    ],
+    followers:[
+        {username:"DanGrimm"}
+    ]
+}
 
 
 function Home(){

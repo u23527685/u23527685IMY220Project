@@ -7,7 +7,20 @@ const { useRef, useState } = React;
 const user={
     username:"Ben10",
     paswword:"benLook11#",
-    email:"Ben10@gmail.com"
+    email:"Ben10@gmail.com",
+    company:"D1Demo Holdings",
+    owned_projects:[],
+    contributed_ptojects:[{
+        name:"Grim town",
+        owner:"Dan Grimm"
+    }
+    ],
+    following:[
+        {username:"DanGrimm"}
+    ],
+    followers:[
+        {username:"DanGrimm"}
+    ]
 }
 
 function Landing(){
