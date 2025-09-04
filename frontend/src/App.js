@@ -4,6 +4,8 @@ import SplashPage from "./pages/SplashPage";
 import Home from "./pages/Home";
 import MyProfile from "./pages/MyProfile";
 import OtherProfile from "./pages/OtherProfile";
+import Followers from "./components/Followers";
+import Following from "./components/Following";
 
 
 
@@ -17,10 +19,10 @@ const router=createBrowserRouter([{
 },
 {
     path:"/profile",
-    element:<MyProfile />
+    element:<MyProfile />,
 },
 {
-    paths:"/profile/:username",
+    paths:"/:username",
     element:<OtherProfile/>
 }
 ])

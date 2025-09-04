@@ -7,9 +7,9 @@ import Search from "../components/Search";
 
 const Projects=[
     {
-    owner:"KenyKen",
+    owner:"AlexCoder",
     likes:22,
-    name:"Kenny Kens Tressure",
+    name:"Alex's Tressure",
     downloads:2,
     datecreated: new Date(2024, 6, 4)
 },
@@ -21,9 +21,9 @@ const Projects=[
     datecreated: new Date(2024, 6, 24)
 },
 {
-    owner:"lokalikeSam",
+    owner:"SarahDev",
     likes:2,
-    name:"Sam says who",
+    name:"Sarah says who",
     downloads:0,
     datecreated: new Date(2024, 8, 14)
 }
@@ -48,7 +48,9 @@ const otheruser={
     likes:[{
         name:"Grim town",
         owner:"DanGrimm"
-    }]
+    }],
+    name:"Dan",
+    surname:'Grimm'
 }
 
 const user={
@@ -66,13 +68,89 @@ const user={
         {username:"DanGrimm"}
     ],
     followers:[
-        {username:"DanGrimm"}
+        {username:"DanGrimm"},
+        {username: "AlexCoder"}
     ],
     likes:[{
         name:"Grim town",
         owner:"DanGrimm"
-    }]
+    }],
+    name:"Ben",
+    surname:'10'
 }
+
+const user2 = {
+    username: "AlexCoder",
+    paswword: "alex2024!Pass",
+    email: "alexcoder@gmail.com",
+    company: "TechStart Solutions",
+    owned_projects: [{
+        name: "Smart Budget",
+        owner: "AlexCoder"
+    }],
+    contributed_projects: [{
+        name: "Grim town",
+        owner: "DanGrimm"
+    }],
+    following: [
+        {username: "Ben10"},
+        {username: "DanGrimm"}
+    ],
+    followers: [
+    ],
+    likes: [{
+    }],
+    name: "AlexCoder",
+    surname: "Johnson"
+}
+
+const user3 = {
+    username: "SarahDev",
+    paswword: "sarah#Secure99",
+    email: "sarahdev@gmail.com",
+    company: "Innovation Labs Inc",
+    owned_projects: [
+        {
+            name: "Weather App",
+            owner: "SarahDev"
+        },
+        {
+            name: "Task Manager",
+            owner: "SarahDev"
+        }
+    ],
+    contributed_projects: [{
+        name: "Smart Budget",
+        owner: "AlexCoder"
+    }],
+    following: [
+        {username: "AlexCoder"}
+    ],
+    followers: [
+        {username: "Ben10"},
+        {username: "AlexCoder"},
+        {username: "DanGrimm"}
+    ],
+    likes: [
+        {
+            name: "Weather App",
+            owner: "SarahDev"
+        },
+        {
+            name: "Grim town",
+            owner: "DanGrimm"
+        }
+    ],
+    name: "Sarah",
+    surname: "Williams"
+}
+
+const users=[
+    user,
+    otheruser,
+    user2,
+    user3
+]
 
 
 function Home(){
@@ -147,7 +225,7 @@ function Home(){
     };
     return(
         <div>
-            <Navbar user={user} otheruser={otheruser} projects={projects} />
+            <Navbar user={user} otheruser={otheruser} projects={projects} users={users} />
             <Search onsearch={onSearch} />
             <h1>Home Page</h1>
             <div className="LocGlobchoose" >

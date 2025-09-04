@@ -9,7 +9,7 @@ function Singup({onsignup}){
             <input type="text" name="username" />
             <label>Password:</label>
             <input type="password" name="password" />
-            <input name="login" onClick={onsignup} type="submit" value="Login"/>
+            <input name="login" onClick={onsignup} type="submit" value="Signup"/>
         </form>
     )
 }
