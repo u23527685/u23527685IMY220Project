@@ -1,7 +1,9 @@
 import React from "react";
 const { useRef, useState } = React;
+import { useNavigate } from "react-router-dom";
 
-function ProjectPreview({project,ondownload,onlike,onunlike}){
+function ProjectPreview({project,ondownload,onlike,onunlike,yours=false}){
+    const navigate=useNavigate();
     const [liked, setLiked] = useState(false);
     const owner=project.owner;
     const name=project.name;
@@ -18,6 +20,13 @@ function ProjectPreview({project,ondownload,onlike,onunlike}){
         if(owner && name && ondownload)
             ondownload(owner,name)
     }
+    const toproject=()=>{
+        if(yours){
+            navigate(`/${name}/${owner}`,{state:{project}});
+        }else{
+            navigate(`/project/${name}/${owner}`,{state:{project}})
+        }
+    }
     return (
         <div className="projectprev">
             <div className="usernameshow">
@@ -25,11 +34,10 @@ function ProjectPreview({project,ondownload,onlike,onunlike}){
                 <div className="userName">{project.owner}</div>
             </div>
             <div className="projectinf">
-                <p>{project.name}</p>
-                {onlike && onunlike && <button onClick={toggleLike}>
-                    {liked ? "Unlike":"Like"}
-                </button>}
+                <p onClick={toproject} >{project.name}</p>
+                {onlike && onunlike && <button onClick={toggleLike}>{liked ? "Unlike":"Like"}</button>}
                 <span>{project.likes} Likes</span>
+                {"  |  "}
                 {ondownload && <button onClick={download}>Download</button>}
                 <span>{project.downloads} Downloads</span>
             </div>

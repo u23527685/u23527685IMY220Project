@@ -6,6 +6,7 @@ function Navbar({user,projects,otheruser,users}){
         <nav>
             <Link to="/home">Home</Link>
             <Link to="/profile"state={{user,projects,otheruser,users}}>Profile</Link>
+            <Link to={`/projects/${user.username}`}state={{projects,users}}>Projects</Link>
         </nav>
     )
 }

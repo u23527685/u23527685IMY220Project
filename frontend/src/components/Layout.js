@@ -1,10 +1,6 @@
-import React from "react";
-import Navbar from "../components/Navbar";
-const { useRef, useState } = React;
-import LocalFeed from "../components/LocalProjectFeed";
-import GlobalFeed from "../components/GlobalProjectFeed";
-import Search from "../components/Search";
-import { useSearchParams } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import Navbar from './Navbar';
+import React from 'react';
 
 const Projects=[
     {
@@ -182,91 +178,12 @@ const users=[
     user2,
     user3
 ]
-
-
-function Home(){
-    const [local, setlocal]=useState(true);
-    const [global, setglobal]=useState(false);
-    const [projects, setprojects]= useState(Projects);
-    const [allprojects, setallprojects]=useState(Projects);
-    const onDownload=(owner,name)=>{
-        setprojects(
-            projects.map((project,i)=>{
-                 if (project.owner===owner && project.name===name) {
-                    return {...project,downloads:project.downloads + 1 };
-                }
-                return project;
-            })
-        );
-        setallprojects(
-            allprojects.map((project,i)=>{
-                 if (project.owner===owner && project.name===name) {
-                    return {...project,downloads:project.downloads + 1 };
-                }
-                return project;
-            })
-        )
-    };
-    const onLike=(owner,name)=>{
-        setprojects(
-            projects.map((project,i)=>{
-                if(project.owner==owner && project.name==name)
-                    return {...project,likes:project.likes + 1 };
-                return project;
-            })
-        );
-        setallprojects(
-            allprojects.map((project,i)=>{
-                 if (project.owner===owner && project.name===name) {
-                    return {...project,likes:project.likes + 1 };
-                }
-                return project;
-            })
-        )
-    };
-    const onUnLike=(owner,name)=>{
-        setprojects(
-            projects.map((project,i)=>{
-                if(project.owner==owner && project.name==name)
-                    return {...project,likes:project.likes - 1 };
-                return project;
-            })
-        );
-        setallprojects(
-            allprojects.map((project,i)=>{
-                 if (project.owner===owner && project.name===name) {
-                    return {...project,likes:project.likes - 1 };
-                }
-                return project;
-            })
-        )
-    };
-    const onSearch=(search)=>{
-        console.log(search);
-    };
-    const toggleLocal=()=>{
-        console.log("loc");
-        setglobal(false);
-        setlocal(true);
-    };
-    const toggleGlobal=()=>{
-        console.log("glob");
-        setlocal(false);
-        setglobal(true);
-    };
-    return(
-        <div>
-            <Search onsearch={onSearch} />
-            <h1>Home Page</h1>
-            <div className="LocGlobchoose" >
-                <h2 className={local ? "active" : "inactive"} onClick={toggleLocal}>Local</h2>
-                <h2 className={global ? "active" : "inactive"} onClick={toggleGlobal} >Global</h2>
-            </div>
-            { local && <LocalFeed projects={projects} ondownload={onDownload} onlike={onLike} onunlike={onUnLike}/>}
-            {global && <GlobalFeed projects={projects} ondownload={onDownload} onlike={onLike} onunlike={onUnLike}/>}
-        </div>
-        
-    )
+function Layout() {
+  return (
+    <>
+      <Navbar user={user} otheruser={otheruser} users={users} projects={Projects} />
+      <Outlet />
+    </>
+  );
 }
-
-export default Home;
+export default Layout;
