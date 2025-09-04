@@ -6,13 +6,13 @@ function UserProjectsView({projectnames}){
     const location = useLocation();
     const { projects } = location.state || [];
     var userprojects = projects.filter(project =>
-    projectnames.some(pn =>
-        pn.name === project.name && pn.owner === project.owner
-    )
-);
+        projectnames.some(pn =>
+            pn.name === project.name && pn.owner === project.owner
+        )
+    );
     return(
         <div id="userProjectView" >
-            {userprojects.map((up,i)=><ProjectPreview project={up}/>)}
+            {userprojects.map((up,i)=><ProjectPreview key={i} project={up}/>)}
         </div>
     )
 }

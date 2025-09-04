@@ -44,7 +44,11 @@ const otheruser={
     ],
     followers:[
         {username:"Ben10"}
-    ]
+    ],
+    likes:[{
+        name:"Grim town",
+        owner:"DanGrimm"
+    }]
 }
 
 const user={
@@ -63,7 +67,11 @@ const user={
     ],
     followers:[
         {username:"DanGrimm"}
-    ]
+    ],
+    likes:[{
+        name:"Grim town",
+        owner:"DanGrimm"
+    }]
 }
 
 

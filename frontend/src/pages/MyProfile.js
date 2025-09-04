@@ -1,6 +1,7 @@
 import React from "react";
 import ProfileText from "../components/ProfileText";
 import UserProjectsView from "../components/UserProjectsView";
+import Likes from "../components/Likes";
 import { useState } from "react";
 import { useLocation } from 'react-router-dom';
 
@@ -50,25 +51,37 @@ function MyProfile(){
     const { user } = location.state || {};
     const [details,setdetails]=useState(true);
     const [projectstab,setprojectstab]=useState(false);
+    const [likes,setlikes]=useState(false);
     const userprojectnames=()=>{return user?[...user.owned_projects,...user.contributed_projects]:[]};
     const toggledetails=()=>{
         setprojectstab(false);
+        setlikes(false);
         setdetails(true);
     };
     const toggleprojects=()=>{
         setdetails(false);
+        setlikes(false);
         setprojectstab(true);
+    };
+     const toggleLike=()=>{
+        setdetails(false);
+        setprojectstab(false);
+        setlikes(true);
     };
     return(
         <div id="profile">
             <div>userImage</div>
+            <div>Home Icon</div>
             <div className="tabs" >
                 <span onClick={toggledetails} >Details</span>
                 {" | "}
                 <span onClick={toggleprojects} >Projects</span>
+                {" | "}
+                <span onClick={toggleLike} >Likes</span>
             </div>
             {details && <ProfileText user={user} />}
             {projectstab && <UserProjectsView projectnames={userprojectnames()} />}
+            {likes && <Likes likes={user.likes} />}
         </div>
     )
 }
