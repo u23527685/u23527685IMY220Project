@@ -8,6 +8,7 @@ import PinnedProjects from "../components/PinnedProjects";
 import { useState } from "react";
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
 
 /*const otheruser={
     name:"Dan",
@@ -102,6 +103,7 @@ function MyProfile(){
     }
     return(
         <div id="profile">
+            <Outlet/>
             <div>
                 <div>userImage</div>
                 <p>
