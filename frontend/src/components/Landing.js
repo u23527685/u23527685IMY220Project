@@ -273,11 +273,10 @@ function Landing(){
         setlogin(false);
     }
     function handleLogin(event){
-        event.preventDefault();
         setlogin(false);
+        navigate('/home', { state: { user, projects, otheruser, users } });
     }
-    function handleSignup(event){
-        event.preventDefault();
+    function handleSignup(){
         setsignup(false);
         navigate('/home', { state: { user, projects, otheruser, users } });
     }
