@@ -1,0 +1,35 @@
+.project-discussion {
+  margin-bottom: 30px;
+  padding: 15px 20px;
+  background-color: #f5f7fa;
+  border-radius: 8px;
+  border: 1px solid #d1d9e6;
+}
+
+.project-discussion h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Style discussion messages */
+.discussion-message {
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #dbe2f1;
+}
+
+.discussion-message:last-child {
+  border-bottom: none;
+}
+
+.discussion-message .author {
+  font-weight: 700;
+  color: #074404;
+  margin-bottom: 4px;
+}
+
+.discussion-message .content {
+  font-size: 1rem;
+  color: #333;
+}

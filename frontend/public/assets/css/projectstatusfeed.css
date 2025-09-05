@@ -1,0 +1,24 @@
+.project-status-feed {
+  margin-bottom: 30px;
+  padding: 15px 20px;
+  background-color: #f9faff;
+  border-radius: 8px;
+  border: 1px solid #cce0ff;
+}
+
+.project-status-feed h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #0056b3;
+}
+
+/* Add styles for individual feed items */
+.feed-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #e1e7f0;
+}
+
+.feed-item:last-child {
+  border-bottom: none;
+}

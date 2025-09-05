@@ -1,0 +1,40 @@
+{
+  "name": "veyo_imy220_project",
+  "version": "1.0.0",
+  "description": "My imy 220 project",
+  "main": "frontend/src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack && babel backend/server.js -d backend/dist",
+    "start": "npm run build && node backend/dist/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "path": "^0.12.7",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.8.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/u23527685/u23527685IMY220Project.git"
+  },
+  "author": "u23527685 Okaile Gaesale",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/u23527685/u23527685IMY220Project/issues"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.28.3",
+    "@babel/core": "^7.28.3",
+    "@babel/preset-env": "^7.28.3",
+    "@babel/preset-react": "^7.27.1",
+    "babel-loader": "^10.0.0",
+    "css-loader": "^7.1.2",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.101.3",
+    "webpack-cli": "^6.0.1"
+  },
+  "homepage": "https://github.com/u23527685/u23527685IMY220Project#readme"
+}
