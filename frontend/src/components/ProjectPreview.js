@@ -1,8 +1,9 @@
 import React from "react";
 const { useRef, useState } = React;
 import { useNavigate } from "react-router-dom";
+import "../../public/assets/css/projectpreview.css"
 
-function ProjectPreview({project,ondownload,onlike,onunlike,yours=false}){
+function ProjectPreview({project,ondownload,onlike,onunlike}){
     const navigate=useNavigate();
     const [liked, setLiked] = useState(false);
     const owner=project.owner;
@@ -21,11 +22,7 @@ function ProjectPreview({project,ondownload,onlike,onunlike,yours=false}){
             ondownload(owner,name)
     }
     const toproject=()=>{
-        if(yours){
-            navigate(`/${name}/${owner}`,{state:{project}});
-        }else{
-            navigate(`/project/${name}/${owner}`,{state:{project}})
-        }
+        navigate(`/project/${name}/${owner}`,{state:{project}})
     }
     return (
         <div className="projectprev">

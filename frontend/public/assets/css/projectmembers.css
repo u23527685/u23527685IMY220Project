@@ -1,0 +1,23 @@
+.project-members {
+  margin-bottom: 30px;
+}
+
+.project-members h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.members-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.member {
+  background-color: #e6f0ff;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 1rem;
+}

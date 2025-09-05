@@ -25,11 +25,12 @@ function Projects(){
     return(
         <div className="projects">
             <div className="list" >
-                <button>Add Project</button>
+                <button onClick={handleadd} >Add Project</button>
                 { add &&  <AddProject oncancel={canceladd} />}
-                <ProjectsList owned={ownedprojects} member={memberprojects} />
+                <ProjectsList username={username} owned={ownedprojects} member={memberprojects} />
             </div>
             <Outlet/>
+            
         </div>
     )
 

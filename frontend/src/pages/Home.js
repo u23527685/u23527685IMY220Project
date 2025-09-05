@@ -4,9 +4,11 @@ const { useRef, useState } = React;
 import LocalFeed from "../components/LocalProjectFeed";
 import GlobalFeed from "../components/GlobalProjectFeed";
 import Search from "../components/Search";
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams,useLocation } from 'react-router-dom';
+import"../../public/assets/css/home.css"
+import Filter from "../components/Filter";
 
-const Projects=[
+/*const Projects=[
     {
     owner:"AlexCoder",
     likes:22,
@@ -181,90 +183,57 @@ const users=[
     otheruser,
     user2,
     user3
-]
+]*/
 
 
 function Home(){
+    const location=useLocation();
+    const {projects}=location.state||[];
+    const {user}=location.state||{};
+    const [filter,setfilter]=useState(false);
     const [local, setlocal]=useState(true);
     const [global, setglobal]=useState(false);
-    const [projects, setprojects]= useState(Projects);
-    const [allprojects, setallprojects]=useState(Projects);
-    const onDownload=(owner,name)=>{
-        setprojects(
-            projects.map((project,i)=>{
-                 if (project.owner===owner && project.name===name) {
-                    return {...project,downloads:project.downloads + 1 };
-                }
-                return project;
-            })
-        );
-        setallprojects(
-            allprojects.map((project,i)=>{
-                 if (project.owner===owner && project.name===name) {
-                    return {...project,downloads:project.downloads + 1 };
-                }
-                return project;
-            })
-        )
-    };
-    const onLike=(owner,name)=>{
-        setprojects(
-            projects.map((project,i)=>{
-                if(project.owner==owner && project.name==name)
-                    return {...project,likes:project.likes + 1 };
-                return project;
-            })
-        );
-        setallprojects(
-            allprojects.map((project,i)=>{
-                 if (project.owner===owner && project.name===name) {
-                    return {...project,likes:project.likes + 1 };
-                }
-                return project;
-            })
-        )
-    };
-    const onUnLike=(owner,name)=>{
-        setprojects(
-            projects.map((project,i)=>{
-                if(project.owner==owner && project.name==name)
-                    return {...project,likes:project.likes - 1 };
-                return project;
-            })
-        );
-        setallprojects(
-            allprojects.map((project,i)=>{
-                 if (project.owner===owner && project.name===name) {
-                    return {...project,likes:project.likes - 1 };
-                }
-                return project;
-            })
-        )
-    };
     const onSearch=(search)=>{
         console.log(search);
     };
     const toggleLocal=()=>{
-        console.log("loc");
         setglobal(false);
         setlocal(true);
     };
     const toggleGlobal=()=>{
-        console.log("glob");
         setlocal(false);
         setglobal(true);
     };
+    const toggleFilter=()=>{
+        if(filter)
+            setfilter(false);
+        else
+            setfilter(true);
+    }
     return(
-        <div>
-            <Search onsearch={onSearch} />
+        <main>
             <h1>Home Page</h1>
-            <div className="LocGlobchoose" >
-                <h2 className={local ? "active" : "inactive"} onClick={toggleLocal}>Local</h2>
-                <h2 className={global ? "active" : "inactive"} onClick={toggleGlobal} >Global</h2>
+            <div id="homeitems" >
+                <div className="LocGlobchoose" >
+                    <h2 className={local ? "isActive" : "inactive"} onClick={toggleLocal}>Local</h2>
+                    <h2>{" | "}</h2>
+                    <h2 className={global ? "isActive" : "inactive"} onClick={toggleGlobal} >Global</h2>
+                </div>
+                <div id="searchfil">
+                    <Search onsearch={onSearch} />
+                    <button onClick={toggleFilter}>Filter</button>
+                </div>
             </div>
-            { local && <LocalFeed projects={projects} ondownload={onDownload} onlike={onLike} onunlike={onUnLike}/>}
-            {global && <GlobalFeed projects={projects} ondownload={onDownload} onlike={onLike} onunlike={onUnLike}/>}
-        </div>
+            
+            <div id="out">
+                <div id="chosen feed" >
+                    {local && <LocalFeed user={user} projects={projects} />}
+                    {global && <GlobalFeed projects={projects} />}
+                </div>
+                
+                {filter&& <Filter/>}
+            </div>
+        </main>
         
     )
 }

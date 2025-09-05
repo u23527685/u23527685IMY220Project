@@ -11,7 +11,33 @@ const Projects=[
     datecreated: new Date(2024, 6, 4),
     members:[{
         username: "SarahDev"
-    }]
+    }],
+    description: 'A description of the project.',
+    imageUrl: 'https://placehold.co/200',
+    type: 'Web Application',
+    hashtags: ['javascript', 'react'],
+    feed:[
+        {
+        user: 'Alice',
+        action: 'check-in',
+        message: 'Initial commit',
+        timestamp: Date.now() - 1000000
+        },
+        {
+        user: 'Bob',
+        action: 'check-out',
+        message: 'Working on feature X',
+        timestamp: Date.now() - 500000
+        }
+    ],
+    files: [
+        { id: 1, name: 'index.js', url: '/files/index.js' },
+        { id: 2, name: 'README.md', url: '/files/README.md' }
+    ],
+    discussion:[
+        { id: 1, user: 'Alice', message: 'Welcome to the project!', timestamp: Date.now() - 2000000 },
+        { id: 2, user: 'Bob', message: 'Thanks! Happy to be here.', timestamp: Date.now() - 1500000 }
+    ]
 },
 {
     owner:"DanGrimm",
@@ -21,7 +47,34 @@ const Projects=[
     datecreated: new Date(2024, 6, 24),
     members:[{
         username: "Ben10"
-    },{username: "AlexCoder"}]
+    },
+    {username: "AlexCoder"}],
+    description: 'A description of the project.',
+    imageUrl: 'https://placehold.co/200',
+    type: 'Web Application',
+    hashtags: ['javascript', 'react'],
+    feed:[
+        {
+        user: 'Alice',
+        action: 'check-in',
+        message: 'Initial commit',
+        timestamp: Date.now() - 1000000
+        },
+        {
+        user: 'Bob',
+        action: 'check-out',
+        message: 'Working on feature X',
+        timestamp: Date.now() - 500000
+        }
+    ],
+    files: [
+        { id: 1, name: 'index.js', url: '/files/index.js' },
+        { id: 2, name: 'README.md', url: '/files/README.md' }
+    ],
+    discussion:[
+        { id: 1, user: 'Alice', message: 'Welcome to the project!', timestamp: Date.now() - 2000000 },
+        { id: 2, user: 'Bob', message: 'Thanks! Happy to be here.', timestamp: Date.now() - 1500000 }
+    ]
 },
 {
     owner:"SarahDev",
@@ -29,7 +82,33 @@ const Projects=[
     name:"Weather App",
     downloads:0,
     datecreated: new Date(2024, 8, 14),
-    members:[]
+    members:[],
+    description: 'A description of the project.',
+    imageUrl: 'https://placehold.co/200',
+    type: 'Web Application',
+    hashtags: ['javascript', 'react'],
+    feed:[
+        {
+        user: 'Alice',
+        action: 'check-in',
+        message: 'Initial commit',
+        timestamp: Date.now() - 1000000
+        },
+        {
+        user: 'Bob',
+        action: 'check-out',
+        message: 'Working on feature X',
+        timestamp: Date.now() - 500000
+        }
+    ],
+    files: [
+        { id: 1, name: 'index.js', url: '/files/index.js' },
+        { id: 2, name: 'README.md', url: '/files/README.md' }
+    ],
+    discussion:[
+        { id: 1, user: 'Alice', message: 'Welcome to the project!', timestamp: Date.now() - 2000000 },
+        { id: 2, user: 'Bob', message: 'Thanks! Happy to be here.', timestamp: Date.now() - 1500000 }
+    ]
 }
 ]
 

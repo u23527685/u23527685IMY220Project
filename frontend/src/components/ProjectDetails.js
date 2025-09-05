@@ -1,5 +1,6 @@
 import React from 'react';
 import Hashtag from './Hashtag';
+import"../../public/assets/css/projectdetails.css";
 function ProjectDetails({ project }) {
   // project: { name, description, imageUrl, type, hashtags: [] }
   return (

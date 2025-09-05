@@ -1,0 +1,33 @@
+
+@font-face {
+  font-family: normaltext;
+  src: url(../fonts/Inter-VariableFont_slnt\,wght.ttf);
+}
+
+body{
+    background-color: #E8F5E9;
+    font-family: normaltext;
+}
+
+h1,h2,h3,h4{
+    font-family: 'Montserrat', sans-serif;
+;
+}
+
+.isActive{
+    color: #429613;
+}
+
+button{
+    background-color: #91C129;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+button:hover{
+    background-color: #429613;
+}

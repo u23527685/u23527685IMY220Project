@@ -1,0 +1,34 @@
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+a{
+    text-decoration: none;
+    color: #000000;
+}
+#logo {
+  flex: 0 0 auto; /* fixed size */
+}
+
+#middle {
+  flex: 1 1 auto; /* take remaining space */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+#middle a {
+  margin: 0 15px; /* spacing between links */
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#profilelink {
+  flex: 0 0 auto; /* fixed size */
+}
+
+#profilelink a{
+    display: flex;
+}

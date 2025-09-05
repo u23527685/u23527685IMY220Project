@@ -1,6 +1,7 @@
 import React from "react";
 const { useRef, useState } = React;
 import ProjectPreview from "./ProjectPreview";
+import "../../public/assets/css/projectfeed.css";
 
 function GlobalFeed({projects,ondownload,onlike,onunlike}){
     return(

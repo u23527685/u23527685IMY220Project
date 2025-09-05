@@ -1,0 +1,16 @@
+.project-checkinout {
+  padding: 15px 20px;
+  background-color: #e9f0ff;
+  border-radius: 8px;
+  border: 1px solid #b3c7ff;
+  text-align: center;
+}
+
+.project-checkinout button {
+  border: none;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}

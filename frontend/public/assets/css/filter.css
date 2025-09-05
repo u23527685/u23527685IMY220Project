@@ -1,0 +1,51 @@
+.filter-container {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 320px;
+  background-color: #fff;
+  font-family: Arial, sans-serif;
+  margin-bottom: 20px;
+}
+
+.filter-container h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-weight: 700;
+  color: #333;
+}
+
+.filter-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-group label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #555;
+}
+
+.filter-group select,
+.filter-group input[type="number"] {
+  padding: 8px 10px;
+  font-size: 1rem;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+}
+
+.filter-apply-btn {
+  background-color: #91C129;
+  border: none;
+  padding: 10px 14px;
+  font-weight: 700;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.filter-apply-btn:hover {
+  background-color: #429613;
+}

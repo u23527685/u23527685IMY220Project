@@ -1,0 +1,80 @@
+form {
+  max-width: 480px;
+  margin: 20px auto;
+  padding: 25px 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+form h2 {
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 1.8rem;
+  text-align: center;
+  color: #429613;
+}
+
+form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #444;
+}
+
+form input[type="text"],
+form input[type="file"],
+form input[type="submit"],
+form input[type="email"],
+form input[type="password"],
+form textarea,
+form select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 18px;
+  border: 1.8px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+form input[type="text"]:focus,
+form input[type="file"]:focus,
+form textarea:focus,
+form select:focus {
+  border-color: #429613;
+  outline: none;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
+
+form button[type="submit"] {
+  width: 100%;
+  background-color: #91C129;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 12px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+form button[type="submit"]:hover {
+  background-color: #429613;
+}
+
+form button[type="submit"]:active {
+  background-color: #429613;
+}

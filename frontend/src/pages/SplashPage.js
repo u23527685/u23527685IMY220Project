@@ -4,9 +4,9 @@ import Home from "./Home";
 
 function SplashPage(){
     return(
-        <div className="splashpage" >
+        <main className="splashpage" >
             <Landing onauth={<Home/>}/>
-        </div>
+        </main>
         
     )
 }

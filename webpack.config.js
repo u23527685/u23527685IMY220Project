@@ -14,6 +14,27 @@ module.exports = {
             use: {
                 loader: "babel-loader"
             }
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                type: "asset/resource",
+                generator: {
+                    filename: "images/[hash][ext][query]"
+                }
+            },
+            {
+                test: /\.svg$/i,
+                type: "asset/resource",
+                generator: {
+                    filename: "images/[hash][ext][query]"
+                }
+            },
+            {
+                test: /\.css$/i,
+                use: [
+                "style-loader", // Injects styles into DOM
+                "css-loader"    // Turns CSS into CommonJS modules
+                ]
             }
         ]
     }

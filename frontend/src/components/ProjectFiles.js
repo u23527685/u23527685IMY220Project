@@ -1,4 +1,5 @@
 import React from 'react';
+import"../../public/assets/css/projectfiles.css";
 function ProjectFiles({ files }) {
   // files: array of { id, name, url }
   return (

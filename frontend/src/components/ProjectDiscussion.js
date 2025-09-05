@@ -1,6 +1,10 @@
 import React from 'react';
+import"../../public/assets/css/projectdiscussion.css";
 function ProjectDiscussion({ discussion }) {
   // discussion: array of { id, user, message, timestamp }
+  const handlesubmit=(event)=>{
+    event.preventDefault();
+  }
   return (
     <section>
       <h2>Project Discussion</h2>
@@ -15,7 +19,7 @@ function ProjectDiscussion({ discussion }) {
       <form>
         <label htmlFor="newMessage">Add Message</label>
         <textarea id="newMessage" name="newMessage" />
-        <button type="submit">Post</button>
+        <button onClick={handlesubmit} type="submit">Post</button>
       </form>
     </section>
   );

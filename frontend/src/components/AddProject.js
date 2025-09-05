@@ -1,4 +1,5 @@
 import React from 'react';
+import "../../public/assets/css/addproject.css";
 
 function AddProject({oncancel}) {
   const handlesubmit=(event)=>{
