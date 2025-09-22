@@ -1,110 +1,76 @@
-.LocGlobchoose{
-    display: flex;
-    flex-direction: row;
-}
-.LocGlobchoose h2{
-    margin:5px
-}
-#homeitems{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: baseline;
-    margin-left: 20px;
-    margin-right: 20px;
+main {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  background: #f9fdf7;
+  color: #074404;
 }
 
-#searchfil{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+h1 {
+  text-align: center;
+  color: #074404;
+  margin-bottom: 2rem;
+}
+
+#homeitems {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.LocGlobchoose {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.LocGlobchoose h2 {
+  cursor: pointer;
+  transition: color 0.3s, transform 0.2s;
+}
+
+.LocGlobchoose .isActive {
+  color: #429613;
+  font-weight: bold;
+  transform: scale(1.05);
+}
+
+.LocGlobchoose .inactive {
+  color: #91C129;
+  opacity: 0.7;
+}
+
+#searchfil {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+#searchfil button {
+  background: #429613;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#searchfil button:hover {
+  background: #074404;
 }
 
 #out {
   display: flex;
-  gap: 20px; /* space between feed and filter */
-  margin-top: 20px;
-  padding: 0 20px;
-  box-sizing: border-box;
-  justify-content: center;
+  gap: 1.5rem;
 }
 
-/* Feed container */
 #chosen\ feed {
-  flex: 1 1 0;
-  max-width: 800px;
+  flex: 3;
 }
 
-/* Filter container */
-.filter-container {
-  width: 320px;
-  flex-shrink: 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
-/* Optional: style the Filter heading */
-.filter-container h3 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  font-weight: 700;
-  color: #333;
-}
-
-/* Style the filter groups */
-.filter-group {
-  margin-bottom: 15px;
-  display: flex;
-  flex-direction: column;
-}
-
-.filter-group label {
-  margin-bottom: 6px;
-  font-weight: 600;
-  color: #555;
-}
-
-.filter-group select,
-.filter-group input[type="number"] {
-  padding: 8px 10px;
-  font-size: 1rem;
-  border: 1px solid #bbb;
-  border-radius: 4px;
-}
-
-/* Style the apply button */
-.filter-apply-btn {
-  background-color: #91C129;
-  border: none;
-  padding: 10px 14px;
-  font-weight: 700;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
-  transition: background-color 0.3s ease;
-}
-
-.filter-apply-btn:hover {
-  background-color: #429613;
-}
-
-button{
-    background-color: #91C129;
-  border: none;
-  padding: 6px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  height: fit-content;
-  transition: background-color 0.3s ease;
-  margin-left: 10px;
-}
-
-button:hover{
-    background-color: #429613;
-    height: fit-content;
+#out > .filter {
+  flex: 1;
+  border-left: 2px solid #91C129;
+  padding-left: 1rem;
 }

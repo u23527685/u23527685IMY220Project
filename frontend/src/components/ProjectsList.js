@@ -1,5 +1,6 @@
 import React from "react";
 import ProjectPreview from "./ProjectPreview";
+import "../../public/assets/css/projectlist.css";
 
 
 function ProjectsList({owned,member,username}){
@@ -18,3 +19,5 @@ function ProjectsList({owned,member,username}){
 }
 
 export default ProjectsList;
+
+//u23527685 18

@@ -9,6 +9,8 @@ import { useState } from "react";
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { Outlet } from 'react-router-dom';
+import ptofileimage from "../../public/assets/svg/default user.svg";
+import "../../public/assets/css/profile.css";
 
 /*const otheruser={
     name:"Dan",
@@ -54,7 +56,7 @@ const user={
 function MyProfile(){
     const navigate = useNavigate();
     const location = useLocation();
-    const { user } = location.state || {};
+    let { user } = location.state || {};
     // true false states
     const [details,setdetails]=useState(true);
     const [projectstab,setprojectstab]=useState(false);
@@ -62,7 +64,9 @@ function MyProfile(){
     const [followers,setfollowers]=useState(false);
     const [following,setfollowing]=useState(false);
     //
-    const userprojectnames=()=>{return user?[...user.owned_projects,...user.contributed_projects]:[]};
+    const userprojectnames=()=>{
+        return user?[...user.owned_projects,...user.contributed_projects]:[]
+    };
     const toggledetails=()=>{
         setprojectstab(false);
         setlikes(false);
@@ -100,31 +104,40 @@ function MyProfile(){
     };
     const gotohom=()=>{
         navigate('/home');
-    }
+    };
+    const onedit=(editeduser)=>{
+        user.username=editeduser.username;
+    };
     return(
         <div id="profile">
-            <Outlet/>
-            <div>
-                <div>userImage</div>
-                <p>
-                    <span onClick={togglefollowers} >{(user.followers).length} followers</span>{" | "}<span onClick={togglefollowing}>{(user.following).length} following</span>
-                </p>
+            <div id="profileallpages">
+                <div id="profileheader">
+                    <div id="profileimagename">
+                        <img width={"200px"} src={ptofileimage}></img>
+                        <div id="username">{user.username}</div>
+                    </div>
+                        <p id="followersspan" >
+                        <span onClick={togglefollowers} className={followers?"isActive":"inactive"} >{(user.followers).length} followers</span>{" | "}<span className={following?"isActive":"inactive"} onClick={togglefollowing}>{(user.following).length} following</span>
+                    </p>
+                </div>
+                <div onClick={gotohom} >Home Icon</div>
+                <h3>Pinned Projects</h3>
+                <PinnedProjects pinprojects={user.pinnedprojects} />
+                <div className="tabs" >
+                    <h4 onClick={toggledetails} className={details?"isActive":"inactive"} >Details</h4>
+                    <p>{" | "}</p>
+                    <h4 onClick={toggleprojects} className={projectstab?"isActive":"inactive"} >Projects</h4>
+                    <p>{" | "}</p>
+                    <h4 onClick={toggleLike} className={likes?"isActive":"inactive"} >Likes</h4>
+                </div>
             </div>
-            <div onClick={gotohom} >Home Icon</div>
-            <h3>Pinned Projects</h3>
-            <PinnedProjects pinprojects={user.pinnedprojects} />
-            <div className="tabs" >
-                <span onClick={toggledetails} >Details</span>
-                {" | "}
-                <span onClick={toggleprojects} >Projects</span>
-                {" | "}
-                <span onClick={toggleLike} >Likes</span>
+            <div id="info" >
+                {details && <ProfileText user={user} onedit={onedit} />}
+                {projectstab && <UserProjectsView projectnames={userprojectnames()} />}
+                {likes && <Likes likes={user.likes} />}
+                {followers && <Followers followers={user.followers}/>}
+                {following && <Following following={user.following}/>}
             </div>
-            {details && <ProfileText user={user} />}
-            {projectstab && <UserProjectsView projectnames={userprojectnames()} />}
-            {likes && <Likes likes={user.likes} />}
-            {followers && <Followers followers={user.followers}/>}
-            {following && <Following following={user.following}/>}
         </div>
     )
 }

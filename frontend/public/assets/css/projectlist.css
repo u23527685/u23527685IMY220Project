@@ -1,0 +1,22 @@
+#Owned,
+#member {
+  background: #f9fdf7;
+  padding: 1rem;
+  border: 1.5px solid #91C129;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+#Owned h3,
+#member h3 {
+  color: #074404;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+#Owned > div,
+#member > div {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

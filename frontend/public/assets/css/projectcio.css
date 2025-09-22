@@ -1,16 +1,42 @@
-.project-checkinout {
-  padding: 15px 20px;
-  background-color: #e9f0ff;
-  border-radius: 8px;
-  border: 1px solid #b3c7ff;
-  text-align: center;
+section h2 {
+  color: #074404;
+  margin-bottom: 0.75rem;
 }
 
-.project-checkinout button {
-  border: none;
-  padding: 12px 24px;
-  font-size: 1.1rem;
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+form label {
+  font-weight: bold;
+  color: #429613;
+  font-size: 0.9rem;
+}
+
+form input,
+form select,
+form textarea {
+  padding: 0.6rem;
+  border: 1.5px solid #91C129;
   border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+form button {
+  background: #429613;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s, transform 0.2s;
+}
+
+form button:hover {
+  background: #074404;
+  transform: translateY(-2px);
 }

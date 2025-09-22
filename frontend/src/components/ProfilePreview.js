@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
+import ptofileimage from "../../public/assets/svg/default user.svg";
+import "../../public/assets/css/profilepreview.css";
 
 function ProfilePreview({user}){
     const navigate=useNavigate();
@@ -11,10 +13,10 @@ function ProfilePreview({user}){
         navigate(`/profile/${user.username}`,{state:{users,projects}});
     }
     return(
-        <div className="userpreview" >
-            <div className="previmg" >User Image</div>
-            <span onClick={gotoprofile} >{user.username} </span>
-            <span>Folowers:{(user.followers).length}</span>
+        <div onClick={gotoprofile} className="profile-card">
+            <img src={user.image || "/assets/svg/default user.svg"} alt={user.username} />
+            <h4>{user.username}</h4>
+            <p>Folowers:{(user.followers).length}</p>
         </div>
     )
 }

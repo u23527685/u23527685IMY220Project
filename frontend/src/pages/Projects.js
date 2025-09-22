@@ -3,6 +3,7 @@ import { useLocation,useNavigate,useParams,Outlet } from "react-router-dom";
 import Project from "../components/Project";
 import ProjectsList from "../components/ProjectsList";
 import AddProject from "../components/AddProject";
+import "../../public/assets/css/projects.css";
 const {useState}=React;
 
 
@@ -37,3 +38,5 @@ function Projects(){
 }
 
 export default Projects;
+
+//u23527685 18

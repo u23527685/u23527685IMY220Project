@@ -1,24 +1,24 @@
-.project-files {
-  margin-bottom: 30px;
+section h2 {
+  color: #074404;
+  margin-bottom: 0.75rem;
 }
 
-.project-files h3 {
-  font-size: 1.6rem;
-  font-weight: 600;
-  margin-bottom: 15px;
-}
-
-.file-list {
+section ul {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
 }
 
-.file-list li {
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
-  color: #444;
+section li {
+  margin-bottom: 0.5rem;
 }
 
-.file-list li:last-child {
-  border-bottom: none;
+section a {
+  color: #429613;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+section a:hover {
+  text-decoration: underline;
+  color: #074404;
 }

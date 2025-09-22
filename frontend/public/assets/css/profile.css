@@ -1,0 +1,91 @@
+#profile {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+#profileallpages {
+    flex: 1;
+    max-width: 400px;
+  background: #fff;
+  border: 2px solid #91C129;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+#profileheader {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#profileimagename {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#profileimagename img {
+  border-radius: 50%;
+  border: 3px solid #429613;
+}
+
+#username {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #074404;
+}
+
+#followersspan {
+  font-size: 0.9rem;
+  color: #555;
+  cursor: pointer;
+}
+
+#followersspan span:hover {
+  color: #074404;
+  text-decoration: underline;
+}
+
+.tabs {
+  margin-top: 1rem;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+}
+
+.tabs h4 {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+.tabs p {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+}
+
+#info {
+  flex: 3;
+  background: #ffffff;
+  border: 2px solid #429613;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(7, 68, 4, 0.2);
+  min-height: 400px;
+}
+
+#followers, #following, #userProjectView, #likedprojects, .pinned {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+
+

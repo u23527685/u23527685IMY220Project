@@ -1,0 +1,43 @@
+.projects {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+
+.projects .list {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.projects .list button {
+  background: #429613;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  align-self: flex-start;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.projects .list button:hover {
+  background: #074404;
+  transform: translateY(-2px);
+}
+
+#Owned,
+#member {
+  margin-top: 1.5rem;
+}
+
+#Owned h3,
+#member h3 {
+  color: #074404;
+  margin-bottom: 0.75rem;
+  border-bottom: 2px solid #91C129;
+  padding-bottom: 0.3rem;
+}

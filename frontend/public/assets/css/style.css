@@ -18,6 +18,10 @@ h1,h2,h3,h4{
     color: #429613;
 }
 
+.inactive:hover{
+    color:#074404;
+}
+
 button{
     background-color: #91C129;
   border: none;

@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import "../../public/assets/css/editprofile.css"
 
-function EditUser({ user, onSave, onCancel }) {
+function EditProfile({ user, onSave, onCancel }) {
     const [formData, setFormData] = useState({
         username: user.username || '',
         email: user.email || '',
@@ -196,4 +197,6 @@ function EditUser({ user, onSave, onCancel }) {
     );
 }
 
-export default EditUser;
+export default EditProfile;
+
+//u23527685 18
