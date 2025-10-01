@@ -181,3 +181,26 @@ export async function getDiscussions(discussions){
         return { success:false,message:error} ;
     }
 }
+
+export async function getAllTypes(){
+    try{
+        const types= await db.collection('project_types').find({}).toArray();
+        return { success:true,types:types};
+    }catch (error){
+        console.error("Error getting projects: ",error);
+        return { success:false,message:error} ;
+    }
+}
+
+export async function getProjectType(Typeid){
+    const objtypeid=new ObjectId(Typeid);
+    try{
+        const types= await db.collection('project_types').find({
+            _id:{$in:[objtypeid]}
+        }).toArray();
+        return { success:true,types:types};
+    }catch (error){
+        console.error("Error getting projects: ",error);
+        return { success:false,message:error} ;
+    }
+}

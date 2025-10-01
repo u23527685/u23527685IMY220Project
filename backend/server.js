@@ -72,6 +72,16 @@ app.post("/api/project/discussions",async(req,res)=>{
   res.json(feed);
 })
 
+app.get("/api/types",async(req,res)=> {
+  const projects= await api.getAllTypes();
+  res.json(projects);
+})
+
+app.get("/api/types/:typeid",async(req,res)=> {
+  const {typeid}=req.params;
+  const projects= await api.getProjectType(typeid);
+  res.json(projects);
+})
 
 async function startServer() {
     try {

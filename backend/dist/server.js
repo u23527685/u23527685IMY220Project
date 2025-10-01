@@ -160,51 +160,92 @@ app.post("/api/project/discussions", /*#__PURE__*/function () {
     return _ref6.apply(this, arguments);
   };
 }());
+app.get("/api/types", /*#__PURE__*/function () {
+  var _ref7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(req, res) {
+    var projects;
+    return _regenerator().w(function (_context7) {
+      while (1) switch (_context7.n) {
+        case 0:
+          _context7.n = 1;
+          return api.getAllTypes();
+        case 1:
+          projects = _context7.v;
+          res.json(projects);
+        case 2:
+          return _context7.a(2);
+      }
+    }, _callee7);
+  }));
+  return function (_x11, _x12) {
+    return _ref7.apply(this, arguments);
+  };
+}());
+app.get("/api/types/:typeid", /*#__PURE__*/function () {
+  var _ref8 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8(req, res) {
+    var typeid, projects;
+    return _regenerator().w(function (_context8) {
+      while (1) switch (_context8.n) {
+        case 0:
+          typeid = req.params.typeid;
+          _context8.n = 1;
+          return api.getProjectType(typeid);
+        case 1:
+          projects = _context8.v;
+          res.json(projects);
+        case 2:
+          return _context8.a(2);
+      }
+    }, _callee8);
+  }));
+  return function (_x13, _x14) {
+    return _ref8.apply(this, arguments);
+  };
+}());
 function startServer() {
   return _startServer.apply(this, arguments);
 }
 function _startServer() {
-  _startServer = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8() {
+  _startServer = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0() {
     var _t;
-    return _regenerator().w(function (_context8) {
-      while (1) switch (_context8.p = _context8.n) {
+    return _regenerator().w(function (_context0) {
+      while (1) switch (_context0.p = _context0.n) {
         case 0:
-          _context8.p = 0;
-          _context8.n = 1;
+          _context0.p = 0;
+          _context0.n = 1;
           return api.connectToMongoDB();
         case 1:
           app.listen(port, function () {
             console.log("Database running on http://localhost:".concat(port));
           });
-          _context8.n = 3;
+          _context0.n = 3;
           break;
         case 2:
-          _context8.p = 2;
-          _t = _context8.v;
+          _context0.p = 2;
+          _t = _context0.v;
           console.error('Failed to start server:', _t);
           process.exit(1);
         case 3:
-          return _context8.a(2);
+          return _context0.a(2);
       }
-    }, _callee8, null, [[0, 2]]);
+    }, _callee0, null, [[0, 2]]);
   }));
   return _startServer.apply(this, arguments);
 }
 app.listen(port, function () {
   console.log("Veyo app Listening on http://localhost:".concat(port));
 });
-process.on('SIGINT', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7() {
-  return _regenerator().w(function (_context7) {
-    while (1) switch (_context7.n) {
+process.on('SIGINT', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9() {
+  return _regenerator().w(function (_context9) {
+    while (1) switch (_context9.n) {
       case 0:
         console.log('\nShutting down gracefully...');
-        _context7.n = 1;
+        _context9.n = 1;
         return api.closeDatabaseConnection();
       case 1:
         process.exit(0);
       case 2:
-        return _context7.a(2);
+        return _context9.a(2);
     }
-  }, _callee7);
+  }, _callee9);
 })));
 startServer();
