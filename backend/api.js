@@ -1,13 +1,24 @@
 import { MongoClient } from "mongodb";
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const connectionString="mongodb+srv://ProjectUser:ProjecyUser77@databases.rkr0bx9.mongodb.net/?retryWrites=true&w=majority&appName=Databases";
-const dbName="VeyoDatabase";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+const connectionString = process.env.MONGODB_URI;
+const dbName = process.env.DB_NAME;
 
 let client;
 let db;
 
 export async function connectToMongoDB(){
     try {
+        if (!connectionString || !dbName) {
+            throw new Error("Missing MONGODB_URI or DB_NAME environment variables");
+        }
         client = new MongoClient(connectionString);
         await client.connect();
         db = client.db(dbName);
@@ -26,10 +37,12 @@ export async function authenticateUser({username, password}) {
             username: new RegExp(`^${username}$`, 'i'), 
             password: password 
         });
-        return user;
+        if(!user)
+            return { success:false, message:"User does not exist"};
+        return { success:true, message:"User logged successfully" , user:user};
     } catch (error) {
         console.error('Error authenticating user:', error);
-        return null;
+        return { success:false, message:error};
     }
 }
 
@@ -43,7 +56,7 @@ export async function signupUser({username,password,email}){
         });
         
         if (existingUser ) {
-            throw new Error('Username or email already taken');
+            return { success:false, message:"user or email already exists"};
         }
         // If no user found, create a new user
         const newUser  = {
@@ -54,9 +67,9 @@ export async function signupUser({username,password,email}){
             personalInfo: {
                 birthday:null,
                 work:null,
-                contactInfo:{
+                contactInfo:[
                     email
-                },
+                ],
                 bio:null,
                 socials:[],
                 website:null
@@ -77,7 +90,7 @@ export async function signupUser({username,password,email}){
         };
         const result = await db.collection('users').insertOne(newUser );
         if (result.insertedId) {
-            return newUser ; // or return the inserted user with _id
+            return { success:true, message:"User signedUp successfully" , user:newUser} ; // or return the inserted user with _id
         } else {
             throw new Error('Failed to create user');
         }
@@ -90,9 +103,20 @@ export async function signupUser({username,password,email}){
 export async function getAllProjects(){
     try{
         const projects= await db.collection('projects').find({}).toArray();
-        return projects;
+        return { success:true,projects:projects};
     }catch (error){
         console.error("Error getting projects: ",error);
-        return[];
+        return { success:false,message:error} ;
+    }
+}
+
+export async function closeDatabaseConnection() {
+    try {
+        if (client) {
+            await client.close();
+            console.log('MongoDB connection closed');
+        }
+    } catch (error) {
+        console.error('Error closing MongoDB connection:', error);
     }
 }

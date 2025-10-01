@@ -6,6 +6,9 @@ import * as api from "../api.js";
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static("frontend/public"));
 
 // Handle all React Router routes
@@ -43,6 +46,16 @@ app.get("/api/projects",async(req,res)=> {
   res.json(projects);
 })
 
+app.post("/api/signup",async(req,res)=>{
+  const newuser= await api.signupUser(req.body);
+  res.json(newuser);
+})
+
+app.post("/api/login",async(req,res)=>{
+  const newuser= await api.authenticateUser(req.body);
+  res.json(newuser);
+})
+
 async function startServer() {
     try {
         await api.connectToMongoDB();
@@ -57,6 +70,12 @@ async function startServer() {
 
 app.listen(port, () => {
   console.log(`Veyo app Listening on http://localhost:${port}`);
+});
+
+process.on('SIGINT', async () => {
+    console.log('\nShutting down gracefully...');
+    await api.closeDatabaseConnection();
+    process.exit(0);
 });
 
 startServer();

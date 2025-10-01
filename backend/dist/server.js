@@ -11,6 +11,10 @@ var express = require("express");
 var path = require("path");
 var app = express();
 var port = process.env.PORT || 3000;
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
 app.use(express["static"]("frontend/public"));
 
 // Handle all React Router routes
@@ -55,37 +59,91 @@ app.get("/api/projects", /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }());
+app.post("/api/signup", /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(req, res) {
+    var newuser;
+    return _regenerator().w(function (_context2) {
+      while (1) switch (_context2.n) {
+        case 0:
+          _context2.n = 1;
+          return api.signupUser(req.body);
+        case 1:
+          newuser = _context2.v;
+          res.json(newuser);
+        case 2:
+          return _context2.a(2);
+      }
+    }, _callee2);
+  }));
+  return function (_x3, _x4) {
+    return _ref2.apply(this, arguments);
+  };
+}());
+app.post("/api/login", /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(req, res) {
+    var newuser;
+    return _regenerator().w(function (_context3) {
+      while (1) switch (_context3.n) {
+        case 0:
+          _context3.n = 1;
+          return api.authenticateUser(req.body);
+        case 1:
+          newuser = _context3.v;
+          res.json(newuser);
+        case 2:
+          return _context3.a(2);
+      }
+    }, _callee3);
+  }));
+  return function (_x5, _x6) {
+    return _ref3.apply(this, arguments);
+  };
+}());
 function startServer() {
   return _startServer.apply(this, arguments);
 }
 function _startServer() {
-  _startServer = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+  _startServer = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
     var _t;
-    return _regenerator().w(function (_context2) {
-      while (1) switch (_context2.p = _context2.n) {
+    return _regenerator().w(function (_context5) {
+      while (1) switch (_context5.p = _context5.n) {
         case 0:
-          _context2.p = 0;
-          _context2.n = 1;
+          _context5.p = 0;
+          _context5.n = 1;
           return api.connectToMongoDB();
         case 1:
           app.listen(port, function () {
             console.log("Database running on http://localhost:".concat(port));
           });
-          _context2.n = 3;
+          _context5.n = 3;
           break;
         case 2:
-          _context2.p = 2;
-          _t = _context2.v;
+          _context5.p = 2;
+          _t = _context5.v;
           console.error('Failed to start server:', _t);
           process.exit(1);
         case 3:
-          return _context2.a(2);
+          return _context5.a(2);
       }
-    }, _callee2, null, [[0, 2]]);
+    }, _callee5, null, [[0, 2]]);
   }));
   return _startServer.apply(this, arguments);
 }
 app.listen(port, function () {
   console.log("Veyo app Listening on http://localhost:".concat(port));
 });
+process.on('SIGINT', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
+  return _regenerator().w(function (_context4) {
+    while (1) switch (_context4.n) {
+      case 0:
+        console.log('\nShutting down gracefully...');
+        _context4.n = 1;
+        return api.closeDatabaseConnection();
+      case 1:
+        process.exit(0);
+      case 2:
+        return _context4.a(2);
+    }
+  }, _callee4);
+})));
 startServer();
