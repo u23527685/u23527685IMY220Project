@@ -83,6 +83,12 @@ app.get("/api/types/:typeid",async(req,res)=> {
   res.json(projects);
 })
 
+app.get("/api/user/:userid",async(req,res)=>{
+  const {userid}=req.params;
+  const user= await api.getUser(userid)
+  res.json(user);
+})
+
 async function startServer() {
     try {
         await api.connectToMongoDB();

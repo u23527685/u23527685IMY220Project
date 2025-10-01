@@ -160,7 +160,7 @@ export async function getActivityFeed(Feed){
 
         return { success:true,activities:activities};
     }catch (error){
-        console.error("Error getting projects: ",error);
+        console.error("Error getting activity feed: ",error);
         return { success:false,message:error} ;
     }
 }
@@ -177,7 +177,7 @@ export async function getDiscussions(discussions){
 
         return { success:true,discussions:activities};
     }catch (error){
-        console.error("Error getting projects: ",error);
+        console.error("Error getting discussions: ",error);
         return { success:false,message:error} ;
     }
 }
@@ -187,7 +187,7 @@ export async function getAllTypes(){
         const types= await db.collection('project_types').find({}).toArray();
         return { success:true,types:types};
     }catch (error){
-        console.error("Error getting projects: ",error);
+        console.error("Error getting Types: ",error);
         return { success:false,message:error} ;
     }
 }
@@ -200,7 +200,20 @@ export async function getProjectType(Typeid){
         }).toArray();
         return { success:true,types:types};
     }catch (error){
-        console.error("Error getting projects: ",error);
+        console.error("Error getting project: ",error);
+        return { success:false,message:error} ;
+    }
+}
+
+export async function getUser(userId){
+    const objectid= new ObjectId(userId);
+    try{
+        const user= await db.collection('users').findOne({
+            _id:{$in:[objectid]}
+        });
+        return { success:true,user:user};
+    }catch(error){
+        console.error("Error getting user: ",error);
         return { success:false,message:error} ;
     }
 }
