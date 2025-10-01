@@ -164,3 +164,20 @@ export async function getActivityFeed(Feed){
         return { success:false,message:error} ;
     }
 }
+
+export async function getDiscussions(discussions){
+    const iddicussuins=[];
+    discussions.forEach(discussion=>{
+        iddicussuins.push(new ObjectId(discussion));
+    })
+    try{
+        const activities= await db.collection('discussions').find({
+            _id: { $in: iddicussuins }
+        }).toArray();
+
+        return { success:true,discussions:activities};
+    }catch (error){
+        console.error("Error getting projects: ",error);
+        return { success:false,message:error} ;
+    }
+}

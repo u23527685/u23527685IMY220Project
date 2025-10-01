@@ -67,6 +67,12 @@ app.post("/api/project/feed",async(req,res)=>{
   res.json(feed);
 })
 
+app.post("/api/project/discussions",async(req,res)=>{
+  const feed=await api.getDiscussions(req.body);
+  res.json(feed);
+})
+
+
 async function startServer() {
     try {
         await api.connectToMongoDB();
