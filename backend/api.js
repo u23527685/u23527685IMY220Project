@@ -147,3 +147,20 @@ export async function userProjects(userid){
         return { success:false,message:error} ;
     }
 }
+
+export async function getActivityFeed(Feed){
+    const activityfeed=[];
+    Feed.forEach(f=>{
+        activityfeed.push(new ObjectId(f));
+    })
+    try{
+        const activities= await db.collection('activities').find({
+            _id: { $in: activityfeed }
+        }).toArray();
+
+        return { success:true,activities:activities};
+    }catch (error){
+        console.error("Error getting projects: ",error);
+        return { success:false,message:error} ;
+    }
+}

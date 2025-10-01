@@ -62,6 +62,11 @@ app.post("/api/login",async(req,res)=>{
   res.json(newuser);
 })
 
+app.post("/api/project/feed",async(req,res)=>{
+  const feed=await api.getActivityFeed(req.body);
+  res.json(feed);
+})
+
 async function startServer() {
     try {
         await api.connectToMongoDB();

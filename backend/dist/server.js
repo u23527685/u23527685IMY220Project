@@ -120,51 +120,71 @@ app.post("/api/login", /*#__PURE__*/function () {
     return _ref4.apply(this, arguments);
   };
 }());
+app.post("/api/project/feed", /*#__PURE__*/function () {
+  var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5(req, res) {
+    var feed;
+    return _regenerator().w(function (_context5) {
+      while (1) switch (_context5.n) {
+        case 0:
+          _context5.n = 1;
+          return api.getActivityFeed(req.body);
+        case 1:
+          feed = _context5.v;
+          res.json(feed);
+        case 2:
+          return _context5.a(2);
+      }
+    }, _callee5);
+  }));
+  return function (_x9, _x0) {
+    return _ref5.apply(this, arguments);
+  };
+}());
 function startServer() {
   return _startServer.apply(this, arguments);
 }
 function _startServer() {
-  _startServer = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6() {
+  _startServer = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7() {
     var _t;
-    return _regenerator().w(function (_context6) {
-      while (1) switch (_context6.p = _context6.n) {
+    return _regenerator().w(function (_context7) {
+      while (1) switch (_context7.p = _context7.n) {
         case 0:
-          _context6.p = 0;
-          _context6.n = 1;
+          _context7.p = 0;
+          _context7.n = 1;
           return api.connectToMongoDB();
         case 1:
           app.listen(port, function () {
             console.log("Database running on http://localhost:".concat(port));
           });
-          _context6.n = 3;
+          _context7.n = 3;
           break;
         case 2:
-          _context6.p = 2;
-          _t = _context6.v;
+          _context7.p = 2;
+          _t = _context7.v;
           console.error('Failed to start server:', _t);
           process.exit(1);
         case 3:
-          return _context6.a(2);
+          return _context7.a(2);
       }
-    }, _callee6, null, [[0, 2]]);
+    }, _callee7, null, [[0, 2]]);
   }));
   return _startServer.apply(this, arguments);
 }
 app.listen(port, function () {
   console.log("Veyo app Listening on http://localhost:".concat(port));
 });
-process.on('SIGINT', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
-  return _regenerator().w(function (_context5) {
-    while (1) switch (_context5.n) {
+process.on('SIGINT', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6() {
+  return _regenerator().w(function (_context6) {
+    while (1) switch (_context6.n) {
       case 0:
         console.log('\nShutting down gracefully...');
-        _context5.n = 1;
+        _context6.n = 1;
         return api.closeDatabaseConnection();
       case 1:
         process.exit(0);
       case 2:
-        return _context5.a(2);
+        return _context6.a(2);
     }
-  }, _callee5);
+  }, _callee6);
 })));
 startServer();
