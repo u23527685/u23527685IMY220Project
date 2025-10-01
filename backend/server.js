@@ -46,6 +46,12 @@ app.get("/api/projects",async(req,res)=> {
   res.json(projects);
 })
 
+app.get("/api/projects/:userid",async(req,res)=> {
+  const {userid}=req.params;
+  const projects= await api.userProjects(userid);
+  res.json(projects);
+})
+
 app.post("/api/signup",async(req,res)=>{
   const newuser= await api.signupUser(req.body);
   res.json(newuser);

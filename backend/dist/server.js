@@ -59,17 +59,18 @@ app.get("/api/projects", /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }());
-app.post("/api/signup", /*#__PURE__*/function () {
+app.get("/api/projects/:userid", /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(req, res) {
-    var newuser;
+    var userid, projects;
     return _regenerator().w(function (_context2) {
       while (1) switch (_context2.n) {
         case 0:
+          userid = req.params.userid;
           _context2.n = 1;
-          return api.signupUser(req.body);
+          return api.userProjects(userid);
         case 1:
-          newuser = _context2.v;
-          res.json(newuser);
+          projects = _context2.v;
+          res.json(projects);
         case 2:
           return _context2.a(2);
       }
@@ -79,14 +80,14 @@ app.post("/api/signup", /*#__PURE__*/function () {
     return _ref2.apply(this, arguments);
   };
 }());
-app.post("/api/login", /*#__PURE__*/function () {
+app.post("/api/signup", /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(req, res) {
     var newuser;
     return _regenerator().w(function (_context3) {
       while (1) switch (_context3.n) {
         case 0:
           _context3.n = 1;
-          return api.authenticateUser(req.body);
+          return api.signupUser(req.body);
         case 1:
           newuser = _context3.v;
           res.json(newuser);
@@ -99,51 +100,71 @@ app.post("/api/login", /*#__PURE__*/function () {
     return _ref3.apply(this, arguments);
   };
 }());
+app.post("/api/login", /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4(req, res) {
+    var newuser;
+    return _regenerator().w(function (_context4) {
+      while (1) switch (_context4.n) {
+        case 0:
+          _context4.n = 1;
+          return api.authenticateUser(req.body);
+        case 1:
+          newuser = _context4.v;
+          res.json(newuser);
+        case 2:
+          return _context4.a(2);
+      }
+    }, _callee4);
+  }));
+  return function (_x7, _x8) {
+    return _ref4.apply(this, arguments);
+  };
+}());
 function startServer() {
   return _startServer.apply(this, arguments);
 }
 function _startServer() {
-  _startServer = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
+  _startServer = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6() {
     var _t;
-    return _regenerator().w(function (_context5) {
-      while (1) switch (_context5.p = _context5.n) {
+    return _regenerator().w(function (_context6) {
+      while (1) switch (_context6.p = _context6.n) {
         case 0:
-          _context5.p = 0;
-          _context5.n = 1;
+          _context6.p = 0;
+          _context6.n = 1;
           return api.connectToMongoDB();
         case 1:
           app.listen(port, function () {
             console.log("Database running on http://localhost:".concat(port));
           });
-          _context5.n = 3;
+          _context6.n = 3;
           break;
         case 2:
-          _context5.p = 2;
-          _t = _context5.v;
+          _context6.p = 2;
+          _t = _context6.v;
           console.error('Failed to start server:', _t);
           process.exit(1);
         case 3:
-          return _context5.a(2);
+          return _context6.a(2);
       }
-    }, _callee5, null, [[0, 2]]);
+    }, _callee6, null, [[0, 2]]);
   }));
   return _startServer.apply(this, arguments);
 }
 app.listen(port, function () {
   console.log("Veyo app Listening on http://localhost:".concat(port));
 });
-process.on('SIGINT', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
-  return _regenerator().w(function (_context4) {
-    while (1) switch (_context4.n) {
+process.on('SIGINT', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
+  return _regenerator().w(function (_context5) {
+    while (1) switch (_context5.n) {
       case 0:
         console.log('\nShutting down gracefully...');
-        _context4.n = 1;
+        _context5.n = 1;
         return api.closeDatabaseConnection();
       case 1:
         process.exit(0);
       case 2:
-        return _context4.a(2);
+        return _context5.a(2);
     }
-  }, _callee4);
+  }, _callee5);
 })));
 startServer();

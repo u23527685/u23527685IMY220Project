@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import { ObjectId } from 'mongodb';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -118,5 +119,31 @@ export async function closeDatabaseConnection() {
         }
     } catch (error) {
         console.error('Error closing MongoDB connection:', error);
+    }
+}
+
+export async function userProjects(userid){
+    try{
+        const userObjectId = new ObjectId(userid);
+        const projects= await db.collection('projects').find({
+            $or:[
+                {owner:userObjectId },
+                {members:{ $in: [userObjectId ] }}
+            ]
+        }).toArray();
+
+        const ownedProjects = [];
+        const memberOfProjects = [];
+        projects.forEach(project => {
+            if (project.owner.equals(userObjectId)) {
+                ownedProjects.push(project);
+            } else {
+                memberOfProjects.push(project);
+            }
+        });
+        return { success:true,projects:{ ownedProjects, memberOfProjects}};
+    }catch (error){
+        console.error("Error getting projects: ",error);
+        return { success:false,message:error} ;
     }
 }

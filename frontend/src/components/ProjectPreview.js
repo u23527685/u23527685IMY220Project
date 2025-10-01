@@ -27,7 +27,6 @@ function ProjectPreview({project,ondownload,onlike,onunlike}){
     return (
         <div className="projectprev">
             <div className="usernameshow">
-                <div className="userImage">User Image</div>
                 <div className="userName">{project.owner}</div>
             </div>
             <div className="projectinf">
