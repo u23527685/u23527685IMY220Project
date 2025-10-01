@@ -1,6 +1,8 @@
 const express = require("express");
 const path = require("path");
 
+import * as api from "../api.js";
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -36,6 +38,25 @@ app.get('/project/:name/:owner', (req, res) => {
 });
 
 
+app.get("/api/projects",async(req,res)=> {
+  const projects= await api.getAllProjects();
+  res.json(projects);
+})
+
+async function startServer() {
+    try {
+        await api.connectToMongoDB();
+        app.listen(port, () => {
+            console.log(`Database running on http://localhost:${port}`);
+        });
+    } catch (error) {
+        console.error('Failed to start server:', error);
+        process.exit(1);
+    }
+}
+
 app.listen(port, () => {
   console.log(`Veyo app Listening on http://localhost:${port}`);
 });
+
+startServer();
