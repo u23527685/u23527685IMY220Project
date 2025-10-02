@@ -228,80 +228,80 @@ app.get("/api/user/:userid", /*#__PURE__*/function () {
     return _ref9.apply(this, arguments);
   };
 }());
-app.put("/api/user", /*#__PURE__*/function () {
+app.get("/ap/project/:projectId", /*#__PURE__*/function () {
   var _ref0 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0(req, res) {
-    var _req$body, _id, updateData, response, _t;
+    var projectId, user;
     return _regenerator().w(function (_context0) {
-      while (1) switch (_context0.p = _context0.n) {
+      while (1) switch (_context0.n) {
         case 0:
-          _context0.p = 0;
+          projectId = req.params.projectId;
+          _context0.n = 1;
+          return api.getProject(projectId);
+        case 1:
+          user = _context0.v;
+          res.json(user);
+        case 2:
+          return _context0.a(2);
+      }
+    }, _callee0);
+  }));
+  return function (_x17, _x18) {
+    return _ref0.apply(this, arguments);
+  };
+}());
+app.put("/api/user", /*#__PURE__*/function () {
+  var _ref1 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee1(req, res) {
+    var _req$body, _id, updateData, response, _t;
+    return _regenerator().w(function (_context1) {
+      while (1) switch (_context1.p = _context1.n) {
+        case 0:
+          _context1.p = 0;
           _req$body = req.body, _id = _req$body._id, updateData = _objectWithoutProperties(_req$body, _excluded);
           if (!(!_id || typeof _id !== 'string')) {
-            _context0.n = 1;
+            _context1.n = 1;
             break;
           }
-          return _context0.a(2, res.status(400).json({
+          return _context1.a(2, res.status(400).json({
             success: false,
             message: 'User  ID is required and must be a string'
           }));
         case 1:
-          _context0.n = 2;
+          _context1.n = 2;
           return api.updateUserInfo(req.body);
         case 2:
-          response = _context0.v;
+          response = _context1.v;
           if (response.success) {
             res.status(200).json(response);
           } else {
             res.status(400).json(response);
           }
-          _context0.n = 4;
+          _context1.n = 4;
           break;
         case 3:
-          _context0.p = 3;
-          _t = _context0.v;
+          _context1.p = 3;
+          _t = _context1.v;
           console.error("Error updating user: ", _t);
           res.status(500).json({
             success: false,
             message: 'Internal server error'
           });
         case 4:
-          return _context0.a(2);
-      }
-    }, _callee0, null, [[0, 3]]);
-  }));
-  return function (_x17, _x18) {
-    return _ref0.apply(this, arguments);
-  };
-}());
-app.put("/api/project", /*#__PURE__*/function () {
-  var _ref1 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee1(req, res) {
-    var response;
-    return _regenerator().w(function (_context1) {
-      while (1) switch (_context1.n) {
-        case 0:
-          _context1.n = 1;
-          return api.updateProject(req.body);
-        case 1:
-          response = _context1.v;
-          res.json(response);
-        case 2:
           return _context1.a(2);
       }
-    }, _callee1);
+    }, _callee1, null, [[0, 3]]);
   }));
   return function (_x19, _x20) {
     return _ref1.apply(this, arguments);
   };
 }());
-app.post("/api/projects/create", /*#__PURE__*/function () {
+app.put("/api/project", /*#__PURE__*/function () {
   var _ref10 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee10(req, res) {
-    var ownerId, response;
+    var response;
     return _regenerator().w(function (_context10) {
       while (1) switch (_context10.n) {
         case 0:
-          ownerId = req.body.ownerId;
           _context10.n = 1;
-          return api.createProject(req.body, ownerId);
+          return api.updateProject(req.body);
         case 1:
           response = _context10.v;
           res.json(response);
@@ -314,66 +314,46 @@ app.post("/api/projects/create", /*#__PURE__*/function () {
     return _ref10.apply(this, arguments);
   };
 }());
-app.post('/api/friends/request', /*#__PURE__*/function () {
+app.post("/api/projects/create", /*#__PURE__*/function () {
   var _ref11 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee11(req, res) {
-    var _req$body2, receiverId, senderId, response, _t2;
+    var ownerId, response;
     return _regenerator().w(function (_context11) {
-      while (1) switch (_context11.p = _context11.n) {
+      while (1) switch (_context11.n) {
         case 0:
-          _context11.p = 0;
-          _req$body2 = req.body, receiverId = _req$body2.receiverId, senderId = _req$body2.senderId; // Check for self-request
-          if (!(senderId === receiverId)) {
-            _context11.n = 1;
-            break;
-          }
-          return _context11.a(2, res.status(400).json({
-            success: false,
-            message: 'Cannot send friend request to yourself'
-          }));
+          ownerId = req.body.ownerId;
+          _context11.n = 1;
+          return api.createProject(req.body, ownerId);
         case 1:
-          _context11.n = 2;
-          return api.sendFriendRequest(senderId, receiverId);
-        case 2:
           response = _context11.v;
-          res.status(response.success ? 200 : 400).json(response);
-          _context11.n = 4;
-          break;
-        case 3:
-          _context11.p = 3;
-          _t2 = _context11.v;
-          console.error('Error in send friend request route:', _t2);
-          res.status(500).json({
-            success: false,
-            message: 'Server error'
-          });
-        case 4:
+          res.json(response);
+        case 2:
           return _context11.a(2);
       }
-    }, _callee11, null, [[0, 3]]);
+    }, _callee11);
   }));
   return function (_x23, _x24) {
     return _ref11.apply(this, arguments);
   };
 }());
-app.post('/api/friends/accept', /*#__PURE__*/function () {
+app.post('/api/friends/request', /*#__PURE__*/function () {
   var _ref12 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee12(req, res) {
-    var _req$body3, senderId, receiverId, response, _t3;
+    var _req$body2, receiverId, senderId, response, _t2;
     return _regenerator().w(function (_context12) {
       while (1) switch (_context12.p = _context12.n) {
         case 0:
           _context12.p = 0;
-          _req$body3 = req.body, senderId = _req$body3.senderId, receiverId = _req$body3.receiverId; // Check for self-accept
-          if (!(receiverId === senderId)) {
+          _req$body2 = req.body, receiverId = _req$body2.receiverId, senderId = _req$body2.senderId; // Check for self-request
+          if (!(senderId === receiverId)) {
             _context12.n = 1;
             break;
           }
           return _context12.a(2, res.status(400).json({
             success: false,
-            message: 'Cannot accept your own request'
+            message: 'Cannot send friend request to yourself'
           }));
         case 1:
           _context12.n = 2;
-          return api.acceptFriendRequest(receiverId, senderId);
+          return api.sendFriendRequest(senderId, receiverId);
         case 2:
           response = _context12.v;
           res.status(response.success ? 200 : 400).json(response);
@@ -381,8 +361,8 @@ app.post('/api/friends/accept', /*#__PURE__*/function () {
           break;
         case 3:
           _context12.p = 3;
-          _t3 = _context12.v;
-          console.error('Error in accept friend request route:', _t3);
+          _t2 = _context12.v;
+          console.error('Error in send friend request route:', _t2);
           res.status(500).json({
             success: false,
             message: 'Server error'
@@ -396,25 +376,25 @@ app.post('/api/friends/accept', /*#__PURE__*/function () {
     return _ref12.apply(this, arguments);
   };
 }());
-app.post('/api/friends/decline', /*#__PURE__*/function () {
+app.post('/api/friends/accept', /*#__PURE__*/function () {
   var _ref13 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee13(req, res) {
-    var _req$body4, senderId, receiverId, response, _t4;
+    var _req$body3, senderId, receiverId, response, _t3;
     return _regenerator().w(function (_context13) {
       while (1) switch (_context13.p = _context13.n) {
         case 0:
           _context13.p = 0;
-          _req$body4 = req.body, senderId = _req$body4.senderId, receiverId = _req$body4.receiverId; // Check for self-decline
+          _req$body3 = req.body, senderId = _req$body3.senderId, receiverId = _req$body3.receiverId; // Check for self-accept
           if (!(receiverId === senderId)) {
             _context13.n = 1;
             break;
           }
           return _context13.a(2, res.status(400).json({
             success: false,
-            message: 'Cannot decline your own request'
+            message: 'Cannot accept your own request'
           }));
         case 1:
           _context13.n = 2;
-          return api.declineFriendRequest(receiverId, senderId);
+          return api.acceptFriendRequest(receiverId, senderId);
         case 2:
           response = _context13.v;
           res.status(response.success ? 200 : 400).json(response);
@@ -422,8 +402,8 @@ app.post('/api/friends/decline', /*#__PURE__*/function () {
           break;
         case 3:
           _context13.p = 3;
-          _t4 = _context13.v;
-          console.error('Error in decline friend request route:', _t4);
+          _t3 = _context13.v;
+          console.error('Error in accept friend request route:', _t3);
           res.status(500).json({
             success: false,
             message: 'Server error'
@@ -437,25 +417,25 @@ app.post('/api/friends/decline', /*#__PURE__*/function () {
     return _ref13.apply(this, arguments);
   };
 }());
-app.post('/api/friends/remove', /*#__PURE__*/function () {
+app.post('/api/friends/decline', /*#__PURE__*/function () {
   var _ref14 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee14(req, res) {
-    var _req$body5, friendId, userId, response, _t5;
+    var _req$body4, senderId, receiverId, response, _t4;
     return _regenerator().w(function (_context14) {
       while (1) switch (_context14.p = _context14.n) {
         case 0:
           _context14.p = 0;
-          _req$body5 = req.body, friendId = _req$body5.friendId, userId = _req$body5.userId; // Check for self-remove
-          if (!(userId === friendId)) {
+          _req$body4 = req.body, senderId = _req$body4.senderId, receiverId = _req$body4.receiverId; // Check for self-decline
+          if (!(receiverId === senderId)) {
             _context14.n = 1;
             break;
           }
           return _context14.a(2, res.status(400).json({
             success: false,
-            message: 'Cannot remove yourself as a friend'
+            message: 'Cannot decline your own request'
           }));
         case 1:
           _context14.n = 2;
-          return api.removeFriend(userId, friendId);
+          return api.declineFriendRequest(receiverId, senderId);
         case 2:
           response = _context14.v;
           res.status(response.success ? 200 : 400).json(response);
@@ -463,8 +443,8 @@ app.post('/api/friends/remove', /*#__PURE__*/function () {
           break;
         case 3:
           _context14.p = 3;
-          _t5 = _context14.v;
-          console.error('Error in remove friend route:', _t5);
+          _t4 = _context14.v;
+          console.error('Error in decline friend request route:', _t4);
           res.status(500).json({
             success: false,
             message: 'Server error'
@@ -478,46 +458,56 @@ app.post('/api/friends/remove', /*#__PURE__*/function () {
     return _ref14.apply(this, arguments);
   };
 }());
-app.post("/api/activity", /*#__PURE__*/function () {
+app.post('/api/friends/remove', /*#__PURE__*/function () {
   var _ref15 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee15(req, res) {
-    var response, _t6;
+    var _req$body5, friendId, userId, response, _t5;
     return _regenerator().w(function (_context15) {
       while (1) switch (_context15.p = _context15.n) {
         case 0:
           _context15.p = 0;
-          _context15.n = 1;
-          return api.addActivityEntry(req.body);
+          _req$body5 = req.body, friendId = _req$body5.friendId, userId = _req$body5.userId; // Check for self-remove
+          if (!(userId === friendId)) {
+            _context15.n = 1;
+            break;
+          }
+          return _context15.a(2, res.status(400).json({
+            success: false,
+            message: 'Cannot remove yourself as a friend'
+          }));
         case 1:
+          _context15.n = 2;
+          return api.removeFriend(userId, friendId);
+        case 2:
           response = _context15.v;
           res.status(response.success ? 200 : 400).json(response);
-          _context15.n = 3;
+          _context15.n = 4;
           break;
-        case 2:
-          _context15.p = 2;
-          _t6 = _context15.v;
-          console.error('Error in remove friend route:', _t6);
+        case 3:
+          _context15.p = 3;
+          _t5 = _context15.v;
+          console.error('Error in remove friend route:', _t5);
           res.status(500).json({
             success: false,
             message: 'Server error'
           });
-        case 3:
+        case 4:
           return _context15.a(2);
       }
-    }, _callee15, null, [[0, 2]]);
+    }, _callee15, null, [[0, 3]]);
   }));
   return function (_x31, _x32) {
     return _ref15.apply(this, arguments);
   };
 }());
-app.post("/api/discussion", /*#__PURE__*/function () {
+app.post("/api/activity", /*#__PURE__*/function () {
   var _ref16 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee16(req, res) {
-    var response, _t7;
+    var response, _t6;
     return _regenerator().w(function (_context16) {
       while (1) switch (_context16.p = _context16.n) {
         case 0:
           _context16.p = 0;
           _context16.n = 1;
-          return api.addDiscussionEntry(req.body);
+          return api.addActivityEntry(req.body);
         case 1:
           response = _context16.v;
           res.status(response.success ? 200 : 400).json(response);
@@ -525,8 +515,8 @@ app.post("/api/discussion", /*#__PURE__*/function () {
           break;
         case 2:
           _context16.p = 2;
-          _t7 = _context16.v;
-          console.error('Error in remove friend route:', _t7);
+          _t6 = _context16.v;
+          console.error('Error in remove friend route:', _t6);
           res.status(500).json({
             success: false,
             message: 'Server error'
@@ -540,99 +530,130 @@ app.post("/api/discussion", /*#__PURE__*/function () {
     return _ref16.apply(this, arguments);
   };
 }());
-
-// DELETE /api/projects/:projectId - Delete a project (requires auth, must be owner)
-app["delete"]('/api/projects/:projectId/:requesterId', /*#__PURE__*/function () {
+app.post("/api/discussion", /*#__PURE__*/function () {
   var _ref17 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee17(req, res) {
-    var _req$params, projectId, requesterId, response, _t8;
+    var response, _t7;
     return _regenerator().w(function (_context17) {
       while (1) switch (_context17.p = _context17.n) {
         case 0:
           _context17.p = 0;
-          _req$params = req.params, projectId = _req$params.projectId, requesterId = _req$params.requesterId; // Validate projectId format
-          if (projectId) {
-            _context17.n = 1;
-            break;
-          }
-          return _context17.a(2, res.status(400).json({
-            success: false,
-            message: 'project id needed'
-          }));
+          _context17.n = 1;
+          return api.addDiscussionEntry(req.body);
         case 1:
-          _context17.n = 2;
-          return api.deleteProject(projectId, requesterId);
-        case 2:
           response = _context17.v;
           res.status(response.success ? 200 : 400).json(response);
-          _context17.n = 4;
+          _context17.n = 3;
           break;
-        case 3:
-          _context17.p = 3;
-          _t8 = _context17.v;
-          console.error('Error in delete project route:', _t8);
+        case 2:
+          _context17.p = 2;
+          _t7 = _context17.v;
+          console.error('Error in remove friend route:', _t7);
           res.status(500).json({
             success: false,
             message: 'Server error'
           });
-        case 4:
+        case 3:
           return _context17.a(2);
       }
-    }, _callee17, null, [[0, 3]]);
+    }, _callee17, null, [[0, 2]]);
   }));
   return function (_x35, _x36) {
     return _ref17.apply(this, arguments);
   };
 }());
 
-// DELETE /api/users/:userId - Delete a user (requires auth, must be self)
-app["delete"]('/api/users/:userId/:requesterId', /*#__PURE__*/function () {
+// DELETE /api/projects/:projectId - Delete a project (requires auth, must be owner)
+app["delete"]('/api/projects/:projectId/:requesterId', /*#__PURE__*/function () {
   var _ref18 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee18(req, res) {
-    var _req$params2, userId, requesterId, response, _t9;
+    var _req$params, projectId, requesterId, response, _t8;
     return _regenerator().w(function (_context18) {
       while (1) switch (_context18.p = _context18.n) {
         case 0:
           _context18.p = 0;
-          _req$params2 = req.params, userId = _req$params2.userId, requesterId = _req$params2.requesterId; // Validate userId format and ensure self-deletion
-          if (userId) {
+          _req$params = req.params, projectId = _req$params.projectId, requesterId = _req$params.requesterId; // Validate projectId format
+          if (projectId) {
             _context18.n = 1;
             break;
           }
           return _context18.a(2, res.status(400).json({
             success: false,
+            message: 'project id needed'
+          }));
+        case 1:
+          _context18.n = 2;
+          return api.deleteProject(projectId, requesterId);
+        case 2:
+          response = _context18.v;
+          res.status(response.success ? 200 : 400).json(response);
+          _context18.n = 4;
+          break;
+        case 3:
+          _context18.p = 3;
+          _t8 = _context18.v;
+          console.error('Error in delete project route:', _t8);
+          res.status(500).json({
+            success: false,
+            message: 'Server error'
+          });
+        case 4:
+          return _context18.a(2);
+      }
+    }, _callee18, null, [[0, 3]]);
+  }));
+  return function (_x37, _x38) {
+    return _ref18.apply(this, arguments);
+  };
+}());
+
+// DELETE /api/users/:userId - Delete a user (requires auth, must be self)
+app["delete"]('/api/users/:userId/:requesterId', /*#__PURE__*/function () {
+  var _ref19 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee19(req, res) {
+    var _req$params2, userId, requesterId, response, _t9;
+    return _regenerator().w(function (_context19) {
+      while (1) switch (_context19.p = _context19.n) {
+        case 0:
+          _context19.p = 0;
+          _req$params2 = req.params, userId = _req$params2.userId, requesterId = _req$params2.requesterId; // Validate userId format and ensure self-deletion
+          if (userId) {
+            _context19.n = 1;
+            break;
+          }
+          return _context19.a(2, res.status(400).json({
+            success: false,
             message: 'UserId needed'
           }));
         case 1:
           if (!(userId !== requesterId)) {
-            _context18.n = 2;
+            _context19.n = 2;
             break;
           }
-          return _context18.a(2, res.status(403).json({
+          return _context19.a(2, res.status(403).json({
             success: false,
             message: 'You can only delete your own account'
           }));
         case 2:
-          _context18.n = 3;
+          _context19.n = 3;
           return api.deleteUser(userId, requesterId);
         case 3:
-          response = _context18.v;
+          response = _context19.v;
           res.status(response.success ? 200 : 400).json(response);
-          _context18.n = 5;
+          _context19.n = 5;
           break;
         case 4:
-          _context18.p = 4;
-          _t9 = _context18.v;
+          _context19.p = 4;
+          _t9 = _context19.v;
           console.error('Error in delete user route:', _t9);
           res.status(500).json({
             success: false,
             message: 'Server error'
           });
         case 5:
-          return _context18.a(2);
+          return _context19.a(2);
       }
-    }, _callee18, null, [[0, 4]]);
+    }, _callee19, null, [[0, 4]]);
   }));
-  return function (_x37, _x38) {
-    return _ref18.apply(this, arguments);
+  return function (_x39, _x40) {
+    return _ref19.apply(this, arguments);
   };
 }());
 
@@ -641,47 +662,47 @@ function startServer() {
   return _startServer.apply(this, arguments);
 }
 function _startServer() {
-  _startServer = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee20() {
+  _startServer = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee21() {
     var _t0;
-    return _regenerator().w(function (_context20) {
-      while (1) switch (_context20.p = _context20.n) {
+    return _regenerator().w(function (_context21) {
+      while (1) switch (_context21.p = _context21.n) {
         case 0:
-          _context20.p = 0;
-          _context20.n = 1;
+          _context21.p = 0;
+          _context21.n = 1;
           return api.connectToMongoDB();
         case 1:
           app.listen(port, function () {
             console.log("Database running on http://localhost:".concat(port));
           });
-          _context20.n = 3;
+          _context21.n = 3;
           break;
         case 2:
-          _context20.p = 2;
-          _t0 = _context20.v;
+          _context21.p = 2;
+          _t0 = _context21.v;
           console.error('Failed to start server:', _t0);
           process.exit(1);
         case 3:
-          return _context20.a(2);
+          return _context21.a(2);
       }
-    }, _callee20, null, [[0, 2]]);
+    }, _callee21, null, [[0, 2]]);
   }));
   return _startServer.apply(this, arguments);
 }
 app.listen(port, function () {
   console.log("Veyo app Listening on http://localhost:".concat(port));
 });
-process.on('SIGINT', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee19() {
-  return _regenerator().w(function (_context19) {
-    while (1) switch (_context19.n) {
+process.on('SIGINT', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee20() {
+  return _regenerator().w(function (_context20) {
+    while (1) switch (_context20.n) {
       case 0:
         console.log('\nShutting down gracefully...');
-        _context19.n = 1;
+        _context20.n = 1;
         return api.closeDatabaseConnection();
       case 1:
         process.exit(0);
       case 2:
-        return _context19.a(2);
+        return _context20.a(2);
     }
-  }, _callee19);
+  }, _callee20);
 })));
 startServer();

@@ -90,6 +90,12 @@ app.get("/api/user/:userid",async(req,res)=>{
   res.json(user);
 })
 
+app.get("/ap/project/:projectId",async(req,res)=>{
+  const {projectId}=req.params;
+  const user= await api.getProject(projectId);
+  res.json(user);
+})
+
 app.put("/api/user", async (req, res) => {
   try {
     const { _id, ...updateData } = req.body;

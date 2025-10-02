@@ -1,243 +1,236 @@
-import React from "react";
+import React, { Component } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-const { useRef, useState } = React;
+import Search from "../components/Search";
 import LocalFeed from "../components/LocalProjectFeed";
 import GlobalFeed from "../components/GlobalProjectFeed";
-import Search from "../components/Search";
-import { useSearchParams,useLocation } from 'react-router-dom';
-import"../../public/assets/css/home.css"
 import Filter from "../components/Filter";
+import "../../public/assets/css/home.css"
 
-/*const Projects=[
-    {
-    owner:"AlexCoder",
-    likes:22,
-    name:"Smart Budget",
-    downloads:2,
-    datecreated: new Date(2024, 6, 4),
-    members:[{
-        username: "SarahDev"
-    }]
-},
-{
-    owner:"DanGrimm",
-    likes:34,
-    name:"Grim town",
-    downloads:15,
-    datecreated: new Date(2024, 6, 24),
-    members:[{
-        username: "Ben10"
-    },{username: "AlexCoder"}]
-},
-{
-    owner:"SarahDev",
-    likes:2,
-    name:"Weather App",
-    downloads:0,
-    datecreated: new Date(2024, 8, 14),
-    members:[]
-}
-]
 
-const otheruser={
-    username:"DanGrimm",
-    paswword:"DanGrimm44#*",
-    email:"DanGrimm@gmail.com",
-    company:"D1Demo Holdings",
-    owned_projects:[{
-        name:"Grim town",
-        owner:"DanGrimm"
-    }],
-    contributed_projects:[],
-    following:[
-        {username:"Ben10"}
-    ],
-    followers:[
-        {username:"Ben10"}
-    ],
-    likes:[{
-        name:"Grim town",
-        owner:"DanGrimm"
-    },{
-        name: "Smart Budget",
-        owner: "AlexCoder"
-    }],
-    name:"Dan",
-    surname:'Grimm',
-    pinnedprojects:[{
-        name:"Grim town",
-        owner:"DanGrimm"
-    }]
-}
-
-const user={
-    username:"Ben10",
-    paswword:"benLook11#",
-    email:"Ben10@gmail.com",
-    company:"D1Demo Holdings",
-    owned_projects:[],
-    contributed_projects:[{
-        name:"Grim town",
-        owner:"DanGrimm"
+// Wrapper to use hooks with class component
+function withRouter(Component) {
+    function ComponentWithRouterProp(props) {
+        let location = useLocation();
+        let navigate = useNavigate();
+        return <Component {...props} location={location} navigate={navigate} />;
     }
-    ],
-    following:[
-        {username:"DanGrimm"}
-    ],
-    followers:[
-        {username:"DanGrimm"},
-        {username: "AlexCoder"}
-    ],
-    likes:[{
-        name:"Grim town",
-        owner:"DanGrimm"
-    }],
-    name:"Ben",
-    surname:'10',
-    pinnedprojects:[{
-        name:"Grim town",
-        owner:"DanGrimm"
-    }]
+    return ComponentWithRouterProp;
 }
 
-const user2 = {
-    username: "AlexCoder",
-    paswword: "alex2024!Pass",
-    email: "alexcoder@gmail.com",
-    company: "TechStart Solutions",
-    owned_projects: [{
-        name: "Smart Budget",
-        owner: "AlexCoder"
-    }],
-    contributed_projects: [{
-        name: "Grim town",
-        owner: "DanGrimm"
-    }],
-    following: [
-        {username: "Ben10"},
-        {username: "DanGrimm"}
-    ],
-    followers: [
-    ],
-    likes: [{
-    }],
-    name: "AlexCoder",
-    surname: "Johnson",
-    pinnedprojects:[{
-        name:"Grim town",
-        owner:"DanGrimm"
-    },{
-        name: "Smart Budget",
-        owner: "AlexCoder"
-    }
-    ]
-}
-
-const user3 = {
-    username: "SarahDev",
-    paswword: "sarah#Secure99",
-    email: "sarahdev@gmail.com",
-    company: "Innovation Labs Inc",
-    owned_projects: [
-        {
-            name: "Weather App",
-            owner: "SarahDev"
-        },
-    ],
-    contributed_projects: [{
-        name: "Smart Budget",
-        owner: "AlexCoder"
-    }],
-    following: [
-        {username: "AlexCoder"}
-    ],
-    followers: [
-        {username: "Ben10"},
-        {username: "AlexCoder"},
-        {username: "DanGrimm"}
-    ],
-    likes: [
-        {
-            name: "Weather App",
-            owner: "SarahDev"
-        },
-        {
-            name: "Grim town",
-            owner: "DanGrimm"
-        }
-    ],
-    name: "Sarah",
-    surname: "Williams",
-    pinnedprojects:[ {
-            name: "Weather App",
-            owner: "SarahDev"
-        },{
-        name: "Smart Budget",
-        owner: "AlexCoder"
-    }
-    ]
-}
-
-const users=[
-    user,
-    otheruser,
-    user2,
-    user3
-]*/
-
-
-function Home(){
-    const location=useLocation();
-    const {projects}=location.state||[];
-    const {user}=location.state||{};
-    const [filter,setfilter]=useState(false);
-    const [local, setlocal]=useState(true);
-    const [global, setglobal]=useState(false);
-    const onSearch=(search)=>{
-        console.log(search);
-    };
-    const toggleLocal=()=>{
-        setglobal(false);
-        setlocal(true);
-    };
-    const toggleGlobal=()=>{
-        setlocal(false);
-        setglobal(true);
-    };
-    const toggleFilter=()=>{
-        if(filter)
-            setfilter(false);
-        else
-            setfilter(true);
-    }
-    return( 
-        <main>
-            <h1>Home Page</h1>
-            <div id="homeitems" >
-                <div className="LocGlobchoose" >
-                    <h2 className={local ? "isActive" : "inactive"} onClick={toggleLocal}>Local</h2>
-                    <h2>{" | "}</h2>
-                    <h2 className={global ? "isActive" : "inactive"} onClick={toggleGlobal} >Global</h2>
-                </div>
-                <div id="searchfil">
-                    <Search onsearch={onSearch} />
-                    <button onClick={toggleFilter}>Filter</button>
-                </div>
-            </div>
-            
-            <div id="out">
-                <div id="chosen feed" >
-                    {local && <LocalFeed user={user} projects={projects} />}
-                    {global && <GlobalFeed projects={projects} />}
-                </div>
-                
-                {filter&& <Filter/>}
-            </div>
-        </main>
+class Home extends Component {
+    constructor(props) {
+        super(props);
         
-    )
+        let user = null;
+        try {
+            if (props.location.state?.user) {
+                user = props.location.state.user;
+            } else {
+                const storedUser = localStorage.getItem('user');
+                if (storedUser) {
+                    user = JSON.parse(storedUser);
+                }
+            }
+        } catch (error) {
+            console.error('Error parsing user data:', error);
+        }
+        
+        this.state = {
+            user: user,
+            allProjects: [],
+            localProjects: [],
+            filter: false,
+            local: true,
+            global: false,
+            isLoading: true,
+            error: null
+        };
+    }
+
+    componentDidMount() {
+        this.fetchProjects();
+    }
+
+    fetchProjects = async () => {
+        if (!this.state.user?._id) {
+            this.props.navigate('/');
+            return;
+        }
+
+        this.setState({ isLoading: true, error: null });
+        
+        try {
+            const globalResponse = await fetch('http://localhost:3000/api/projects');
+            const globalData = await globalResponse.json();
+            
+            if (!globalData.success) {
+                throw new Error('Failed to load projects');
+            }
+            
+            this.setState({ allProjects: globalData.projects || [] });
+
+            const userProjectsResponse = await fetch(`http://localhost:3000/api/projects/${this.state.user._id}`);
+            const userProjectsData = await userProjectsResponse.json();
+            
+            if (!userProjectsData.success) {
+                throw new Error('Failed to load user projects');
+            }
+
+            const ownedProjects = userProjectsData.projects?.ownedProjects || [];
+            const memberOfProjects = userProjectsData.projects?.memberOfProjects || [];
+
+            const currentUserResponse = await fetch(`http://localhost:3000/api/user/${this.state.user._id}`);
+            const currentUserData = await currentUserResponse.json();
+            
+            if (!currentUserData.success) {
+                throw new Error('Failed to load user data');
+            }
+
+            const currentUser = currentUserData.user;
+            const friendIds = currentUser.friends || [];
+            const friendRequestsSentIds = currentUser.friendRequestsSent || [];
+            
+            const relevantUserIds = [...friendIds, ...friendRequestsSentIds];
+
+            const friendsProjects = (globalData.projects || []).filter(project => 
+                relevantUserIds.some(userId => {
+                    const projectOwnerId = typeof project.owner === 'object' ? 
+                        (project.owner.$oid || project.owner._id || project.owner.toString()) : 
+                        project.owner;
+                    const friendUserId = typeof userId === 'object' ? 
+                        (userId.$oid || userId._id || userId.toString()) : 
+                        userId;
+                    return projectOwnerId.toString() === friendUserId.toString();
+                })
+            );
+
+            const combinedLocalProjects = [
+                ...ownedProjects,
+                ...memberOfProjects,
+                ...friendsProjects
+            ];
+
+            const uniqueLocalProjects = combinedLocalProjects.filter((project, index, self) => {
+                const projectId = typeof project._id === 'object' ? 
+                    (project._id.$oid || project._id.toString()) : 
+                    project._id;
+                return index === self.findIndex(p => {
+                    const pId = typeof p._id === 'object' ? 
+                        (p._id.$oid || p._id.toString()) : 
+                        p._id;
+                    return pId.toString() === projectId.toString();
+                });
+            });
+
+            this.setState({ localProjects: uniqueLocalProjects });
+
+        } catch (err) {
+            console.error('Error fetching projects:', err);
+            this.setState({ error: err.message || 'Network error. Please try again.' });
+        } finally {
+            this.setState({ isLoading: false });
+        }
+    }
+
+    onSearch = (search) => {
+        console.log('Search term:', search);
+    }
+
+    toggleLocal = () => {
+        this.setState({ global: false, local: true });
+    }
+
+    toggleGlobal = () => {
+        this.setState({ local: false, global: true });
+    }
+
+    toggleFilter = () => {
+        this.setState(prevState => ({ filter: !prevState.filter }));
+    }
+
+    handleDownload = async (projectId) => {
+        if (!this.state.user?._id) {
+            alert('Please login to download projects');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:3000/api/activity', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    projectId: projectId,
+                    userId: this.state.user._id,
+                    type: 'download',
+                    message: 'Project downloaded',
+                    projectVersion: '1.0.0'
+                })
+            });
+
+            const data = await response.json();
+            
+            if (data.success) {
+                console.log('Download tracked successfully');
+                alert('Download started!');
+            } else {
+                console.error('Failed to track download:', data.message);
+            }
+        } catch (error) {
+            console.error('Error tracking download:', error);
+        }
+    }
+
+    render() {
+        const { user, allProjects, localProjects, filter, local, global, isLoading, error } = this.state;
+
+        if (isLoading) {
+            return (
+                <main>
+                    <h1>Home Page</h1>
+                    <p>Loading projects...</p>
+                </main>
+            );
+        }
+
+        if (error) {
+            return (
+                <main>
+                    <h1>Home Page</h1>
+                    <p style={{ color: 'red' }}>{String(error)}</p>
+                    <button onClick={() => window.location.reload()}>Retry</button>
+                </main>
+            );
+        }
+
+        return (
+            <main>
+                <h1>Home Page</h1>
+                <div id="homeitems">
+                    <div className="LocGlobchoose">
+                        <h2 className={local ? "isActive" : "inactive"} onClick={this.toggleLocal}>Local</h2>
+                        <h2>{" | "}</h2>
+                        <h2 className={global ? "isActive" : "inactive"} onClick={this.toggleGlobal}>Global</h2>
+                    </div>
+                    <div id="searchfil">
+                        <Search onsearch={this.onSearch} />
+                        <button onClick={this.toggleFilter}>Filter</button>
+                    </div>
+                </div>
+               
+                <div id="out">
+                    <div id="chosen-feed">
+                        {local && <LocalFeed projects={localProjects} ondownload={this.handleDownload} user={user} />}
+                        {global && <GlobalFeed projects={allProjects} ondownload={this.handleDownload} user={user} />}
+                    </div>
+                   
+                    {filter && <Filter />}
+                </div>
+            </main>
+        );
+    }
 }
 
-export default Home;
-
-//u23527685 18 
+export default withRouter(Home);

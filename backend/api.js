@@ -496,7 +496,7 @@ export async function addActivityEntry({projectId, userId, type, message, projec
     };
 
     // Insert into activityfeed collection
-    const insertResult = await db.collection("activityfeed").insertOne(activityEntry);
+    const insertResult = await db.collection("activities").insertOne(activityEntry);
     const entryId = insertResult.insertedId;
 
     if (!entryId) {
@@ -504,7 +504,7 @@ export async function addActivityEntry({projectId, userId, type, message, projec
     }
 
     // Fetch the full entry with _id for return
-    const createdEntry = await db.collection("activityfeed").findOne({ _id: entryId });
+    const createdEntry = await db.collection("activities").findOne({ _id: entryId });
     
     const addtoproject = await db.collection("projects").updateOne(
         {_id:projectObjectId},
@@ -610,7 +610,7 @@ export async function deleteProject(projectId,requesterId) {
       return { success: false, message: 'Only the project owner can delete it' };
     }
 
-    const activityDeleteResult = await db.collection('activityfeed').deleteMany({ projectId: projectObjectId });
+    const activityDeleteResult = await db.collection('activities').deleteMany({ projectId: projectObjectId });
 
     const discussionDeleteResult = await db.collection('discussions').deleteMany({ projectId: projectObjectId });
 
@@ -721,7 +721,7 @@ export async function deleteUser (userId,requesterId) {
       );
     }
 
-    const activityDeleteResult = await db.collection('activityfeed').deleteMany({ userId: userObjectId });
+    const activityDeleteResult = await db.collection('activities').deleteMany({ userId: userObjectId });
 
     const discussionDeleteResult = await db.collection('discussions').deleteMany({ userId: userObjectId });
 
@@ -739,5 +739,18 @@ export async function deleteUser (userId,requesterId) {
     console.error('Error deleting user:', error);
     return { success: false, message: error.message || 'Failed to delete user' };
   }
+}
+
+export async function getProject(projectId){
+  const objectid= new ObjectId(projectId);
+    try{
+        const user= await db.collection('projects').findOne({
+            _id:{$in:[objectid]}
+        });
+        return { success:true,project:user};
+    }catch(error){
+        console.error("Error getting project: ",error);
+        return { success:false,message:error} ;
+    }
 }
 
