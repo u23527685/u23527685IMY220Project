@@ -221,6 +221,52 @@ app.post("/api/discussion",async(req,res)=>{
   }
 })
 
+// DELETE /api/projects/:projectId - Delete a project (requires auth, must be owner)
+app.delete('/api/projects/:projectId/:requesterId', async (req, res) => {
+  try {
+    const { projectId,requesterId } = req.params;
+
+    // Validate projectId format
+    if (!projectId) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'project id needed' 
+      });
+    }
+
+    const response = await api.deleteProject(projectId,requesterId);
+    res.status(response.success ? 200 : 400).json(response);
+  } catch (error) {
+    console.error('Error in delete project route:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+// DELETE /api/users/:userId - Delete a user (requires auth, must be self)
+app.delete('/api/users/:userId/:requesterId', async (req, res) => {
+  try {
+    const { userId,requesterId } = req.params;
+
+    // Validate userId format and ensure self-deletion
+    if (!userId) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'UserId needed' 
+      });
+    }
+    if (userId !== requesterId) {
+      return res.status(403).json({ success: false, message: 'You can only delete your own account' });
+    }
+
+    const response = await api.deleteUser (userId,requesterId);
+    res.status(response.success ? 200 : 400).json(response);
+  } catch (error) {
+    console.error('Error in delete user route:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+
 //api
 async function startServer() {
     try {

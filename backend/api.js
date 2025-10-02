@@ -591,3 +591,153 @@ export async function addDiscussionEntry({projectId, userId, message}) {
     return { success: false, message: error.message || 'Failed to add discussion entry' };
   }
 }
+
+// Helper function to validate ObjectId string
+function validateObjectId(id) {
+  return new ObjectId(id);
+}
+
+export async function deleteProject(projectId,requesterId) {
+  try {
+    const projectObjectId = validateObjectId(projectId);
+    const requesterObjectId = validateObjectId(requesterId);
+
+    const project = await db.collection('projects').findOne({ _id: projectObjectId });
+    if (!project) {
+      return { success: false, message: 'Project not found' };
+    }
+    if (!project.owner.equals(requesterObjectId)) {
+      return { success: false, message: 'Only the project owner can delete it' };
+    }
+
+    const activityDeleteResult = await db.collection('activityfeed').deleteMany({ projectId: projectObjectId });
+
+    const discussionDeleteResult = await db.collection('discussions').deleteMany({ projectId: projectObjectId });
+
+    const affectedUsers = await db.collection('users').find({
+      $or: [
+        { ownedProjects: { $in: [projectObjectId] } },
+        { memberOfProjects: { $in: [projectObjectId] } },
+        { pinnedProjects: { $in: [projectObjectId] } }  // Assumes pinnedProject is an array
+      ]
+    }).toArray();
+
+    const uniqueUserIds = [...new Set(affectedUsers.map(user => user._id.toString()))];
+    let updatedUserCount = 0;
+    // Update each unique user: Pull from all relevant fields
+    for (const userIdStr of uniqueUserIds) {
+      const userObjectId = new ObjectId(userIdStr);
+      const updateOps = { $pull: {} };
+      // Always attempt pulls (MongoDB ignores if field doesn't exist or value not present)
+      updateOps.$pull.ownedProjects = projectObjectId;
+      updateOps.$pull.memberOfProjects = projectObjectId;
+      updateOps.$pull.pinnedProject = projectObjectId;
+      const updateResult = await db.collection('users').updateOne(
+        { _id: userObjectId },
+        updateOps
+      );
+      if (updateResult.modifiedCount > 0) {
+        updatedUserCount++;
+      }
+    }
+
+    const projectDeleteResult = await db.collection('projects').deleteOne({ _id: projectObjectId });
+    if (projectDeleteResult.deletedCount === 0) {
+      return { success: false, message: 'Failed to delete project' };
+    }
+
+    return {
+      success: true,
+      message: `Project "${project.name}" deleted successfully.`
+    };
+
+  }catch (error) {
+    console.error('Error deleting project:', error);
+    return { success: false, message: error.message || 'Failed to delete project' };
+  }
+}
+
+// Function to delete a user and clean up related data
+export async function deleteUser (userId,requesterId) {
+  try {
+
+    if (userId !== requesterId) {
+      return { success: false, message: 'You can only delete your own account' };
+    }
+
+    const userObjectId = validateObjectId(userId);
+
+    // Check if user exists
+    const user = await db.collection('users').findOne({ _id: userObjectId });
+    if (!user) {
+      return { success: false, message: 'User  not found' };
+    }
+
+    // Step 1: Delete all projects owned by this user (cascade deletion)
+    const ownedProjects = user.ownedProjects || [];
+    let deletedProjectCount = 0;
+    for (const projId of ownedProjects) {
+      const projectResponse = await deleteProject(projId.toString()); // Recursive call
+      if (projectResponse.success) {
+        deletedProjectCount++;
+      } else {
+        console.warn(`Failed to delete owned project ${projId}: ${projectResponse.message}`);
+      }
+    }
+
+    // Step 2: Remove user from all projects' members arrays (for non-owned projects)
+    const memberProjects = await db.collection('projects').find({ members: userObjectId }).toArray();
+    for (const project of memberProjects) {
+      await db.collection('projects').updateOne(
+        { _id: project._id },
+        { $pull: { members: userObjectId } }
+      );
+    }
+
+    // Step 3: Clean friendships (remove from all friends' friends arrays)
+    const friends = user.friends || [];
+    for (const friendId of friends) {
+      await db.collection('users').updateOne(
+        { _id: friendId },
+        { $pull: { friends: userObjectId } }
+      );
+    }
+
+    // Clean sent friend requests (remove from receivers' received)
+    const sentRequests = user.friendRequestsSent || [];
+    for (const receiverId of sentRequests) {
+      await db.collection('users').updateOne(
+        { _id: receiverId },
+        { $pull: { friendRequestsReceived: userObjectId } }
+      );
+    }
+
+    // Clean received friend requests (remove from senders' sent)
+    const receivedRequests = user.friendRequestsReceived || [];
+    for (const senderId of receivedRequests) {
+      await db.collection('users').updateOne(
+        { _id: senderId },
+        { $pull: { friendRequestsSent: userObjectId } }
+      );
+    }
+
+    const activityDeleteResult = await db.collection('activityfeed').deleteMany({ userId: userObjectId });
+
+    const discussionDeleteResult = await db.collection('discussions').deleteMany({ userId: userObjectId });
+
+    const userDeleteResult = await db.collection('users').deleteOne({ _id: userObjectId });
+    if (userDeleteResult.deletedCount === 0) {
+      return { success: false, message: 'Failed to delete user' };
+    }
+
+    return {
+      success: true,
+      message: `User  "${user.name || userId}" deleted successfully. Deleted ${deletedProjectCount} owned projects, cleaned ${memberProjects.length} memberships, ${friends.length} friendships, and related activities/discussions.`
+    };
+
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    return { success: false, message: error.message || 'Failed to delete user' };
+  }
+}
+

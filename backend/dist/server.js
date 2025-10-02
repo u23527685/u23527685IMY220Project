@@ -3,7 +3,7 @@
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 var api = _interopRequireWildcard(require("../api.js"));
 var _excluded = ["_id"];
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, "default": e }; if (null === e || "object" != _typeof(e) && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (var _t9 in e) "default" !== _t9 && {}.hasOwnProperty.call(e, _t9) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, _t9)) && (i.get || i.set) ? o(f, _t9, i) : f[_t9] = e[_t9]); return f; })(e, t); }
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, "default": e }; if (null === e || "object" != _typeof(e) && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (var _t1 in e) "default" !== _t1 && {}.hasOwnProperty.call(e, _t1) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, _t1)) && (i.get || i.set) ? o(f, _t1, i) : f[_t1] = e[_t1]); return f; })(e, t); }
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
@@ -541,52 +541,147 @@ app.post("/api/discussion", /*#__PURE__*/function () {
   };
 }());
 
+// DELETE /api/projects/:projectId - Delete a project (requires auth, must be owner)
+app["delete"]('/api/projects/:projectId/:requesterId', /*#__PURE__*/function () {
+  var _ref17 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee17(req, res) {
+    var _req$params, projectId, requesterId, response, _t8;
+    return _regenerator().w(function (_context17) {
+      while (1) switch (_context17.p = _context17.n) {
+        case 0:
+          _context17.p = 0;
+          _req$params = req.params, projectId = _req$params.projectId, requesterId = _req$params.requesterId; // Validate projectId format
+          if (projectId) {
+            _context17.n = 1;
+            break;
+          }
+          return _context17.a(2, res.status(400).json({
+            success: false,
+            message: 'project id needed'
+          }));
+        case 1:
+          _context17.n = 2;
+          return api.deleteProject(projectId, requesterId);
+        case 2:
+          response = _context17.v;
+          res.status(response.success ? 200 : 400).json(response);
+          _context17.n = 4;
+          break;
+        case 3:
+          _context17.p = 3;
+          _t8 = _context17.v;
+          console.error('Error in delete project route:', _t8);
+          res.status(500).json({
+            success: false,
+            message: 'Server error'
+          });
+        case 4:
+          return _context17.a(2);
+      }
+    }, _callee17, null, [[0, 3]]);
+  }));
+  return function (_x35, _x36) {
+    return _ref17.apply(this, arguments);
+  };
+}());
+
+// DELETE /api/users/:userId - Delete a user (requires auth, must be self)
+app["delete"]('/api/users/:userId/:requesterId', /*#__PURE__*/function () {
+  var _ref18 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee18(req, res) {
+    var _req$params2, userId, requesterId, response, _t9;
+    return _regenerator().w(function (_context18) {
+      while (1) switch (_context18.p = _context18.n) {
+        case 0:
+          _context18.p = 0;
+          _req$params2 = req.params, userId = _req$params2.userId, requesterId = _req$params2.requesterId; // Validate userId format and ensure self-deletion
+          if (userId) {
+            _context18.n = 1;
+            break;
+          }
+          return _context18.a(2, res.status(400).json({
+            success: false,
+            message: 'UserId needed'
+          }));
+        case 1:
+          if (!(userId !== requesterId)) {
+            _context18.n = 2;
+            break;
+          }
+          return _context18.a(2, res.status(403).json({
+            success: false,
+            message: 'You can only delete your own account'
+          }));
+        case 2:
+          _context18.n = 3;
+          return api.deleteUser(userId, requesterId);
+        case 3:
+          response = _context18.v;
+          res.status(response.success ? 200 : 400).json(response);
+          _context18.n = 5;
+          break;
+        case 4:
+          _context18.p = 4;
+          _t9 = _context18.v;
+          console.error('Error in delete user route:', _t9);
+          res.status(500).json({
+            success: false,
+            message: 'Server error'
+          });
+        case 5:
+          return _context18.a(2);
+      }
+    }, _callee18, null, [[0, 4]]);
+  }));
+  return function (_x37, _x38) {
+    return _ref18.apply(this, arguments);
+  };
+}());
+
 //api
 function startServer() {
   return _startServer.apply(this, arguments);
 }
 function _startServer() {
-  _startServer = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee18() {
-    var _t8;
-    return _regenerator().w(function (_context18) {
-      while (1) switch (_context18.p = _context18.n) {
+  _startServer = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee20() {
+    var _t0;
+    return _regenerator().w(function (_context20) {
+      while (1) switch (_context20.p = _context20.n) {
         case 0:
-          _context18.p = 0;
-          _context18.n = 1;
+          _context20.p = 0;
+          _context20.n = 1;
           return api.connectToMongoDB();
         case 1:
           app.listen(port, function () {
             console.log("Database running on http://localhost:".concat(port));
           });
-          _context18.n = 3;
+          _context20.n = 3;
           break;
         case 2:
-          _context18.p = 2;
-          _t8 = _context18.v;
-          console.error('Failed to start server:', _t8);
+          _context20.p = 2;
+          _t0 = _context20.v;
+          console.error('Failed to start server:', _t0);
           process.exit(1);
         case 3:
-          return _context18.a(2);
+          return _context20.a(2);
       }
-    }, _callee18, null, [[0, 2]]);
+    }, _callee20, null, [[0, 2]]);
   }));
   return _startServer.apply(this, arguments);
 }
 app.listen(port, function () {
   console.log("Veyo app Listening on http://localhost:".concat(port));
 });
-process.on('SIGINT', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee17() {
-  return _regenerator().w(function (_context17) {
-    while (1) switch (_context17.n) {
+process.on('SIGINT', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee19() {
+  return _regenerator().w(function (_context19) {
+    while (1) switch (_context19.n) {
       case 0:
         console.log('\nShutting down gracefully...');
-        _context17.n = 1;
+        _context19.n = 1;
         return api.closeDatabaseConnection();
       case 1:
         process.exit(0);
       case 2:
-        return _context17.a(2);
+        return _context19.a(2);
     }
-  }, _callee17);
+  }, _callee19);
 })));
 startServer();
