@@ -89,6 +89,11 @@ app.get("/api/user/:userid",async(req,res)=>{
   res.json(user);
 })
 
+app.post("/api/updateuser",async(req,res)=>{
+  const response= await api.updateUserInfo(req.body);
+  res.json(response);
+})
+
 async function startServer() {
     try {
         await api.connectToMongoDB();

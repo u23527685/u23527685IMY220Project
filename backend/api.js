@@ -217,3 +217,52 @@ export async function getUser(userId){
         return { success:false,message:error} ;
     }
 }
+
+export async function updateUserInfo(user){
+    try {
+        const userId = new ObjectId(user._id);
+        
+        const existingUser = await db.collection('users').findOne({ _id: userId });
+        if (!existingUser) {
+            return { success: false, message: "User not found" };
+        }
+
+        if (user.username && user.username !== existingUser.username) {
+            const usernameTaken = await db.collection('users').findOne({
+                username: user.username,
+                _id: { $ne: userId } // exclude current user
+            });
+
+            if (usernameTaken) {
+                return { success: false, message: "Username is already taken" };
+            }
+        }
+
+        const updateFields = {
+            username: user.username ?? existingUser.username,
+            email: user.email ?? existingUser.email,
+            name: user.name ?? existingUser.name,
+            surname: user.surname ?? existingUser.surname,
+            personalInfo: {
+                bio: user.personalInfo?.bio ?? existingUser.personalInfo?.bio ?? null,
+                website: user.personalInfo?.website ?? existingUser.personalInfo?.website ?? null,
+                socials: user.personalInfo?.socials ?? existingUser.personalInfo?.socials ?? [],
+                birthday: user.personalInfo?.birthday ?? existingUser.personalInfo?.birthday ?? null,
+                contactInfo: user.personalInfo?.contactInfo ?? existingUser.personalInfo?.contactInfo ?? [],
+                work: user.personalInfo?.work ?? existingUser.personalInfo?.work ?? null
+            },
+            updatedAt: new Date()
+        };
+
+        await db.collection('users').updateOne(
+            { _id: userId },
+            { $set: updateFields }
+        );
+
+        return { success: true, message: "User updated successfully" };
+
+    } catch (error) {
+        console.error("Error updating user:", error);
+        return { success: false, message: error.message };
+    }
+}
