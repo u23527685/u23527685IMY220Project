@@ -40,6 +40,7 @@ app.get('/project/:name/:owner', (req, res) => {
   res.sendFile(path.resolve('frontend', 'public', 'index.html'));
 });
 
+// api calls
 
 app.get("/api/projects",async(req,res)=> {
   const projects= await api.getAllProjects();
@@ -89,12 +90,27 @@ app.get("/api/user/:userid",async(req,res)=>{
   res.json(user);
 })
 
-app.post("/api/updateuser",async(req,res)=>{
-  const response= await api.updateUserInfo(req.body);
-  res.json(response);
-})
+app.put("/api/user", async (req, res) => {
+  try {
+    const { _id, ...updateData } = req.body;
+    if (!_id || typeof _id !== 'string') {
+      return res.status(400).json({ success: false, message: 'User  ID is required and must be a string' });
+    }
 
-app.post("/api/updateproject",async(req,res)=>{
+    const response = await api.updateUserInfo(req.body);
+    
+    if (response.success) {
+      res.status(200).json(response);
+    } else {
+      res.status(400).json(response); 
+    }
+  } catch (error) {
+    console.error("Error updating user: ", error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
+app.put("/api/project",async(req,res)=>{
   const response= await api.updateProject(req.body);
   res.json(response);
 })
@@ -105,7 +121,107 @@ app.post("/api/projects/create", async (req, res) => {
     res.json(response);
 });
 
+app.post('/api/friends/request', async (req, res) => {
+  try {
+    const { receiverId,senderId } = req.body;
 
+    // Check for self-request
+    if (senderId === receiverId) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Cannot send friend request to yourself' 
+      });
+    }
+
+    const response = await api.sendFriendRequest(senderId, receiverId);
+    res.status(response.success ? 200 : 400).json(response);
+  } catch (error) {
+    console.error('Error in send friend request route:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+app.post('/api/friends/accept', async (req, res) => {
+  try {
+    const { senderId,receiverId } = req.body;
+
+    // Check for self-accept
+    if (receiverId === senderId) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Cannot accept your own request' 
+      });
+    }
+
+    const response = await api.acceptFriendRequest(receiverId, senderId);
+    res.status(response.success ? 200 : 400).json(response);
+  } catch (error) {
+    console.error('Error in accept friend request route:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+app.post('/api/friends/decline', async (req, res) => {
+  try {
+    const { senderId,receiverId } = req.body;
+
+    // Check for self-decline
+    if (receiverId === senderId) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Cannot decline your own request' 
+      });
+    }
+
+    const response = await api.declineFriendRequest(receiverId, senderId);
+    res.status(response.success ? 200 : 400).json(response);
+  } catch (error) {
+    console.error('Error in decline friend request route:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+app.post('/api/friends/remove', async (req, res) => {
+  try {
+    const { friendId,userId } = req.body;
+
+    // Check for self-remove
+    if (userId === friendId) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Cannot remove yourself as a friend' 
+      });
+    }
+
+    const response = await api.removeFriend(userId, friendId);
+    res.status(response.success ? 200 : 400).json(response);
+  } catch (error) {
+    console.error('Error in remove friend route:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+app.post("/api/activity",async(req,res)=>{
+  try{
+    const response = await api.addActivityEntry(req.body);
+    res.status(response.success ? 200 : 400).json(response);
+  } catch (error) {
+    console.error('Error in remove friend route:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+})
+
+app.post("/api/discussion",async(req,res)=>{
+  try{
+    const response = await api.addDiscussionEntry(req.body);
+    res.status(response.success ? 200 : 400).json(response);
+  } catch (error) {
+    console.error('Error in remove friend route:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+})
+
+//api
 async function startServer() {
     try {
         await api.connectToMongoDB();

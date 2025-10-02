@@ -343,16 +343,251 @@ export async function createProject(data, ownerId) {
             versionHistory: []
         };
 
-        await db.collection("projects").insertOne(newProject);
-
+        // Insert the new project and capture the result (including _id)
+        const insertResult = await db.collection("projects").insertOne(newProject);
+        const projectId = insertResult.insertedId; // This is the new ObjectId
+        if (!projectId) {
+        return { success: false, message: 'Failed to create project' };
+        }
+        // Update the owner's user document to add this project to ownedProjects
+        const userUpdateResult = await db.collection("users").updateOne(
+        { _id: ownerObjectId },
+        { $addToSet: { ownedProjects: projectId } } 
+        );
+        // Check if user was found and updated
+        if (userUpdateResult.matchedCount === 0) {
+        // Optional: Rollback project creation if user not found (but for simplicity, we keep it)
+        console.warn('User  not found, but project was created. Manual cleanup may be needed.');
+        return { 
+            success: false, 
+            message: 'Project created, but owner user not found. Check user ID.' 
+        };
+        }
+        // Fetch the full project with _id for return
+        const createdProject = await db.collection("projects").findOne({ _id: projectId });
         return {
-            success: true,
-            message: "Project created successfully",
-            project: newProject
+        success: true,
+        message: "Project created successfully",
+        project: createdProject 
         };
 
     } catch (error) {
         console.error("Error creating project:", error);
         return { success: false, message: error.message };
     }
+}
+
+export async function sendFriendRequest(senderId, receiverId) {
+  try {
+    const senderObjectId = new ObjectId(senderId);
+    const receiverObjectId = new ObjectId(receiverId);
+
+    await db.collection("users").updateOne(
+      { _id: senderObjectId },
+      { $addToSet: { friendRequestsSent: receiverObjectId } }
+    );
+
+    await db.collection("users").updateOne(
+      { _id: receiverObjectId },
+      { $addToSet: { friendRequestsReceived: senderObjectId } }
+    );
+
+    return { success: true, message: "Friend request sent" };
+
+  } catch (error) {
+    console.error("Error sending friend request:", error);
+    return { success: false, message: error.message };
+  }
+}
+
+export async function acceptFriendRequest(receiverId, senderId) {
+  try {
+    const receiverObjectId = new ObjectId(receiverId);
+    const senderObjectId = new ObjectId(senderId);
+
+    await db.collection("users").updateOne(
+      { _id: receiverObjectId },
+      {
+        $addToSet: { friends: senderObjectId },
+        $pull: { friendRequestsReceived: senderObjectId }
+      }
+    );
+
+    await db.collection("users").updateOne(
+      { _id: senderObjectId },
+      {
+        $addToSet: { friends: receiverObjectId },
+        $pull: { friendRequestsSent: receiverObjectId }
+      }
+    );
+
+    return { success: true, message: "Friend request accepted" };
+
+  } catch (error) {
+    console.error("Error accepting request:", error);
+    return { success: false, message: error.message };
+  }
+}
+
+export async function declineFriendRequest(receiverId, senderId) {
+  try {
+    const receiverObjectId = new ObjectId(receiverId);
+    const senderObjectId = new ObjectId(senderId);
+
+    await db.collection("users").updateOne(
+      { _id: receiverObjectId },
+      { $pull: { friendRequestsReceived: senderObjectId } }
+    );
+
+    await db.collection("users").updateOne(
+      { _id: senderObjectId },
+      { $pull: { friendRequestsSent: receiverObjectId } }
+    );
+
+    return { success: true, message: "Friend request declined" };
+
+  } catch (error) {
+    console.error("Error declining request:", error);
+    return { success: false, message: error.message };
+  }
+}
+
+export async function removeFriend(userId, friendId) {
+  try {
+    const userObjectId = new ObjectId(userId);
+    const friendObjectId = new ObjectId(friendId);
+
+    await db.collection("users").updateOne(
+      { _id: userObjectId },
+      { $pull: { friends: friendObjectId } }
+    );
+
+    await db.collection("users").updateOne(
+      { _id: friendObjectId },
+      { $pull: { friends: userObjectId } }
+    );
+
+    return { success: true, message: "Friend removed successfully" };
+
+  } catch (error) {
+    console.error("Error removing friend:", error);
+    return { success: false, message: error.message };
+  }
+}
+
+
+export async function addActivityEntry({projectId, userId, type, message, projectVersion}) {
+  try {
+
+    if(!projectId || !userId || !type || !message)
+        return {success:false, message: "request incorrect"};
+    const projectObjectId = new ObjectId(projectId);
+    const userObjectId = new ObjectId(userId);
+
+    // Prepare activity entry
+    const activityEntry = {
+      projectId: projectObjectId,
+      userId: userObjectId,
+      type: type,
+      message: message,
+      projectVersion: projectVersion || '1.0.0',
+      createdAt: new Date(),
+      downloads: 0 
+    };
+
+    // Insert into activityfeed collection
+    const insertResult = await db.collection("activityfeed").insertOne(activityEntry);
+    const entryId = insertResult.insertedId;
+
+    if (!entryId) {
+      return { success: false, message: 'Failed to add activity entry' };
+    }
+
+    // Fetch the full entry with _id for return
+    const createdEntry = await db.collection("activityfeed").findOne({ _id: entryId });
+    
+    const addtoproject = await db.collection("projects").updateOne(
+        {_id:projectObjectId},
+        {
+            $addToSet:{activityFeed:entryId}
+        }
+    )
+
+    const added= addtoproject.insertedId;
+
+    if(!added){
+        return {
+            success: true,
+            message: 'Activity entry added successfully but project not found',
+            entry: createdEntry // Includes _id and all fields
+        };
+    }
+
+    return {
+      success: true,
+      message: 'Activity entry added successfully',
+      entry: createdEntry // Includes _id and all fields
+    };
+
+  } catch (error) {
+    console.error("Error adding activity entry:", error);
+    return { success: false, message: error.message || 'Failed to add activity entry' };
+  }
+}
+
+export async function addDiscussionEntry({projectId, userId, message}) {
+  try {
+
+    if(!projectId || !userId  || !message)
+        return {success:false, message: "request incorrect"};
+
+    const projectObjectId = new ObjectId(projectId);
+    const userObjectId = new ObjectId(userId);
+
+    // Prepare discussion entry
+    const discussionEntry = {
+      projectId: projectObjectId,
+      userId: userObjectId,
+      message: message,
+      createdAt: new Date()
+    };
+
+    // Insert into discussions collection
+    const insertResult = await db.collection("discussions").insertOne(discussionEntry);
+    const entryId = insertResult.insertedId;
+
+    if (!entryId) {
+      return { success: false, message: 'Failed to add discussion entry' };
+    }
+
+    // Fetch the full entry with _id for return
+    const createdEntry = await db.collection("discussions").findOne({ _id: entryId });
+
+    const addtoproject = await db.collection("projects").updateOne(
+        {_id:projectObjectId},
+        {
+            $addToSet:{discussionBoard:entryId}
+        }
+    )
+
+    const added= addtoproject.insertedId;
+
+    if(!added){
+        return {
+            success: true,
+            message: 'Discussion entry added successfully but project not found',
+            entry: createdEntry // Includes _id and all fields
+        };
+    }
+
+    return {
+      success: true,
+      message: 'Discussion entry added successfully',
+      entry: createdEntry // Includes _id and all fields
+    };
+
+  } catch (error) {
+    console.error("Error adding discussion entry:", error);
+    return { success: false, message: error.message || 'Failed to add discussion entry' };
+  }
 }
