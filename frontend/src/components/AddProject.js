@@ -17,21 +17,10 @@ function AddProject({oncancel}) {
       <label htmlFor="projectDescription">Description</label>
       <textarea id="projectDescription" name="projectDescription" required />
 
-      <label htmlFor="projectFiles">Add Files</label>
-      <input type="file" id="projectFiles" name="projectFiles" multiple />
-
       <label htmlFor="projectLanguages">Programming Languages (hashtags)</label>
       <input type="text" id="projectLanguages" name="projectLanguages" placeholder="#javascript #react" />
 
       <label htmlFor="projectType">Project Type</label>
-      <select id="projectType" name="projectType" required>
-        <option value="">Select type</option>
-        <option value="desktop">Desktop Application</option>
-        <option value="web">Web Application</option>
-        <option value="mobile">Mobile Application</option>
-        <option value="framework">Framework</option>
-        <option value="library">Library</option>
-      </select>
 
       <label htmlFor="projectVersion">Version</label>
       <input type="text" id="projectVersion" name="projectVersion" placeholder="e.g. 1.0.0" required />

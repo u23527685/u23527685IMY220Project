@@ -99,6 +99,13 @@ app.post("/api/updateproject",async(req,res)=>{
   res.json(response);
 })
 
+app.post("/api/projects/create", async (req, res) => {
+    const ownerId = req.body.ownerId;
+    const response = await api.createProject(req.body, ownerId);
+    res.json(response);
+});
+
+
 async function startServer() {
     try {
         await api.connectToMongoDB();

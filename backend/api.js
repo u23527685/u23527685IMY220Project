@@ -299,3 +299,60 @@ export async function updateProject(project){
         return { success: false, message: error.message };
     }
 }
+
+export async function createProject(data, ownerId) {
+    try {
+        const ownerObjectId = new ObjectId(ownerId);
+
+        const existingProject = await db.collection("projects").findOne({
+            name: data.projectName,
+            owner: ownerObjectId
+        });
+
+        if (existingProject) {
+            return {
+                success: false,
+                message: "You already have a project with this name."
+            };
+        }
+
+        let hashtags = [];
+        if (data.projectLanguages) {
+            hashtags = data.projectLanguages
+                .split(" ")
+                .map(tag => tag.replace(/^#/, "").trim())
+                .filter(tag => tag.length > 0);
+        }
+
+        const newProject = {
+            name: data.projectName,
+            description: data.projectDescription,
+            projectImage: data.projectImage || null,
+            type: new ObjectId(data.projectType),
+            hashtags: hashtags,
+            version: data.projectVersion,
+            owner: ownerObjectId,
+            members: [], // starts empty
+            status: "checked_out",
+            checkedOutBy: null,
+            files: [],
+            activityFeed: [],
+            discussionBoard: [],
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            versionHistory: []
+        };
+
+        await db.collection("projects").insertOne(newProject);
+
+        return {
+            success: true,
+            message: "Project created successfully",
+            project: newProject
+        };
+
+    } catch (error) {
+        console.error("Error creating project:", error);
+        return { success: false, message: error.message };
+    }
+}
