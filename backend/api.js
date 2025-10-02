@@ -221,7 +221,7 @@ export async function getUser(userId){
 export async function updateUserInfo(user){
     try {
         const userId = new ObjectId(user._id);
-        
+
         const existingUser = await db.collection('users').findOne({ _id: userId });
         if (!existingUser) {
             return { success: false, message: "User not found" };
@@ -263,6 +263,39 @@ export async function updateUserInfo(user){
 
     } catch (error) {
         console.error("Error updating user:", error);
+        return { success: false, message: error.message };
+    }
+}
+
+export async function updateProject(project){
+    try {
+        if (!project._id) {
+            return { success: false, message: "Project ID is required" };
+        }
+
+        const projectId = new ObjectId(project._id);
+
+        const updateFields = {};
+
+        if (project.name !== undefined) updateFields.name = project.name;
+        if (project.description !== undefined) updateFields.description = project.description;
+        if (project.hashtags !== undefined) updateFields.hashtags = project.hashtags;
+
+        if (project.type !== undefined) {
+            updateFields.type = new ObjectId(project.type);
+        }
+
+        updateFields.updatedAt = new Date();
+
+        await db.collection("projects").updateOne(
+            { _id: projectId },
+            { $set: updateFields }
+        );
+
+        return { success: true, message: "Project updated successfully" };
+
+    } catch (error) {
+        console.error("Error updating project:", error);
         return { success: false, message: error.message };
     }
 }
