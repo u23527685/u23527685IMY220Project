@@ -32,6 +32,7 @@ class Home extends Component {
                     user = JSON.parse(storedUser);
                 }
             }
+            localStorage.setItem("userId",user._id);
         } catch (error) {
             console.error('Error parsing user data:', error);
         }
