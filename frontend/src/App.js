@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     children: [
       { path: "home", element: <Home /> },
       { path: "profile", element: <MyProfile /> },
-      { path: "profile/:username", element: <OtherProfile /> },
+      { path: "profile/:userId", element: <OtherProfile /> },
       {
         path: "/projects/:username",
         element: <Projects />,
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
           { path: ":name/:owner", element: <Project /> }
         ]
       },
-      { path: "/project/:name/:owner/:id", element: <Project /> }
+      { path: "/project/:name/:owner/:projectId", element: <Project /> }
     ]
   }
 ]);

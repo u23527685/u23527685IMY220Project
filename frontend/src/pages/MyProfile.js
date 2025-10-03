@@ -5,6 +5,7 @@ import ProfileText from "../components/ProfileText";
 import UserProjectsView from "../components/UserProjectsView";
 import PinnedProjects from "../components/PinnedProjects";
 import FriendRequests from "../components/FriendRequests";
+import UserFriends from "../components/UserFriends";
 
 import ptofileimage from "../../public/assets/svg/default user.svg";
 import "../../public/assets/css/profile.css";
@@ -67,8 +68,12 @@ function MyProfile() {
 
     // Callback for when EditProfile saves changes
     const handleProfileSave = useCallback(async (updatedFormData) => {
-        // After EditProfile successfully calls the API, we refetch the user data
-        // to ensure MyProfile has the most up-to-date information.
+        if (user?._id) {
+            await fetchUserData(user._id);
+        }
+    }, [user?._id, fetchUserData]);
+
+    const handleFriendAction = useCallback(async () => {
         if (user?._id) {
             await fetchUserData(user._id);
         }
@@ -110,17 +115,10 @@ function MyProfile() {
                     </div>
                     <p id="followersspan">
                         <span
-                            onClick={() => setActiveTab('followers')}
-                            className={activeTab === 'followers' ? "isActive" : "inactive"}
+                            onClick={() => setActiveTab('friends')}
+                            className={activeTab === 'friends' ? "isActive" : "inactive"}
                         >
-                            {(user.followers || []).length} followers
-                        </span>
-                        {" | "}
-                        <span
-                            onClick={() => setActiveTab('following')}
-                            className={activeTab === 'following' ? "isActive" : "inactive"}
-                        >
-                            {(user.following || []).length} following
+                            {(user.friends || []).length} friends
                         </span>
                     </p>
                 </div>
@@ -138,6 +136,7 @@ function MyProfile() {
             </div>
             <div id="info">
                 {activeTab === 'details' && <ProfileText user={user} onedit={handleProfileSave} />}
+                {activeTab === 'friends' && (<UserFriends userId={user._id} friendsList={user.friends} onFriendRemoved={handleFriendAction} isProjectContext={false}/>)}
                 {activeTab === 'projects' && <UserProjectsView projectIds={userProjectNames} />}
                 {activeTab === 'friendRequests' && <FriendRequests user={user} fetchUserData={fetchUserData} />} {/* New component */}
             </div>

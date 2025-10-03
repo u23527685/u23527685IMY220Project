@@ -10,8 +10,6 @@ function FriendRequests({ user, fetchUserData }) {
     // Function to fetch details for a list of user IDs
     const fetchUserDetails = useCallback(async (userIds) => {
         if (!userIds || userIds.length === 0) return [];
-        const token = localStorage.getItem('token');
-        if (!token) throw new Error('Authentication token not found.');
 
         const details = [];
         for (const id of userIds) {
@@ -19,8 +17,7 @@ function FriendRequests({ user, fetchUserData }) {
                 const response = await fetch(`/api/user/${id}`, {
                     method: 'GET',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
+                        'Content-Type': 'application/json'
                     }
                 });
                 const result = await response.json();
@@ -65,11 +62,6 @@ function FriendRequests({ user, fetchUserData }) {
     }, [user, fetchUserDetails]); // Re-run if user object changes
 
     const handleFriendRequestAction = async (otherUserId, actionType) => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            setError('Authentication token not found. Please log in again.');
-            return;
-        }
         if (!user?._id) {
             setError('Your user ID is missing.');
             return;
@@ -101,8 +93,7 @@ function FriendRequests({ user, fetchUserData }) {
             const response = await fetch(endpoint, {
                 method: method,
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(body)
             });
@@ -110,7 +101,6 @@ function FriendRequests({ user, fetchUserData }) {
             const result = await response.json();
 
             if (result.success) {
-                // Refetch user data to update friend requests lists in MyProfile
                 await fetchUserData(user._id);
             } else {
                 setError(result.message || `Failed to ${actionType} friend request.`);

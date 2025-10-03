@@ -33,7 +33,6 @@ class ProjectPreview extends Component {
         
         if (project?.owner) {
             try {
-                console.log(project.owner)
                 const ownerId = typeof project.owner === 'object' ? 
                     (project.owner.$oid || project.owner._id || JSON.stringify(project.owner)) : 
                     project.owner;
@@ -69,7 +68,21 @@ class ProjectPreview extends Component {
             (project.owner.$oid || project.owner._id || project.owner.toString()) : 
             project.owner;
         const projectName = project.name || 'unnamed';
-        navigate(`/project/${projectName}/${ownerId}`, { state: { project, user } });
+        const projectid= typeof project._id ==="object" ? (project._id.$oid || project._id || project._id.toString()) : project._id
+        navigate(`/project/${projectName}/${ownerId}/${projectid}`, { state: { project, user } });
+    }
+
+    touser = ()=>{
+        const { navigate } = this.props;
+        const {project}= this.props;
+        const ownerId = typeof project.owner === 'object' ? 
+            (project.owner.$oid || project.owner._id || project.owner.toString()) : 
+            project.owner;
+        if (ownerId) {
+            navigate(`/profile/${ownerId}`);
+        } else {
+            console.warn("Cannot navigate to user profile: ownerId is not available.");
+        }
     }
 
     render() {
@@ -80,7 +93,7 @@ class ProjectPreview extends Component {
         return (
             <div className="projectprev">
                 <div className="usernameshow">
-                    <div className="userName">{String(ownerUsername)}</div>
+                    <div onClick={this.touser} style={{ cursor: 'pointer', fontWeight: 'bold' }} className="userName">{String(ownerUsername)}</div>
                 </div>
                 <div className="projectinf">
                     <p onClick={this.toproject} style={{ cursor: 'pointer', fontWeight: 'bold' }}>

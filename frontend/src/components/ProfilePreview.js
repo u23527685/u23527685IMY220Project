@@ -16,7 +16,7 @@ function ProfilePreview({user}){
         <div onClick={gotoprofile} className="profile-card">
             <img src={user.image || "/assets/svg/default user.svg"} alt={user.username} />
             <h4>{user.username}</h4>
-            <p>Folowers:{(user.followers).length}</p>
+            <p>friends:{(user.friends).length}</p>
         </div>
     )
 }
