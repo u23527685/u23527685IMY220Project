@@ -1,17 +1,20 @@
 #projinfo {
-  max-width: 900px;
-  margin: 30px auto;
-  padding: 20px 30px;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #222;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  background: #f9fdf7;
 }
 
-#projinfo h1 {
-  font-size: 2.4rem;
-  font-weight: 700;
-  margin-bottom: 25px;
+#projinfo > h1 {
   text-align: center;
+  color: #074404;
+  margin-bottom: 2rem;
+}
+
+.project-section {
+  background: #ffffff;
+  border: 2px solid #91C129;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 8px rgba(7, 68, 4, 0.15);
 }

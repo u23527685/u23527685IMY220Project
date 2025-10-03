@@ -4,13 +4,14 @@
   "description": "My imy 220 project",
   "main": "frontend/src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack && babel backend/server.js -d backend/dist",
     "start": "npm run build && node backend/dist/server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "mongodb": "^6.20.0",
     "path": "^0.12.7",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
@@ -32,6 +33,7 @@
     "@babel/preset-react": "^7.27.1",
     "babel-loader": "^10.0.0",
     "css-loader": "^7.1.2",
+    "nodemon": "^3.1.10",
     "style-loader": "^4.0.0",
     "webpack": "^5.101.3",
     "webpack-cli": "^6.0.1"

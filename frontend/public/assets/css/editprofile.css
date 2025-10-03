@@ -1,0 +1,67 @@
+.edit-user {
+  background: #fff;
+  border: 2px solid #91C129;
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.edit-user-form h3 {
+  margin-bottom: 1rem;
+  color: #074404;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  font-weight: bold;
+  color: #074404;
+  margin-bottom: 0.3rem;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.6rem;
+  border: 1px solid #91C129;
+  border-radius: 8px;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #429613;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.cancel-button {
+  background: #ddd;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background: #bbb;
+}
+
+.save-button {
+  background: #429613;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.save-button:hover {
+  background: #074404;
+}

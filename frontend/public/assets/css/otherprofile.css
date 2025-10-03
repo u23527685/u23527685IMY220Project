@@ -1,0 +1,86 @@
+#otherprofile {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+#otherprofile-sidebar {
+  flex: 1;
+  max-width: 400px;
+  background: #fff;
+  border: 2px solid #3377aa;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+#otherprofile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#otherprofile-image-name {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#otherprofile-image-name img {
+  border-radius: 50%;
+  border: 3px solid #225588;
+}
+
+#otherprofile-username {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #114466;
+}
+
+#otherprofile-followers {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+#otherprofile-followers span:hover {
+  color: #114466;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.otherprofile-home-icon {
+  margin-top: 1rem;
+  cursor: pointer;
+  color: #3377aa;
+}
+
+.otherprofile-tabs {
+  margin-top: 1rem;
+  font-weight: bold;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.otherprofile-tabs h4 {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+#otherprofile-info {
+  flex: 3;
+  background: #ffffff;
+  border: 2px solid #3377aa;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(51, 119, 170, 0.2);
+  min-height: 400px;
+}
+
+#otherprofile-followers, #otherprofile-info {
+  margin-top: 1rem;
+}
