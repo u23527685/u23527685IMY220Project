@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import ptofileimage from "../../public/assets/svg/default user.svg";
 import "../../public/assets/css/profilepreview.css";
 
-function ProfilePreview({user}){
+function ProfilePreview({user,onAction}){
     const navigate=useNavigate();
     const location = useLocation();
     const gotoprofile=()=>{

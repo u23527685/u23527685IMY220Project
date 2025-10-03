@@ -754,3 +754,15 @@ export async function getProject(projectId){
     }
 }
 
+// In api.js, add this new function
+export async function searchUsers(searchTerm) {
+    try {
+        const users = await db.collection('users').find({
+            username: new RegExp(searchTerm, 'i')
+        }).project({ password: 0 }).toArray();
+        return { success: true, users: users };
+    } catch (error) {
+        console.error('Error searching users:', error);
+        return { success: false, message: error.message };
+    }
+}

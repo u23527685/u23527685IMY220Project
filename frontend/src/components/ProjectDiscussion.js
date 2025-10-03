@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import "../../public/assets/css/projectdiscussion.css";
 
-function ProjectDiscussion({ projectId, discussionIds, currentUserId }) { // Changed props to IDs
+function ProjectDiscussion({ projectId, discussionIds, currentUserId, ismember }) { // Changed props to IDs
     const [discussion, setDiscussion] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const [loading, setLoading] = useState(true);
@@ -120,7 +120,7 @@ function ProjectDiscussion({ projectId, discussionIds, currentUserId }) { // Cha
             ) : (
                 <p>No discussion yet. Be the first to post!</p>
             )}
-            <form onSubmit={handlePostMessage}>
+            { ismember && <form onSubmit={handlePostMessage}>
                 <label htmlFor="newMessage">Add Message</label>
                 <textarea
                     id="newMessage"
@@ -133,7 +133,7 @@ function ProjectDiscussion({ projectId, discussionIds, currentUserId }) { // Cha
                 <button type="submit" disabled={postLoading}>
                     {postLoading ? 'Posting...' : 'Post'}
                 </button>
-            </form>
+            </form>}
         </section>
     );
 }

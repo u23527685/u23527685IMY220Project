@@ -4,7 +4,7 @@ import Hashtag from './Hashtag'; // Assuming Hashtag component exists
 import EditProjectForm from './EditProject';
 import "../../public/assets/css/projectdetails.css";
 
-function ProjectDetails({ project, isOwner, onProjectUpdated }) { // Added isOwner and onProjectUpdated props
+function ProjectDetails({ project, isOwner, onProjectUpdated }) { 
     const [editing, setEditing] = useState(false);
     const [projectType, setProjectType] = useState('Loading...');
 

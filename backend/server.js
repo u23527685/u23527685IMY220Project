@@ -272,8 +272,17 @@ app.delete('/api/users/:userId/:requesterId', async (req, res) => {
   }
 });
 
+// In server.js, add this new route
+app.get("/api/users/search", async (req, res) => {
+    const { q } = req.query; // Get the search term from the query parameter 'q'
+    if (!q) {
+        return res.status(400).json({ success: false, message: "Search term 'q' is required" });
+    }
+    const response = await api.searchUsers(q);
+    res.json(response);
+});
 
-//api
+//api end 
 async function startServer() {
     try {
         await api.connectToMongoDB();

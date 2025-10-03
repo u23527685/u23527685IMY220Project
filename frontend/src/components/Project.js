@@ -1,5 +1,5 @@
 // frontend/src/components/Project.js
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, } from 'react';
 import { useParams } from 'react-router-dom';
 import ProjectCheckInOut from "./ProjectCheckinout"; // Assuming this component is self-contained
 import ProjectDiscussion from "./ProjectDiscussion";
@@ -67,6 +67,9 @@ function Project() {
 
     const isOwner = project.owner === currentUserId; // Check if current user is the project owner
 
+    const isMember = project.owner === currentUserId || (project.members || []).includes(currentUserId);
+
+
     return (
         <div id="projinfo">
             <h1>Project System</h1>
@@ -76,7 +79,7 @@ function Project() {
             </div>
 
             <div className="project-section">
-                <ProjectStatusFeed projectId={project._id} activityFeedIds={project.activityFeed} />
+                <ProjectStatusFeed ismember={isMember} projectId={project._id} activityFeedIds={project.activityFeed} />
             </div>
 
             <div className="project-section">
@@ -94,15 +97,16 @@ function Project() {
 
             <div className="project-section">
                 <ProjectDiscussion
+                    ismember={isMember}
                     projectId={project._id}
                     discussionIds={project.discussionBoard}
                     currentUserId={currentUserId}
                 />
             </div>
 
-            <div className="project-section">
-                <ProjectCheckInOut /> {/* Assuming this component is self-contained */}
-            </div>
+            { isMember && <div className="project-section">
+                <ProjectCheckInOut ismember={isMember} /> {/* Assuming this component is self-contained */}
+            </div>}
         </div>
     );
 }

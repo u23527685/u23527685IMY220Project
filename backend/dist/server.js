@@ -657,52 +657,84 @@ app["delete"]('/api/users/:userId/:requesterId', /*#__PURE__*/function () {
   };
 }());
 
-//api
+// In server.js, add this new route
+app.get("/api/users/search", /*#__PURE__*/function () {
+  var _ref20 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee20(req, res) {
+    var q, response;
+    return _regenerator().w(function (_context20) {
+      while (1) switch (_context20.n) {
+        case 0:
+          q = req.query.q; // Get the search term from the query parameter 'q'
+          if (q) {
+            _context20.n = 1;
+            break;
+          }
+          return _context20.a(2, res.status(400).json({
+            success: false,
+            message: "Search term 'q' is required"
+          }));
+        case 1:
+          _context20.n = 2;
+          return api.searchUsers(q);
+        case 2:
+          response = _context20.v;
+          res.json(response);
+        case 3:
+          return _context20.a(2);
+      }
+    }, _callee20);
+  }));
+  return function (_x41, _x42) {
+    return _ref20.apply(this, arguments);
+  };
+}());
+
+//api end 
 function startServer() {
   return _startServer.apply(this, arguments);
 }
 function _startServer() {
-  _startServer = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee21() {
+  _startServer = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee22() {
     var _t0;
-    return _regenerator().w(function (_context21) {
-      while (1) switch (_context21.p = _context21.n) {
+    return _regenerator().w(function (_context22) {
+      while (1) switch (_context22.p = _context22.n) {
         case 0:
-          _context21.p = 0;
-          _context21.n = 1;
+          _context22.p = 0;
+          _context22.n = 1;
           return api.connectToMongoDB();
         case 1:
           app.listen(port, function () {
             console.log("Database running on http://localhost:".concat(port));
           });
-          _context21.n = 3;
+          _context22.n = 3;
           break;
         case 2:
-          _context21.p = 2;
-          _t0 = _context21.v;
+          _context22.p = 2;
+          _t0 = _context22.v;
           console.error('Failed to start server:', _t0);
           process.exit(1);
         case 3:
-          return _context21.a(2);
+          return _context22.a(2);
       }
-    }, _callee21, null, [[0, 2]]);
+    }, _callee22, null, [[0, 2]]);
   }));
   return _startServer.apply(this, arguments);
 }
 app.listen(port, function () {
   console.log("Veyo app Listening on http://localhost:".concat(port));
 });
-process.on('SIGINT', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee20() {
-  return _regenerator().w(function (_context20) {
-    while (1) switch (_context20.n) {
+process.on('SIGINT', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee21() {
+  return _regenerator().w(function (_context21) {
+    while (1) switch (_context21.n) {
       case 0:
         console.log('\nShutting down gracefully...');
-        _context20.n = 1;
+        _context21.n = 1;
         return api.closeDatabaseConnection();
       case 1:
         process.exit(0);
       case 2:
-        return _context20.a(2);
+        return _context21.a(2);
     }
-  }, _callee20);
+  }, _callee21);
 })));
 startServer();

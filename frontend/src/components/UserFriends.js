@@ -1,6 +1,6 @@
 // frontend/src/components/UserFriends.js
 import React, { useState, useEffect, useCallback } from 'react';
-//import '../../public/assets/css/userfriends.css'; // Assuming you'll create this CSS
+import "../../public/assets/css/profilepreview.css";
 
 function UserFriends({ userId, friendsList, onFriendRemoved, onAddFriendToProject, isProjectContext = false, currentProjectMembers = [] }) {
     const [friendsDetails, setFriendsDetails] = useState([]);
@@ -64,12 +64,6 @@ function UserFriends({ userId, friendsList, onFriendRemoved, onAddFriendToProjec
     // Handle removing a friend
     const handleRemoveFriend = async (friendId) => {
         if (!window.confirm(`Are you sure you want to remove this friend?`)) return;
-
-        const token = localStorage.getItem('token');
-        if (!token) {
-            setError('Authentication token not found. Please log in again.');
-            return;
-        }
         if (!userId) {
             setError('Your user ID is missing.');
             return;
@@ -79,8 +73,7 @@ function UserFriends({ userId, friendsList, onFriendRemoved, onAddFriendToProjec
             const response = await fetch('/api/friends/remove', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ userId: userId, friendId: friendId })
             });
@@ -107,11 +100,11 @@ function UserFriends({ userId, friendsList, onFriendRemoved, onAddFriendToProjec
             return;
         }
         // Debounce search if needed
-        // const timer = setTimeout(() => performSearch(e.target.value), 500);
-        // return () => clearTimeout(timer);
+        const timer = setTimeout(() => performSearch(e.target.value), 500);
+        return () => clearTimeout(timer);
     };
 
-    /*const performSearch = useCallback(async (term) => {
+    const performSearch = useCallback(async (term) => {
         if (term.length < 3) {
             setSearchResults([]);
             return;
@@ -119,16 +112,12 @@ function UserFriends({ userId, friendsList, onFriendRemoved, onAddFriendToProjec
         setSearchLoading(true);
         setSearchError(null);
         try {
-            const token = localStorage.getItem('token');
-            if (!token) throw new Error('Authentication token not found.');
 
             // Assuming you have a backend endpoint for searching users by username
             // This endpoint is NOT in your current API, so you'd need to add it.
             // For now, I'll simulate or assume a simple search.
             // Example: GET /api/users/search?q=searchTerm
-            const response = await fetch(`/api/users/search?q=${term}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
+            const response = await fetch(`/api/users/search?q=${term}`);
             const result = await response.json();
 
             if (result.success && result.users) {
@@ -146,9 +135,9 @@ function UserFriends({ userId, friendsList, onFriendRemoved, onAddFriendToProjec
         } finally {
             setSearchLoading(false);
         }
-    }, [userId, friendsList]);*/
+    }, [userId, friendsList]);
 
-    /*useEffect(() => {
+    useEffect(() => {
         const handler = setTimeout(() => {
             performSearch(searchTerm);
         }, 500); // Debounce search
@@ -156,7 +145,7 @@ function UserFriends({ userId, friendsList, onFriendRemoved, onAddFriendToProjec
         return () => {
             clearTimeout(handler);
         };
-    }, [searchTerm, performSearch]);*/
+    }, [searchTerm, performSearch]);
 
 
     // Handle sending a friend request
@@ -230,7 +219,7 @@ function UserFriends({ userId, friendsList, onFriendRemoved, onAddFriendToProjec
                         {searchError && <p style={{ color: 'red' }}>{searchError}</p>}
                         <div className="search-results">
                             {searchResults.map(user => (
-                                <div key={user._id} className="search-result-item">
+                                <div key={user._id} className="profile-card">
                                     <span>{user.username}</span>
                                     <button onClick={() => handleSendFriendRequest(user._id)}>Add Friend</button>
                                 </div>
@@ -243,9 +232,9 @@ function UserFriends({ userId, friendsList, onFriendRemoved, onAddFriendToProjec
 
             <h4>{isProjectContext ? "Select Project Members" : "My Friends"} ({friendsDetails.length})</h4>
             {friendsDetails.length > 0 ? (
-                <div className="friends-list">
+                <div>
                     {friendsDetails.map(friend => (
-                        <div key={friend._id} className="friend-item">
+                        <div key={friend._id} className="profile-card">
                             <span>{friend.username}</span>
                             {isProjectContext ? (
                                 <input

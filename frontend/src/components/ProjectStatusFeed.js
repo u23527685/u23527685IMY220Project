@@ -1,7 +1,7 @@
 // frontend/src/components/ProjectStatusFeed.js
 import React, { useState, useEffect, useCallback } from 'react';
 
-function ProjectStatusFeed({ projectId, activityFeedIds }) { // Changed props to IDs
+function ProjectStatusFeed({ projectId, activityFeedIds, ismember }) { // Changed props to IDs
     const [feed, setFeed] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -57,7 +57,6 @@ function ProjectStatusFeed({ projectId, activityFeedIds }) { // Changed props to
                 <ul>
                     {feed.map((entry) => (
                         <li key={entry._id}>
-                            {/* Assuming entry has userId, type, message, createdAt */}
                             <strong>{entry.userId}</strong> {entry.type} at {new Date(entry.createdAt).toLocaleString()}
                             <p>Message: {entry.message}</p>
                         </li>

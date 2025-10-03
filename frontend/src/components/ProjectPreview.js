@@ -85,6 +85,43 @@ class ProjectPreview extends Component {
         }
     }
 
+    isOwner =()=>{
+        const { project, user } = this.props
+        const ownerId = typeof project.owner === 'object' ? 
+            (project.owner.$oid || project.owner._id || project.owner.toString()) : 
+            project.owner;
+
+        const userId = typeof user._id === 'object' ? 
+            (user._id.$oid || user._id.toString()) : 
+            user._id;
+
+        if(ownerId === userId)
+            return true;
+
+        return false;
+    }
+
+    isworkingonproject =()=>{
+        const { project, user } = this.props;
+
+        const userId = typeof user._id === 'object' ? 
+            (user._id.$oid || user._id.toString()) : 
+            user._id;
+
+        if(this.isOwner())
+            return true;
+
+        let b=false;
+        b=project.members.forEach(member => {
+            if(member===userId){
+                return true;
+            }   
+        });
+        if(b!==true)
+            b=false;
+        return b;
+    }
+
     render() {
         const { project, ondownload } = this.props;
         const { ownerUsername } = this.state;

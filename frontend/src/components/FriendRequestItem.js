@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "../../public/assets/css/profilepreview.css";
 
 function FriendRequestItem({ request, type, onAction, requesterId }) {
     const [loading, setLoading] = useState(false);
@@ -17,8 +18,8 @@ function FriendRequestItem({ request, type, onAction, requesterId }) {
     };
 
     return (
-        <div className="friend-request-item">
-            <span>{request.username}</span> {/* Assuming request object has username */}
+        <div className="profile-card">
+            <span>{request.username}</span> 
             {type === 'received' && (
                 <div className="actions">
                     <button onClick={() => handleAction('accept')} disabled={loading}>
