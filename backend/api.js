@@ -754,7 +754,6 @@ export async function getProject(projectId){
     }
 }
 
-// In api.js, add this new function
 export async function searchUsers(searchTerm) {
     try {
         const users = await db.collection('users').find({
@@ -763,6 +762,62 @@ export async function searchUsers(searchTerm) {
         return { success: true, users: users };
     } catch (error) {
         console.error('Error searching users:', error);
+        return { success: false, message: error.message };
+    }
+}
+
+// In api.js, add this new function
+export async function searchAll(searchTerm) {
+    try {
+        if (!searchTerm || searchTerm.trim().length < 2) {
+            return { success: true, results: { users: [], projects: [], hashtags: [] } };
+        }
+
+        const regex = new RegExp(searchTerm.trim(), 'i'); // Case-insensitive partial match
+
+        // Search users by username
+        const users = await db.collection('users')
+            .find({ username: regex })
+            .project({ password: 0, email: 0 }) // Exclude sensitive fields
+            .limit(10) // Limit results for performance
+            .toArray();
+
+        // Search projects by name
+        const projectsByName = await db.collection('projects')
+            .find({ name: regex })
+            .limit(10)
+            .toArray();
+
+        // Search projects by hashtags (match any hashtag in the array)
+        const projectsByHashtag = await db.collection('projects')
+            .find({ hashtags: regex }) // MongoDB $regex on array elements
+            .limit(10)
+            .toArray();
+
+        // Combine projects (remove duplicates by _id)
+        const allProjects = [...new Map([...projectsByName, ...projectsByHashtag].map(p => [p._id, p])).values()];
+
+        // Extract unique hashtags from matching projects (for hashtag results)
+        const allHashtags = new Set();
+        allProjects.forEach(project => {
+            project.hashtags?.forEach(tag => {
+                if (regex.test(tag)) {
+                    allHashtags.add(tag);
+                }
+            });
+        });
+        const hashtags = Array.from(allHashtags);
+
+        return {
+            success: true,
+            results: {
+                users: users,
+                projects: allProjects,
+                hashtags: hashtags
+            }
+        };
+    } catch (error) {
+        console.error('Error in searchAll:', error);
         return { success: false, message: error.message };
     }
 }

@@ -282,6 +282,16 @@ app.get("/api/users/search", async (req, res) => {
     res.json(response);
 });
 
+// In server.js, add this new route (place it with other GET routes)
+app.get("/api/search", async (req, res) => { 
+    const { q: searchTerm } = req.query; // Get search term from 'q' query param
+    if (!searchTerm) {
+        return res.status(400).json({ success: false, message: "Search term 'q' is required" });
+    }
+    const response = await api.searchAll(searchTerm);
+    res.json(response);
+});
+
 //api end 
 async function startServer() {
     try {

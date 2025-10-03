@@ -4,6 +4,8 @@ import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import LocalFeed from "../components/LocalProjectFeed";
 import GlobalFeed from "../components/GlobalProjectFeed";
+import ProjectPreview from "../components/ProjectPreview";
+import ProfilePreview from "../components/ProfilePreview";
 import Filter from "../components/Filter";
 import "../../public/assets/css/home.css"
 
@@ -45,7 +47,8 @@ class Home extends Component {
             local: true,
             global: false,
             isLoading: true,
-            error: null
+            error: null,
+            searchResults: null
         };
     }
 
@@ -134,9 +137,27 @@ class Home extends Component {
         }
     }
 
-    onSearch = (search) => {
-        console.log('Search term:', search);
+    onSearch = async (search) => {
+    if (!search || search.trim().length < 2) {
+        this.setState({ searchResults: null });
+        return;
     }
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/search?q=${encodeURIComponent(search)}`);
+        const data = await response.json();
+
+        if (data.success) {
+            this.setState({ searchResults: data.results });
+        } else {
+            this.setState({ searchResults: null });
+        }
+    } catch (error) {
+        console.error('Search error:', error);
+        this.setState({ searchResults: null });
+    }
+};
+
 
     toggleLocal = () => {
         this.setState({ global: false, local: true });
@@ -228,6 +249,36 @@ class Home extends Component {
                     </div>
                    
                     {filter && <Filter />}
+                    {this.state.searchResults && (
+                        <div className="search-results">
+                            {/* USERS */}
+                            {this.state.searchResults.users.length > 0 && (
+                                <div>
+                                    <h3>Users</h3>
+                                    <ul>
+                                        {this.state.searchResults.users.map((user,index) => (
+                                            //var userId = typeof user._id === 'object' ? (user._id.$oid || user._id.toString()) : user._id;
+                                            <ProfilePreview key={index} user={user} onAction={null}/>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {/* PROJECTS */}
+                            {this.state.searchResults.projects.length > 0 && (
+                                <div>
+                                    <h3>Projects</h3>
+                                    <ul>
+                                        {this.state.searchResults.projects.map((project,index) => (
+                                            //var projectId = typeof project._id === 'object' ? (project._id.$oid || project._id.toString()) : project._id;
+                                            <ProjectPreview key={index} project={project} ondownload={null} user={user} />
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
                 </div>
             </main>
         );
