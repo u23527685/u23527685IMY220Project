@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 
+import { clear } from "console";
 import * as api from "../api.js";
 
 const app = express();
@@ -311,6 +312,7 @@ app.listen(port, () => {
 
 process.on('SIGINT', async () => {
     console.log('\nShutting down gracefully...');
+    //localStorage.clear();
     await api.closeDatabaseConnection();
     process.exit(0);
 });
