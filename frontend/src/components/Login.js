@@ -1,5 +1,5 @@
 
-import "../../public/assets/css/login.css"
+import "../../public/assets/css/loginstyle.css"
 
 import React, { useState } from "react";
 
@@ -83,7 +83,7 @@ function Login({ onlogin, toggleSignup, oncancel }) {
   return (
     <div id="LoginOverlay">
       <form id="LoginForm" onSubmit={handleSubmit} noValidate>
-        <p onClick={cancel} id="cancel">X</p>
+        <p onClick={cancel} className="cancel">X</p>
         <label htmlFor="username">Username:</label>
         <input
           type="text"

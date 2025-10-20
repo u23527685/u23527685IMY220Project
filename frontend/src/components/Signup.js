@@ -89,8 +89,8 @@ function Signup({oncancel, onsignup, toggleLogin }) {
 
   return (
     <div id="SigninOverlay">
-      <p onClick={cancel} id="cancel">X</p>
       <form id="SignupForm" onSubmit={handleSubmit} noValidate>
+        <p onClick={cancel} className="cancel">X</p>
         <label htmlFor="email">Email:</label>
         <input
           type="email"
