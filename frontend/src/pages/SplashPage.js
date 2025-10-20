@@ -4,7 +4,7 @@ import Home from "./Home";
 
 function SplashPage(){
     return(
-        <main className="splashpage" >
+        <main style={{margin : 0 ,backgroundColor: '#E8F5E9', padding:0}} className="splashpage" >
             <Landing onauth={<Home/>}/>
         </main>
         

@@ -1,0 +1,118 @@
+#landing {
+  min-height: 100vh;
+  background-color: #E8F5E9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right:60px;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* Decorative semicircle on the left */
+#landing img.semicircle {
+  position: absolute;
+  left: -10%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 400px;
+  height: 400px;
+  z-index: 0;
+}
+
+/* Main content container */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  z-index: 1;
+  text-align: center;
+}
+
+/* Welcome text */
+#landing img.slogan {
+  max-width: 400px;
+  height: auto;
+  width: 100%;
+}
+
+/* Button container */
+#landing > button {
+  position: absolute;
+  right: 60px;
+  z-index: 2;
+}
+
+/* Login button */
+#landing button:nth-of-type(1) {
+  top: 50%;
+  transform: translateY(calc(-50% - 65px));
+  width: 280px;
+  height: 70px;
+  background-color: #429613;
+  color: #000;
+  font-size: 28px;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+#landing button:nth-of-type(1):hover {
+  background-color: #074404;
+  transform: translateY(calc(-50% - 65px)) translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Signup button */
+#landing button:nth-of-type(2) {
+  top: 50%;
+  transform: translateY(calc(-50% + 65px));
+  width: 280px;
+  height: 70px;
+  background-color: #91C129;
+  color: #000;
+  font-size: 28px;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+#landing button:nth-of-type(2):hover {
+  background-color: #074404;
+  transform: translateY(calc(-50% + 65px)) translateY(2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  #landing {
+    padding: 40px 20px;
+  }
+
+  #landing img.slogan {
+    max-width: 300px;
+  }
+
+  #landing button:nth-of-type(1),
+  #landing button:nth-of-type(2) {
+    width: 220px;
+    height: 60px;
+    font-size: 20px;
+    right: 20px;
+  }
+
+  #landing img.semicircle {
+    width: 300px;
+    height: 300px;
+    left: -100px;
+  }
+}

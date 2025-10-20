@@ -3,7 +3,7 @@ import "../../public/assets/css/login.css"
 
 import React, { useState } from "react";
 
-function Login({ onlogin, toggleSignup }) {
+function Login({ onlogin, toggleSignup, oncancel }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -75,9 +75,15 @@ function Login({ onlogin, toggleSignup }) {
     }
   };
 
+  const cancel=()=>{
+    if(oncancel)
+      oncancel();
+  }
+
   return (
     <div id="LoginOverlay">
       <form id="LoginForm" onSubmit={handleSubmit} noValidate>
+        <p onClick={cancel} id="cancel">X</p>
         <label htmlFor="username">Username:</label>
         <input
           type="text"

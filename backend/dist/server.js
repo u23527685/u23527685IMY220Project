@@ -761,7 +761,7 @@ process.on('SIGINT', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().
     while (1) switch (_context22.n) {
       case 0:
         console.log('\nShutting down gracefully...');
-        localStorage.clear();
+        //localStorage.clear();
         _context22.n = 1;
         return api.closeDatabaseConnection();
       case 1:
