@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../../public/assets/css/signup.css";
 
-function Signup({ onsignup, toggleLogin }) {
+function Signup({oncancel, onsignup, toggleLogin }) {
   const [formData, setFormData] = useState({
     email: "",
     username: "",
@@ -82,9 +82,15 @@ function Signup({ onsignup, toggleLogin }) {
     }
   };
 
+  const cancel=()=>{
+    if(oncancel)
+      oncancel();
+  }
+
   return (
     <div id="SigninOverlay">
       <form id="SignupForm" onSubmit={handleSubmit} noValidate>
+        <p onClick={cancel} className="cancel">X</p>
         <label htmlFor="email">Email:</label>
         <input
           type="email"

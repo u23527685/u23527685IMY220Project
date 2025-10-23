@@ -2,6 +2,9 @@ import React from "react";
 import Login from "./Login";
 import Singup from "./Signup";
 import { useNavigate } from 'react-router-dom';
+import slogan from "../../public/assets/svg/slogan.svg"
+import semicircle from "../../public/assets/svg/semicircle.svg"
+import "../../public/assets/css/landing.css"
 const { useRef, useState } = React;
 
 function Landing(){
@@ -21,6 +24,13 @@ function Landing(){
         localStorage.setItem('user', JSON.stringify(user));
         navigate('/home',{ state: { user } });
     }
+
+    function untoggleLogin(){
+        setlogin(false);
+    }
+    function untoggleSignup(){
+        setsignup(false);
+    }
     
     function handleSignup(user) {
         // Store user data in localStorage or context
@@ -29,10 +39,15 @@ function Landing(){
     }
     return(
         <div id="landing">
+            <img src={semicircle} alt="decoration" className="semicircle" />
+      
+            <div className="content">
+                <img src={slogan} alt="Welcome to Veyo - Don't Git Lost Veyo It!" className="slogan" />
+            </div>
             <button  onClick={toggleLogin} >Login</button>
             <button onClick={toggleSignup}>Signup</button>
-            {login && (<Login toggleSignup={toggleSignup} onlogin={handleLogin} />)}
-            {signup && (<Singup toggleLogin={toggleLogin} onsignup={handleSignup}/>)}
+            {login && (<Login oncancel={untoggleLogin} toggleSignup={toggleSignup} onlogin={handleLogin} />)}
+            {signup && (<Singup oncancel={untoggleSignup} toggleLogin={toggleLogin} onsignup={handleSignup}/>)}
         </div>
     )
 }
