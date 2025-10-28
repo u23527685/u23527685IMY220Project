@@ -293,6 +293,26 @@ app.get("/api/search", async (req, res) => {
     res.json(response);
 });
 
+app.post("/api/projects/add-member", async (req, res) => {
+    const { projectId, userId } = req.body;
+    const response = await api.addMemberToProject(projectId, userId);
+    res.json(response);
+});
+
+app.post("/api/projects/promote", async (req, res) => {
+    const { projectId, userId } = req.body;
+    const response = await api.promoteMemberToOwner(projectId, userId);
+    res.json(response);
+});
+
+app.post("/api/users/pin", async (req, res) => {
+    const { userId, projectId } = req.body;
+    const response = await api.pinProjectToUser(userId, projectId);
+    res.json(response);
+});
+
+
+
 //api end 
 async function startServer() {
     try {

@@ -87,7 +87,9 @@ export async function signupUser({username,password,email}){
             createdAt: new Date(),
             updatedAt: new Date(),
             name: null,
-            surname: null
+            surname: null,
+            savedProjects:[],
+            profileImage:"default user"
         };
         const result = await db.collection('users').insertOne(newUser );
         if (result.insertedId) {
@@ -340,7 +342,8 @@ export async function createProject(data, ownerId) {
             discussionBoard: [],
             createdAt: new Date(),
             updatedAt: new Date(),
-            versionHistory: []
+            versionHistory: [],
+            imagse:"default"
         };
 
         // Insert the new project and capture the result (including _id)
@@ -818,6 +821,156 @@ export async function searchAll(searchTerm) {
         };
     } catch (error) {
         console.error('Error in searchAll:', error);
+        return { success: false, message: error.message };
+    }
+}
+
+
+export async function asp(){
+  await db.collection("projects").updateMany(
+    {},  // Matches all documents
+    { $set: { image: "default" } }
+  )
+}
+
+
+export async function addMemberToProject(projectId, userId) {
+    try {
+        const projectObjectId = new ObjectId(projectId);
+        const userObjectId = new ObjectId(userId);
+
+        // Check if project exists
+        const project = await db.collection("projects").findOne({ _id: projectObjectId });
+        if (!project) {
+            return { success: false, message: "Project not found" };
+        }
+
+        // Check if user exists
+        const user = await db.collection("users").findOne({ _id: userObjectId });
+        if (!user) {
+            return { success: false, message: "User not found" };
+        }
+
+        // Avoid duplicates
+        if (
+            project.owner.toString() === userObjectId.toString() ||
+            project.members?.some(m => m.toString() === userObjectId.toString())
+        ) {
+            return { success: false, message: "User is already a member or owner" };
+        }
+
+        // Update project document
+        await db.collection("projects").updateOne(
+            { _id: projectObjectId },
+            { $addToSet: { members: userObjectId } }
+        );
+
+        // Update user document
+        await db.collection("users").updateOne(
+            { _id: userObjectId },
+            { $addToSet: { memberOfProjects: projectObjectId } }
+        );
+
+        return { success: true, message: "User added as member successfully" };
+    } catch (error) {
+        console.error("Error adding member to project:", error);
+        return { success: false, message: error.message };
+    }
+}
+
+export async function promoteMemberToOwner(projectId, userId) {
+    try {
+        const projectObjectId = new ObjectId(projectId);
+        const userObjectId = new ObjectId(userId);
+
+        // Fetch project
+        const project = await db.collection("projects").findOne({ _id: projectObjectId });
+        if (!project) {
+            return { success: false, message: "Project not found" };
+        }
+
+        // Ensure user is a member before promoting
+        const isMember = project.members?.some(m => m.toString() === userObjectId.toString());
+        if (!isMember) {
+            return { success: false, message: "User must be a member before becoming owner" };
+        }
+
+        // Update project: transfer ownership
+        await db.collection("projects").updateOne(
+            { _id: projectObjectId },
+            {
+                $set: { owner: userObjectId },
+                $pull: { members: userObjectId } // remove from members if needed
+            }
+        );
+
+        // Update user becoming new owner
+        await db.collection("users").updateOne(
+            { _id: userObjectId },
+            {
+                $addToSet: { ownedProjects: projectObjectId },
+                $pull: { memberOfProjects: projectObjectId }
+            }
+        );
+
+        // Update previous owner’s record
+        const prevOwnerId = project.owner;
+        if (prevOwnerId) {
+            await db.collection("users").updateOne(
+                { _id: new ObjectId(prevOwnerId) },
+                {
+                    $pull: { ownedProjects: projectObjectId },
+                    $addToSet: { memberOfProjects: projectObjectId }
+                }
+            );
+        }
+
+        return { success: true, message: "Member promoted to owner successfully" };
+    } catch (error) {
+        console.error("Error promoting member to owner:", error);
+        return { success: false, message: error.message };
+    }
+}
+
+export async function pinProjectToUser(userId, projectId) {
+    try {
+        const userObjectId = new ObjectId(userId);
+        const projectObjectId = new ObjectId(projectId);
+
+        // Fetch user
+        const user = await db.collection("users").findOne({ _id: userObjectId });
+        if (!user) {
+            return { success: false, message: "User not found" };
+        }
+
+        // Fetch project
+        const project = await db.collection("projects").findOne({ _id: projectObjectId });
+        if (!project) {
+            return { success: false, message: "Project not found" };
+        }
+
+        // Check ownership or membership
+        const isOwner =
+            project.owner?.toString() === userObjectId.toString();
+        const isMember =
+            project.members?.some(m => m.toString() === userObjectId.toString());
+
+        if (!isOwner && !isMember) {
+            return {
+                success: false,
+                message: "User must be an owner or member to pin this project"
+            };
+        }
+
+        // Add project to pinnedProjects
+        await db.collection("users").updateOne(
+            { _id: userObjectId },
+            { $addToSet: { pinnedProjects: projectObjectId } } // prevents duplicates
+        );
+
+        return { success: true, message: "Project pinned successfully" };
+    } catch (error) {
+        console.error("Error pinning project:", error);
         return { success: false, message: error.message };
     }
 }

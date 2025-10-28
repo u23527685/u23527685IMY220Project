@@ -257,7 +257,6 @@ class Home extends Component {
                                     <h3>Users</h3>
                                     <ul>
                                         {this.state.searchResults.users.map((user,index) => (
-                                            //var userId = typeof user._id === 'object' ? (user._id.$oid || user._id.toString()) : user._id;
                                             <ProfilePreview key={index} user={user} onAction={null}/>
                                         ))}
                                     </ul>
