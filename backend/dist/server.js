@@ -1,816 +1,137 @@
-"use strict";
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
 
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-var _console = require("console");
-var api = _interopRequireWildcard(require("../api.js"));
-var _excluded = ["_id"];
-function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, "default": e }; if (null === e || "object" != _typeof(e) && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (var _t1 in e) "default" !== _t1 && {}.hasOwnProperty.call(e, _t1) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, _t1)) && (i.get || i.set) ? o(f, _t1, i) : f[_t1] = e[_t1]); return f; })(e, t); }
-function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
-function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
-function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i["return"]) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
-function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-var express = require("express");
-var path = require("path");
-var app = express();
-var port = process.env.PORT || 3000;
-app.use(express.json());
-app.use(express.urlencoded({
-  extended: true
-}));
-app.use(express["static"]("frontend/public"));
+/***/ "./backend/api.js":
+/*!************************!*\
+  !*** ./backend/api.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-// Handle all React Router routes
-app.get('/', function (req, res) {
-  res.sendFile(path.resolve('frontend', 'public', 'index.html'));
-});
-app.get('/home', function (req, res) {
-  res.sendFile(path.resolve('frontend', 'public', 'index.html'));
-});
-app.get('/profile', function (req, res) {
-  res.sendFile(path.resolve('frontend', 'public', 'index.html'));
-});
-app.get('/profile/:username', function (req, res) {
-  res.sendFile(path.resolve('frontend', 'public', 'index.html'));
-});
-app.get('/projects/:username', function (req, res) {
-  res.sendFile(path.resolve('frontend', 'public', 'index.html'));
-});
-app.get('/projects/:username/:name/:owner', function (req, res) {
-  res.sendFile(path.resolve('frontend', 'public', 'index.html'));
-});
-app.get('/project/:name/:owner', function (req, res) {
-  res.sendFile(path.resolve('frontend', 'public', 'index.html'));
-});
+eval("{\n\nObject.defineProperty(exports, \"__esModule\", ({\n  value: true\n}));\nexports.acceptFriendRequest = acceptFriendRequest;\nexports.addActivityEntry = addActivityEntry;\nexports.addDiscussionEntry = addDiscussionEntry;\nexports.addMemberToProject = addMemberToProject;\nexports.asp = asp;\nexports.authenticateUser = authenticateUser;\nexports.closeDatabaseConnection = closeDatabaseConnection;\nexports.connectToMongoDB = connectToMongoDB;\nexports.createProject = createProject;\nexports.declineFriendRequest = declineFriendRequest;\nexports.deleteProject = deleteProject;\nexports.deleteUser = deleteUser;\nexports.getActivityFeed = getActivityFeed;\nexports.getAllProjects = getAllProjects;\nexports.getAllTypes = getAllTypes;\nexports.getDiscussions = getDiscussions;\nexports.getProject = getProject;\nexports.getProjectFiles = getProjectFiles;\nexports.getProjectType = getProjectType;\nexports.getUser = getUser;\nexports.pinProjectToUser = pinProjectToUser;\nexports.promoteMemberToOwner = promoteMemberToOwner;\nexports.removeFriend = removeFriend;\nexports.searchAll = searchAll;\nexports.searchUsers = searchUsers;\nexports.sendFriendRequest = sendFriendRequest;\nexports.signupUser = signupUser;\nexports.updateProject = updateProject;\nexports.updateUserInfo = updateUserInfo;\nexports.userProjects = userProjects;\nvar _mongodb = __webpack_require__(/*! mongodb */ \"mongodb\");\nvar _dotenv = _interopRequireDefault(__webpack_require__(/*! dotenv */ \"dotenv\"));\nvar _path = _interopRequireDefault(__webpack_require__(/*! path */ \"path\"));\nvar _url = __webpack_require__(/*! url */ \"url\");\nfunction _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }\nconst _filename = (0, _url.fileURLToPath)(\"file:///C:/Users/Okail/OneDrive/Desktop/IMY220/project/u23527685IMY220Project/backend/api.js\");\nconst _dirname = _path.default.dirname(_filename);\n_dotenv.default.config({\n  path: _path.default.resolve(_dirname, '.env')\n});\nconst connectionString = process.env.MONGODB_URI;\nconst dbName = process.env.DB_NAME;\nlet client;\nlet db;\nasync function connectToMongoDB() {\n  try {\n    if (!connectionString || !dbName) {\n      throw new Error(\"Missing MONGODB_URI or DB_NAME environment variables\");\n    }\n    client = new _mongodb.MongoClient(connectionString);\n    await client.connect();\n    db = client.db(dbName);\n    console.log('Connected to MongoDB');\n    return db;\n  } catch (error) {\n    console.error('Failed to connect to MongoDB:', error);\n    throw error;\n  }\n}\nasync function authenticateUser({\n  username,\n  password\n}) {\n  try {\n    if (!username || !password) {\n      return {\n        success: false,\n        message: \"Username and password are required\",\n        errorCode: \"MISSING_CREDENTIALS\"\n      };\n    }\n    const user = await db.collection('users').findOne({\n      username: new RegExp(`^${username}$`, 'i'),\n      password: password\n    });\n    if (!user) {\n      return {\n        success: false,\n        message: \"Invalid username or password\",\n        errorCode: \"INVALID_CREDENTIALS\"\n      };\n    }\n    return {\n      success: true,\n      message: \"User logged in successfully\",\n      user: user\n    };\n  } catch (error) {\n    console.error('Error authenticating user:', error);\n    return {\n      success: false,\n      message: \"Authentication failed due to server error\",\n      errorCode: \"AUTH_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function signupUser({\n  username,\n  password,\n  email\n}) {\n  try {\n    if (!username || !password || !email) {\n      return {\n        success: false,\n        message: \"Username, password, and email are required\",\n        errorCode: \"MISSING_FIELDS\"\n      };\n    }\n\n    // Validate email format\n    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n    if (!emailRegex.test(email)) {\n      return {\n        success: false,\n        message: \"Invalid email format\",\n        errorCode: \"INVALID_EMAIL\"\n      };\n    }\n    const existingUser = await db.collection('users').findOne({\n      $or: [{\n        username: new RegExp(`^${username}$`, 'i')\n      }, {\n        email: new RegExp(`^${email}$`, 'i')\n      }]\n    });\n    if (existingUser) {\n      return {\n        success: false,\n        message: \"Username or email already exists\",\n        errorCode: \"USER_EXISTS\"\n      };\n    }\n    const newUser = {\n      username,\n      password,\n      email,\n      profileImage: \"default user\",\n      personalInfo: {\n        birthday: null,\n        work: null,\n        contactInfo: [email],\n        bio: null,\n        socials: [],\n        website: null\n      },\n      friends: [],\n      friendRequestsSent: [],\n      friendRequestsReceived: [],\n      ownedProjects: [],\n      memberOfProjects: [],\n      favoriteLanguages: [],\n      role: \"registered_user\",\n      isVerified: false,\n      verificationRequest: null,\n      createdAt: new Date(),\n      updatedAt: new Date(),\n      name: null,\n      surname: null,\n      savedProjects: []\n    };\n    const result = await db.collection('users').insertOne(newUser);\n    if (result.insertedId) {\n      return {\n        success: true,\n        message: \"User signed up successfully\",\n        user: newUser\n      };\n    } else {\n      throw new Error('Failed to create user');\n    }\n  } catch (error) {\n    console.error('Error signing up user:', error);\n    return {\n      success: false,\n      message: \"Signup failed due to server error\",\n      errorCode: \"SIGNUP_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function getAllProjects() {\n  try {\n    const projects = await db.collection('projects').find({}).toArray();\n    return {\n      success: true,\n      projects: projects\n    };\n  } catch (error) {\n    console.error(\"Error getting projects:\", error);\n    return {\n      success: false,\n      message: \"Failed to retrieve projects\",\n      errorCode: \"FETCH_PROJECTS_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function closeDatabaseConnection() {\n  try {\n    if (client) {\n      await client.close();\n      console.log('MongoDB connection closed');\n    }\n  } catch (error) {\n    console.error('Error closing MongoDB connection:', error);\n  }\n}\nasync function userProjects(userid) {\n  try {\n    if (!userid) {\n      return {\n        success: false,\n        message: \"User ID is required\",\n        errorCode: \"MISSING_USER_ID\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(userid)) {\n      return {\n        success: false,\n        message: \"Invalid user ID format\",\n        errorCode: \"INVALID_USER_ID\"\n      };\n    }\n    const userObjectId = new _mongodb.ObjectId(userid);\n    const projects = await db.collection('projects').find({\n      $or: [{\n        owner: userObjectId\n      }, {\n        members: {\n          $in: [userObjectId]\n        }\n      }]\n    }).toArray();\n    const ownedProjects = [];\n    const memberOfProjects = [];\n    projects.forEach(project => {\n      if (project.owner.equals(userObjectId)) {\n        ownedProjects.push(project);\n      } else {\n        memberOfProjects.push(project);\n      }\n    });\n    return {\n      success: true,\n      projects: {\n        ownedProjects,\n        memberOfProjects\n      }\n    };\n  } catch (error) {\n    console.error(\"Error getting user projects:\", error);\n    return {\n      success: false,\n      message: \"Failed to retrieve user projects\",\n      errorCode: \"FETCH_USER_PROJECTS_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function getActivityFeed(Feed) {\n  try {\n    if (!Feed || !Array.isArray(Feed)) {\n      return {\n        success: false,\n        message: \"Invalid feed format\",\n        errorCode: \"INVALID_FEED_FORMAT\"\n      };\n    }\n    const activityfeed = [];\n    Feed.forEach(f => {\n      if (_mongodb.ObjectId.isValid(f)) {\n        activityfeed.push(new _mongodb.ObjectId(f));\n      }\n    });\n    const activities = await db.collection('activities').find({\n      _id: {\n        $in: activityfeed\n      }\n    }).toArray();\n    return {\n      success: true,\n      activities: activities\n    };\n  } catch (error) {\n    console.error(\"Error getting activity feed:\", error);\n    return {\n      success: false,\n      message: \"Failed to retrieve activity feed\",\n      errorCode: \"FETCH_ACTIVITY_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function getDiscussions(discussions) {\n  try {\n    if (!discussions || !Array.isArray(discussions)) {\n      return {\n        success: false,\n        message: \"Invalid discussions format\",\n        errorCode: \"INVALID_DISCUSSIONS_FORMAT\"\n      };\n    }\n    const iddiscussions = [];\n    discussions.forEach(discussion => {\n      if (_mongodb.ObjectId.isValid(discussion)) {\n        iddiscussions.push(new _mongodb.ObjectId(discussion));\n      }\n    });\n    const discussionsList = await db.collection('discussions').find({\n      _id: {\n        $in: iddiscussions\n      }\n    }).toArray();\n    return {\n      success: true,\n      discussions: discussionsList\n    };\n  } catch (error) {\n    console.error(\"Error getting discussions:\", error);\n    return {\n      success: false,\n      message: \"Failed to retrieve discussions\",\n      errorCode: \"FETCH_DISCUSSIONS_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function getAllTypes() {\n  try {\n    const types = await db.collection('project_types').find({}).toArray();\n    return {\n      success: true,\n      types: types\n    };\n  } catch (error) {\n    console.error(\"Error getting types:\", error);\n    return {\n      success: false,\n      message: \"Failed to retrieve project types\",\n      errorCode: \"FETCH_TYPES_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function getProjectType(Typeid) {\n  try {\n    if (!Typeid) {\n      return {\n        success: false,\n        message: \"Type ID is required\",\n        errorCode: \"MISSING_TYPE_ID\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(Typeid)) {\n      return {\n        success: false,\n        message: \"Invalid type ID format\",\n        errorCode: \"INVALID_TYPE_ID\"\n      };\n    }\n    const objtypeid = new _mongodb.ObjectId(Typeid);\n    const types = await db.collection('project_types').find({\n      _id: {\n        $in: [objtypeid]\n      }\n    }).toArray();\n    if (types.length === 0) {\n      return {\n        success: false,\n        message: \"Project type not found\",\n        errorCode: \"TYPE_NOT_FOUND\"\n      };\n    }\n    return {\n      success: true,\n      types: types\n    };\n  } catch (error) {\n    console.error(\"Error getting project type:\", error);\n    return {\n      success: false,\n      message: \"Failed to retrieve project type\",\n      errorCode: \"FETCH_PROJECT_TYPE_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function getUser(userId) {\n  try {\n    if (!userId) {\n      return {\n        success: false,\n        message: \"User ID is required\",\n        errorCode: \"MISSING_USER_ID\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(userId)) {\n      return {\n        success: false,\n        message: \"Invalid user ID format\",\n        errorCode: \"INVALID_USER_ID\"\n      };\n    }\n    const objectid = new _mongodb.ObjectId(userId);\n    const user = await db.collection('users').findOne({\n      _id: {\n        $in: [objectid]\n      }\n    });\n    if (!user) {\n      return {\n        success: false,\n        message: \"User not found\",\n        errorCode: \"USER_NOT_FOUND\"\n      };\n    }\n    return {\n      success: true,\n      user: user\n    };\n  } catch (error) {\n    console.error(\"Error getting user:\", error);\n    return {\n      success: false,\n      message: \"Failed to retrieve user\",\n      errorCode: \"FETCH_USER_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function updateUserInfo(user) {\n  try {\n    if (!user._id) {\n      return {\n        success: false,\n        message: \"User ID is required\",\n        errorCode: \"MISSING_USER_ID\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(user._id)) {\n      return {\n        success: false,\n        message: \"Invalid user ID format\",\n        errorCode: \"INVALID_USER_ID\"\n      };\n    }\n    const userId = new _mongodb.ObjectId(user._id);\n    const existingUser = await db.collection('users').findOne({\n      _id: userId\n    });\n    if (!existingUser) {\n      return {\n        success: false,\n        message: \"User not found\",\n        errorCode: \"USER_NOT_FOUND\"\n      };\n    }\n    if (user.username && user.username !== existingUser.username) {\n      const usernameTaken = await db.collection('users').findOne({\n        username: user.username,\n        _id: {\n          $ne: userId\n        }\n      });\n      if (usernameTaken) {\n        return {\n          success: false,\n          message: \"Username is already taken\",\n          errorCode: \"USERNAME_TAKEN\"\n        };\n      }\n    }\n    const updateFields = {\n      username: user.username ?? existingUser.username,\n      email: user.email ?? existingUser.email,\n      name: user.name ?? existingUser.name,\n      surname: user.surname ?? existingUser.surname,\n      personalInfo: {\n        bio: user.personalInfo?.bio ?? existingUser.personalInfo?.bio ?? null,\n        website: user.personalInfo?.website ?? existingUser.personalInfo?.website ?? null,\n        socials: user.personalInfo?.socials ?? existingUser.personalInfo?.socials ?? [],\n        birthday: user.personalInfo?.birthday ?? existingUser.personalInfo?.birthday ?? null,\n        contactInfo: user.personalInfo?.contactInfo ?? existingUser.personalInfo?.contactInfo ?? [],\n        work: user.personalInfo?.work ?? existingUser.personalInfo?.work ?? null\n      },\n      updatedAt: new Date()\n    };\n    await db.collection('users').updateOne({\n      _id: userId\n    }, {\n      $set: updateFields\n    });\n    return {\n      success: true,\n      message: \"User updated successfully\"\n    };\n  } catch (error) {\n    console.error(\"Error updating user:\", error);\n    return {\n      success: false,\n      message: \"Failed to update user\",\n      errorCode: \"UPDATE_USER_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function updateProject(project) {\n  try {\n    if (!project._id) {\n      return {\n        success: false,\n        message: \"Project ID is required\",\n        errorCode: \"MISSING_PROJECT_ID\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(project._id)) {\n      return {\n        success: false,\n        message: \"Invalid project ID format\",\n        errorCode: \"INVALID_PROJECT_ID\"\n      };\n    }\n    const projectId = new _mongodb.ObjectId(project._id);\n    const existingProject = await db.collection(\"projects\").findOne({\n      _id: projectId\n    });\n    if (!existingProject) {\n      return {\n        success: false,\n        message: \"Project not found\",\n        errorCode: \"PROJECT_NOT_FOUND\"\n      };\n    }\n    const updateFields = {};\n    if (project.name !== undefined) updateFields.name = project.name;\n    if (project.description !== undefined) updateFields.description = project.description;\n    if (project.hashtags !== undefined) updateFields.hashtags = project.hashtags;\n    if (project.type !== undefined) {\n      if (!_mongodb.ObjectId.isValid(project.type)) {\n        return {\n          success: false,\n          message: \"Invalid project type ID\",\n          errorCode: \"INVALID_TYPE_ID\"\n        };\n      }\n      updateFields.type = new _mongodb.ObjectId(project.type);\n    }\n    updateFields.updatedAt = new Date();\n    await db.collection(\"projects\").updateOne({\n      _id: projectId\n    }, {\n      $set: updateFields\n    });\n    return {\n      success: true,\n      message: \"Project updated successfully\"\n    };\n  } catch (error) {\n    console.error(\"Error updating project:\", error);\n    return {\n      success: false,\n      message: \"Failed to update project\",\n      errorCode: \"UPDATE_PROJECT_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function createProject(data, ownerId) {\n  try {\n    if (!ownerId) {\n      return {\n        success: false,\n        message: \"Owner ID is required\",\n        errorCode: \"MISSING_OWNER_ID\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(ownerId)) {\n      return {\n        success: false,\n        message: \"Invalid owner ID format\",\n        errorCode: \"INVALID_OWNER_ID\"\n      };\n    }\n    if (!data.projectName) {\n      return {\n        success: false,\n        message: \"Project name is required\",\n        errorCode: \"MISSING_PROJECT_NAME\"\n      };\n    }\n    if (!data.projectType) {\n      return {\n        success: false,\n        message: \"Project type is required\",\n        errorCode: \"MISSING_PROJECT_TYPE\"\n      };\n    }\n    const ownerObjectId = new _mongodb.ObjectId(ownerId);\n    const existingProject = await db.collection(\"projects\").findOne({\n      name: data.projectName,\n      owner: ownerObjectId\n    });\n    if (existingProject) {\n      return {\n        success: false,\n        message: \"You already have a project with this name\",\n        errorCode: \"PROJECT_NAME_EXISTS\"\n      };\n    }\n    let hashtags = [];\n    if (data.projectLanguages) {\n      hashtags = data.projectLanguages.split(\" \").map(tag => tag.replace(/^#/, \"\").trim()).filter(tag => tag.length > 0);\n    }\n    const newProject = {\n      name: data.projectName,\n      description: data.projectDescription,\n      projectImage: data.projectImage || null,\n      type: new _mongodb.ObjectId(data.projectType),\n      hashtags: hashtags,\n      version: data.projectVersion,\n      owner: ownerObjectId,\n      members: [],\n      status: \"checked_out\",\n      checkedOutBy: null,\n      files: [],\n      activityFeed: [],\n      discussionBoard: [],\n      createdAt: new Date(),\n      updatedAt: new Date(),\n      versionHistory: [],\n      image: \"default\"\n    };\n    const insertResult = await db.collection(\"projects\").insertOne(newProject);\n    const projectId = insertResult.insertedId;\n    if (!projectId) {\n      return {\n        success: false,\n        message: 'Failed to create project',\n        errorCode: \"PROJECT_INSERT_FAILED\"\n      };\n    }\n    const userUpdateResult = await db.collection(\"users\").updateOne({\n      _id: ownerObjectId\n    }, {\n      $addToSet: {\n        ownedProjects: projectId\n      }\n    });\n    if (userUpdateResult.matchedCount === 0) {\n      console.warn('User not found, but project was created. Manual cleanup may be needed.');\n      return {\n        success: false,\n        message: 'Project created, but owner user not found. Check user ID.',\n        errorCode: \"USER_UPDATE_FAILED\"\n      };\n    }\n    const createdProject = await db.collection(\"projects\").findOne({\n      _id: projectId\n    });\n    return {\n      success: true,\n      message: \"Project created successfully\",\n      project: createdProject\n    };\n  } catch (error) {\n    console.error(\"Error creating project:\", error);\n    return {\n      success: false,\n      message: \"Failed to create project\",\n      errorCode: \"CREATE_PROJECT_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function sendFriendRequest(senderId, receiverId) {\n  try {\n    if (!senderId || !receiverId) {\n      return {\n        success: false,\n        message: \"Sender and receiver IDs are required\",\n        errorCode: \"MISSING_IDS\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(senderId) || !_mongodb.ObjectId.isValid(receiverId)) {\n      return {\n        success: false,\n        message: \"Invalid ID format\",\n        errorCode: \"INVALID_ID_FORMAT\"\n      };\n    }\n    if (senderId === receiverId) {\n      return {\n        success: false,\n        message: \"Cannot send friend request to yourself\",\n        errorCode: \"SELF_REQUEST\"\n      };\n    }\n    const senderObjectId = new _mongodb.ObjectId(senderId);\n    const receiverObjectId = new _mongodb.ObjectId(receiverId);\n\n    // Check if users exist\n    const sender = await db.collection(\"users\").findOne({\n      _id: senderObjectId\n    });\n    const receiver = await db.collection(\"users\").findOne({\n      _id: receiverObjectId\n    });\n    if (!sender || !receiver) {\n      return {\n        success: false,\n        message: \"One or both users not found\",\n        errorCode: \"USER_NOT_FOUND\"\n      };\n    }\n\n    // Check if already friends\n    if (sender.friends?.some(id => id.equals(receiverObjectId))) {\n      return {\n        success: false,\n        message: \"Users are already friends\",\n        errorCode: \"ALREADY_FRIENDS\"\n      };\n    }\n\n    // Check if request already sent\n    if (sender.friendRequestsSent?.some(id => id.equals(receiverObjectId))) {\n      return {\n        success: false,\n        message: \"Friend request already sent\",\n        errorCode: \"REQUEST_EXISTS\"\n      };\n    }\n    await db.collection(\"users\").updateOne({\n      _id: senderObjectId\n    }, {\n      $addToSet: {\n        friendRequestsSent: receiverObjectId\n      }\n    });\n    await db.collection(\"users\").updateOne({\n      _id: receiverObjectId\n    }, {\n      $addToSet: {\n        friendRequestsReceived: senderObjectId\n      }\n    });\n    return {\n      success: true,\n      message: \"Friend request sent\"\n    };\n  } catch (error) {\n    console.error(\"Error sending friend request:\", error);\n    return {\n      success: false,\n      message: \"Failed to send friend request\",\n      errorCode: \"FRIEND_REQUEST_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function acceptFriendRequest(receiverId, senderId) {\n  try {\n    if (!receiverId || !senderId) {\n      return {\n        success: false,\n        message: \"Receiver and sender IDs are required\",\n        errorCode: \"MISSING_IDS\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(receiverId) || !_mongodb.ObjectId.isValid(senderId)) {\n      return {\n        success: false,\n        message: \"Invalid ID format\",\n        errorCode: \"INVALID_ID_FORMAT\"\n      };\n    }\n    const receiverObjectId = new _mongodb.ObjectId(receiverId);\n    const senderObjectId = new _mongodb.ObjectId(senderId);\n\n    // Verify request exists\n    const receiver = await db.collection(\"users\").findOne({\n      _id: receiverObjectId\n    });\n    if (!receiver || !receiver.friendRequestsReceived?.some(id => id.equals(senderObjectId))) {\n      return {\n        success: false,\n        message: \"Friend request not found\",\n        errorCode: \"REQUEST_NOT_FOUND\"\n      };\n    }\n    await db.collection(\"users\").updateOne({\n      _id: receiverObjectId\n    }, {\n      $addToSet: {\n        friends: senderObjectId\n      },\n      $pull: {\n        friendRequestsReceived: senderObjectId\n      }\n    });\n    await db.collection(\"users\").updateOne({\n      _id: senderObjectId\n    }, {\n      $addToSet: {\n        friends: receiverObjectId\n      },\n      $pull: {\n        friendRequestsSent: receiverObjectId\n      }\n    });\n    return {\n      success: true,\n      message: \"Friend request accepted\"\n    };\n  } catch (error) {\n    console.error(\"Error accepting request:\", error);\n    return {\n      success: false,\n      message: \"Failed to accept friend request\",\n      errorCode: \"ACCEPT_REQUEST_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function declineFriendRequest(receiverId, senderId) {\n  try {\n    if (!receiverId || !senderId) {\n      return {\n        success: false,\n        message: \"Receiver and sender IDs are required\",\n        errorCode: \"MISSING_IDS\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(receiverId) || !_mongodb.ObjectId.isValid(senderId)) {\n      return {\n        success: false,\n        message: \"Invalid ID format\",\n        errorCode: \"INVALID_ID_FORMAT\"\n      };\n    }\n    const receiverObjectId = new _mongodb.ObjectId(receiverId);\n    const senderObjectId = new _mongodb.ObjectId(senderId);\n    await db.collection(\"users\").updateOne({\n      _id: receiverObjectId\n    }, {\n      $pull: {\n        friendRequestsReceived: senderObjectId\n      }\n    });\n    await db.collection(\"users\").updateOne({\n      _id: senderObjectId\n    }, {\n      $pull: {\n        friendRequestsSent: receiverObjectId\n      }\n    });\n    return {\n      success: true,\n      message: \"Friend request declined\"\n    };\n  } catch (error) {\n    console.error(\"Error declining request:\", error);\n    return {\n      success: false,\n      message: \"Failed to decline friend request\",\n      errorCode: \"DECLINE_REQUEST_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function removeFriend(userId, friendId) {\n  try {\n    if (!userId || !friendId) {\n      return {\n        success: false,\n        message: \"User ID and friend ID are required\",\n        errorCode: \"MISSING_IDS\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(userId) || !_mongodb.ObjectId.isValid(friendId)) {\n      return {\n        success: false,\n        message: \"Invalid ID format\",\n        errorCode: \"INVALID_ID_FORMAT\"\n      };\n    }\n    const userObjectId = new _mongodb.ObjectId(userId);\n    const friendObjectId = new _mongodb.ObjectId(friendId);\n    await db.collection(\"users\").updateOne({\n      _id: userObjectId\n    }, {\n      $pull: {\n        friends: friendObjectId\n      }\n    });\n    await db.collection(\"users\").updateOne({\n      _id: friendObjectId\n    }, {\n      $pull: {\n        friends: userObjectId\n      }\n    });\n    return {\n      success: true,\n      message: \"Friend removed successfully\"\n    };\n  } catch (error) {\n    console.error(\"Error removing friend:\", error);\n    return {\n      success: false,\n      message: \"Failed to remove friend\",\n      errorCode: \"REMOVE_FRIEND_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function addActivityEntry({\n  projectId,\n  userId,\n  type,\n  message,\n  projectVersion\n}) {\n  try {\n    if (!projectId || !userId || !type || !message) {\n      return {\n        success: false,\n        message: \"Project ID, user ID, type, and message are required\",\n        errorCode: \"MISSING_FIELDS\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(projectId) || !_mongodb.ObjectId.isValid(userId)) {\n      return {\n        success: false,\n        message: \"Invalid ID format\",\n        errorCode: \"INVALID_ID_FORMAT\"\n      };\n    }\n    const projectObjectId = new _mongodb.ObjectId(projectId);\n    const userObjectId = new _mongodb.ObjectId(userId);\n    const activityEntry = {\n      projectId: projectObjectId,\n      userId: userObjectId,\n      type: type,\n      message: message,\n      projectVersion: projectVersion || '1.0.0',\n      createdAt: new Date(),\n      downloads: 0\n    };\n    const insertResult = await db.collection(\"activities\").insertOne(activityEntry);\n    const entryId = insertResult.insertedId;\n    if (!entryId) {\n      return {\n        success: false,\n        message: 'Failed to add activity entry',\n        errorCode: \"ACTIVITY_INSERT_FAILED\"\n      };\n    }\n    const createdEntry = await db.collection(\"activities\").findOne({\n      _id: entryId\n    });\n    const addtoproject = await db.collection(\"projects\").updateOne({\n      _id: projectObjectId\n    }, {\n      $addToSet: {\n        activityFeed: entryId\n      }\n    });\n    if (addtoproject.matchedCount === 0) {\n      return {\n        success: true,\n        message: 'Activity entry added successfully but project not found',\n        entry: createdEntry,\n        warning: \"PROJECT_NOT_FOUND\"\n      };\n    }\n    return {\n      success: true,\n      message: 'Activity entry added successfully',\n      entry: createdEntry\n    };\n  } catch (error) {\n    console.error(\"Error adding activity entry:\", error);\n    return {\n      success: false,\n      message: \"Failed to add activity entry\",\n      errorCode: \"ADD_ACTIVITY_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function addDiscussionEntry({\n  projectId,\n  userId,\n  message\n}) {\n  try {\n    if (!projectId || !userId || !message) {\n      return {\n        success: false,\n        message: \"Project ID, user ID, and message are required\",\n        errorCode: \"MISSING_FIELDS\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(projectId) || !_mongodb.ObjectId.isValid(userId)) {\n      return {\n        success: false,\n        message: \"Invalid ID format\",\n        errorCode: \"INVALID_ID_FORMAT\"\n      };\n    }\n    const projectObjectId = new _mongodb.ObjectId(projectId);\n    const userObjectId = new _mongodb.ObjectId(userId);\n    const discussionEntry = {\n      projectId: projectObjectId,\n      userId: userObjectId,\n      message: message,\n      createdAt: new Date()\n    };\n    const insertResult = await db.collection(\"discussions\").insertOne(discussionEntry);\n    const entryId = insertResult.insertedId;\n    if (!entryId) {\n      return {\n        success: false,\n        message: 'Failed to add discussion entry',\n        errorCode: \"DISCUSSION_INSERT_FAILED\"\n      };\n    }\n    const createdEntry = await db.collection(\"discussions\").findOne({\n      _id: entryId\n    });\n    const addtoproject = await db.collection(\"projects\").updateOne({\n      _id: projectObjectId\n    }, {\n      $addToSet: {\n        discussionBoard: entryId\n      }\n    });\n    if (addtoproject.matchedCount === 0) {\n      return {\n        success: true,\n        message: 'Discussion entry added successfully but project not found',\n        entry: createdEntry,\n        warning: \"PROJECT_NOT_FOUND\"\n      };\n    }\n    return {\n      success: true,\n      message: 'Discussion entry added successfully',\n      entry: createdEntry\n    };\n  } catch (error) {\n    console.error(\"Error adding discussion entry:\", error);\n    return {\n      success: false,\n      message: \"Failed to add discussion entry\",\n      errorCode: \"ADD_DISCUSSION_ERROR\",\n      error: error.message\n    };\n  }\n}\nfunction validateObjectId(id) {\n  if (!_mongodb.ObjectId.isValid(id)) {\n    throw new Error(`Invalid ObjectId: ${id}`);\n  }\n  return new _mongodb.ObjectId(id);\n}\nasync function deleteProject(projectId, requesterId) {\n  try {\n    if (!projectId || !requesterId) {\n      return {\n        success: false,\n        message: \"Project ID and requester ID are required\",\n        errorCode: \"MISSING_IDS\"\n      };\n    }\n    const projectObjectId = validateObjectId(projectId);\n    const requesterObjectId = validateObjectId(requesterId);\n    const project = await db.collection('projects').findOne({\n      _id: projectObjectId\n    });\n    if (!project) {\n      return {\n        success: false,\n        message: 'Project not found',\n        errorCode: \"PROJECT_NOT_FOUND\"\n      };\n    }\n    if (!project.owner.equals(requesterObjectId)) {\n      return {\n        success: false,\n        message: 'Only the project owner can delete it',\n        errorCode: \"UNAUTHORIZED\"\n      };\n    }\n    await db.collection('activities').deleteMany({\n      projectId: projectObjectId\n    });\n    await db.collection('discussions').deleteMany({\n      projectId: projectObjectId\n    });\n    const affectedUsers = await db.collection('users').find({\n      $or: [{\n        ownedProjects: {\n          $in: [projectObjectId]\n        }\n      }, {\n        memberOfProjects: {\n          $in: [projectObjectId]\n        }\n      }, {\n        pinnedProjects: {\n          $in: [projectObjectId]\n        }\n      }]\n    }).toArray();\n    const uniqueUserIds = [...new Set(affectedUsers.map(user => user._id.toString()))];\n    for (const userIdStr of uniqueUserIds) {\n      const userObjectId = new _mongodb.ObjectId(userIdStr);\n      const updateOps = {\n        $pull: {}\n      };\n      updateOps.$pull.ownedProjects = projectObjectId;\n      updateOps.$pull.memberOfProjects = projectObjectId;\n      updateOps.$pull.pinnedProject = projectObjectId;\n      await db.collection('users').updateOne({\n        _id: userObjectId\n      }, updateOps);\n    }\n    const projectDeleteResult = await db.collection('projects').deleteOne({\n      _id: projectObjectId\n    });\n    if (projectDeleteResult.deletedCount === 0) {\n      return {\n        success: false,\n        message: 'Failed to delete project',\n        errorCode: \"DELETE_FAILED\"\n      };\n    }\n    return {\n      success: true,\n      message: `Project \"${project.name}\" deleted successfully.`\n    };\n  } catch (error) {\n    console.error('Error deleting project:', error);\n    return {\n      success: false,\n      message: \"Failed to delete project\",\n      errorCode: \"DELETE_PROJECT_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function deleteUser(userId, requesterId) {\n  try {\n    if (!userId || !requesterId) {\n      return {\n        success: false,\n        message: \"User ID and requester ID are required\",\n        errorCode: \"MISSING_IDS\"\n      };\n    }\n    if (userId !== requesterId) {\n      return {\n        success: false,\n        message: 'You can only delete your own account',\n        errorCode: \"UNAUTHORIZED\"\n      };\n    }\n    const userObjectId = validateObjectId(userId);\n    const user = await db.collection('users').findOne({\n      _id: userObjectId\n    });\n    if (!user) {\n      return {\n        success: false,\n        message: 'User not found',\n        errorCode: \"USER_NOT_FOUND\"\n      };\n    }\n    const ownedProjects = user.ownedProjects || [];\n    let deletedProjectCount = 0;\n    for (const projId of ownedProjects) {\n      const projectResponse = await deleteProject(projId.toString(), userId);\n      if (projectResponse.success) {\n        deletedProjectCount++;\n      } else {\n        console.warn(`Failed to delete owned project ${projId}: ${projectResponse.message}`);\n      }\n    }\n    const memberProjects = await db.collection('projects').find({\n      members: userObjectId\n    }).toArray();\n    for (const project of memberProjects) {\n      await db.collection('projects').updateOne({\n        _id: project._id\n      }, {\n        $pull: {\n          members: userObjectId\n        }\n      });\n    }\n    const friends = user.friends || [];\n    for (const friendId of friends) {\n      await db.collection('users').updateOne({\n        _id: friendId\n      }, {\n        $pull: {\n          friends: userObjectId\n        }\n      });\n    }\n    const sentRequests = user.friendRequestsSent || [];\n    for (const receiverId of sentRequests) {\n      await db.collection('users').updateOne({\n        _id: receiverId\n      }, {\n        $pull: {\n          friendRequestsReceived: userObjectId\n        }\n      });\n    }\n    const receivedRequests = user.friendRequestsReceived || [];\n    for (const senderId of receivedRequests) {\n      await db.collection('users').updateOne({\n        _id: senderId\n      }, {\n        $pull: {\n          friendRequestsSent: userObjectId\n        }\n      });\n    }\n    await db.collection('activities').deleteMany({\n      userId: userObjectId\n    });\n    await db.collection('discussions').deleteMany({\n      userId: userObjectId\n    });\n    const userDeleteResult = await db.collection('users').deleteOne({\n      _id: userObjectId\n    });\n    if (userDeleteResult.deletedCount === 0) {\n      return {\n        success: false,\n        message: 'Failed to delete user',\n        errorCode: \"DELETE_FAILED\"\n      };\n    }\n    return {\n      success: true,\n      message: `User \"${user.username || userId}\" deleted successfully. Deleted ${deletedProjectCount} owned projects, cleaned ${memberProjects.length} memberships, ${friends.length} friendships, and related activities/discussions.`\n    };\n  } catch (error) {\n    console.error('Error deleting user:', error);\n    return {\n      success: false,\n      message: \"Failed to delete user\",\n      errorCode: \"DELETE_USER_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function getProject(projectId) {\n  try {\n    if (!projectId) {\n      return {\n        success: false,\n        message: \"Project ID is required\",\n        errorCode: \"MISSING_PROJECT_ID\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(projectId)) {\n      return {\n        success: false,\n        message: \"Invalid project ID format\",\n        errorCode: \"INVALID_PROJECT_ID\"\n      };\n    }\n    const objectid = new _mongodb.ObjectId(projectId);\n    const project = await db.collection('projects').findOne({\n      _id: {\n        $in: [objectid]\n      }\n    });\n    if (!project) {\n      return {\n        success: false,\n        message: \"Project not found\",\n        errorCode: \"PROJECT_NOT_FOUND\"\n      };\n    }\n    return {\n      success: true,\n      project: project\n    };\n  } catch (error) {\n    console.error(\"Error getting project:\", error);\n    return {\n      success: false,\n      message: \"Failed to retrieve project\",\n      errorCode: \"FETCH_PROJECT_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function searchUsers(searchTerm) {\n  try {\n    if (!searchTerm || searchTerm.trim().length === 0) {\n      return {\n        success: false,\n        message: \"Search term is required\",\n        errorCode: \"MISSING_SEARCH_TERM\"\n      };\n    }\n    const users = await db.collection('users').find({\n      username: new RegExp(searchTerm, 'i')\n    }).project({\n      password: 0\n    }).toArray();\n    return {\n      success: true,\n      users: users\n    };\n  } catch (error) {\n    console.error('Error searching users:', error);\n    return {\n      success: false,\n      message: \"Failed to search users\",\n      errorCode: \"SEARCH_USERS_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function searchAll(searchTerm) {\n  try {\n    if (!searchTerm || searchTerm.trim().length < 2) {\n      return {\n        success: true,\n        results: {\n          users: [],\n          projects: [],\n          hashtags: []\n        }\n      };\n    }\n    const regex = new RegExp(searchTerm.trim(), 'i');\n    const users = await db.collection('users').find({\n      username: regex\n    }).project({\n      password: 0,\n      email: 0\n    }).limit(10).toArray();\n    const projectsByName = await db.collection('projects').find({\n      name: regex\n    }).limit(10).toArray();\n    const projectsByHashtag = await db.collection('projects').find({\n      hashtags: regex\n    }).limit(10).toArray();\n    const allProjects = [...new Map([...projectsByName, ...projectsByHashtag].map(p => [p._id, p])).values()];\n    const allHashtags = new Set();\n    allProjects.forEach(project => {\n      project.hashtags?.forEach(tag => {\n        if (regex.test(tag)) {\n          allHashtags.add(tag);\n        }\n      });\n    });\n    const hashtags = Array.from(allHashtags);\n    return {\n      success: true,\n      results: {\n        users: users,\n        projects: allProjects,\n        hashtags: hashtags\n      }\n    };\n  } catch (error) {\n    console.error('Error in searchAll:', error);\n    return {\n      success: false,\n      message: \"Search failed\",\n      errorCode: \"SEARCH_ALL_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function asp() {\n  try {\n    await db.collection(\"projects\").updateMany({}, {\n      $set: {\n        image: \"default\"\n      }\n    });\n    return {\n      success: true,\n      message: \"All projects updated\"\n    };\n  } catch (error) {\n    console.error('Error in asp:', error);\n    return {\n      success: false,\n      message: \"Update failed\",\n      errorCode: \"ASP_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function addMemberToProject(projectId, userId) {\n  try {\n    if (!projectId || !userId) {\n      return {\n        success: false,\n        message: \"Project ID and user ID are required\",\n        errorCode: \"MISSING_IDS\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(projectId) || !_mongodb.ObjectId.isValid(userId)) {\n      return {\n        success: false,\n        message: \"Invalid ID format\",\n        errorCode: \"INVALID_ID_FORMAT\"\n      };\n    }\n    const projectObjectId = new _mongodb.ObjectId(projectId);\n    const userObjectId = new _mongodb.ObjectId(userId);\n    const project = await db.collection(\"projects\").findOne({\n      _id: projectObjectId\n    });\n    if (!project) {\n      return {\n        success: false,\n        message: \"Project not found\",\n        errorCode: \"PROJECT_NOT_FOUND\"\n      };\n    }\n    const user = await db.collection(\"users\").findOne({\n      _id: userObjectId\n    });\n    if (!user) {\n      return {\n        success: false,\n        message: \"User not found\",\n        errorCode: \"USER_NOT_FOUND\"\n      };\n    }\n    if (project.owner.toString() === userObjectId.toString() || project.members?.some(m => m.toString() === userObjectId.toString())) {\n      return {\n        success: false,\n        message: \"User is already a member or owner\",\n        errorCode: \"ALREADY_MEMBER\"\n      };\n    }\n    await db.collection(\"projects\").updateOne({\n      _id: projectObjectId\n    }, {\n      $addToSet: {\n        members: userObjectId\n      }\n    });\n    await db.collection(\"users\").updateOne({\n      _id: userObjectId\n    }, {\n      $addToSet: {\n        memberOfProjects: projectObjectId\n      }\n    });\n    return {\n      success: true,\n      message: \"User added as member successfully\"\n    };\n  } catch (error) {\n    console.error(\"Error adding member to project:\", error);\n    return {\n      success: false,\n      message: \"Failed to add member\",\n      errorCode: \"ADD_MEMBER_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function promoteMemberToOwner(projectId, userId) {\n  try {\n    if (!projectId || !userId) {\n      return {\n        success: false,\n        message: \"Project ID and user ID are required\",\n        errorCode: \"MISSING_IDS\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(projectId) || !_mongodb.ObjectId.isValid(userId)) {\n      return {\n        success: false,\n        message: \"Invalid ID format\",\n        errorCode: \"INVALID_ID_FORMAT\"\n      };\n    }\n    const projectObjectId = new _mongodb.ObjectId(projectId);\n    const userObjectId = new _mongodb.ObjectId(userId);\n    const project = await db.collection(\"projects\").findOne({\n      _id: projectObjectId\n    });\n    if (!project) {\n      return {\n        success: false,\n        message: \"Project not found\",\n        errorCode: \"PROJECT_NOT_FOUND\"\n      };\n    }\n    const isMember = project.members?.some(m => m.toString() === userObjectId.toString());\n    if (!isMember) {\n      return {\n        success: false,\n        message: \"User must be a member before becoming owner\",\n        errorCode: \"NOT_MEMBER\"\n      };\n    }\n    await db.collection(\"projects\").updateOne({\n      _id: projectObjectId\n    }, {\n      $set: {\n        owner: userObjectId\n      },\n      $pull: {\n        members: userObjectId\n      }\n    });\n    await db.collection(\"users\").updateOne({\n      _id: userObjectId\n    }, {\n      $addToSet: {\n        ownedProjects: projectObjectId\n      },\n      $pull: {\n        memberOfProjects: projectObjectId\n      }\n    });\n    const prevOwnerId = project.owner;\n    if (prevOwnerId) {\n      await db.collection(\"users\").updateOne({\n        _id: new _mongodb.ObjectId(prevOwnerId)\n      }, {\n        $pull: {\n          ownedProjects: projectObjectId\n        },\n        $addToSet: {\n          memberOfProjects: projectObjectId\n        }\n      });\n    }\n    return {\n      success: true,\n      message: \"Member promoted to owner successfully\"\n    };\n  } catch (error) {\n    console.error(\"Error promoting member to owner:\", error);\n    return {\n      success: false,\n      message: \"Failed to promote member\",\n      errorCode: \"PROMOTE_MEMBER_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function pinProjectToUser(userId, projectId) {\n  try {\n    if (!userId || !projectId) {\n      return {\n        success: false,\n        message: \"User ID and project ID are required\",\n        errorCode: \"MISSING_IDS\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(userId) || !_mongodb.ObjectId.isValid(projectId)) {\n      return {\n        success: false,\n        message: \"Invalid ID format\",\n        errorCode: \"INVALID_ID_FORMAT\"\n      };\n    }\n    const userObjectId = new _mongodb.ObjectId(userId);\n    const projectObjectId = new _mongodb.ObjectId(projectId);\n    const user = await db.collection(\"users\").findOne({\n      _id: userObjectId\n    });\n    if (!user) {\n      return {\n        success: false,\n        message: \"User not found\",\n        errorCode: \"USER_NOT_FOUND\"\n      };\n    }\n    const project = await db.collection(\"projects\").findOne({\n      _id: projectObjectId\n    });\n    if (!project) {\n      return {\n        success: false,\n        message: \"Project not found\",\n        errorCode: \"PROJECT_NOT_FOUND\"\n      };\n    }\n    const isOwner = project.owner?.toString() === userObjectId.toString();\n    const isMember = project.members?.some(m => m.toString() === userObjectId.toString());\n    if (!isOwner && !isMember) {\n      return {\n        success: false,\n        message: \"User must be an owner or member to pin this project\",\n        errorCode: \"UNAUTHORIZED\"\n      };\n    }\n    await db.collection(\"users\").updateOne({\n      _id: userObjectId\n    }, {\n      $addToSet: {\n        pinnedProjects: projectObjectId\n      }\n    });\n    return {\n      success: true,\n      message: \"Project pinned successfully\"\n    };\n  } catch (error) {\n    console.error(\"Error pinning project:\", error);\n    return {\n      success: false,\n      message: \"Failed to pin project\",\n      errorCode: \"PIN_PROJECT_ERROR\",\n      error: error.message\n    };\n  }\n}\nasync function getProjectFiles(projectId) {\n  try {\n    if (!projectId) {\n      return {\n        success: false,\n        message: \"Project ID is required\",\n        errorCode: \"MISSING_PROJECT_ID\"\n      };\n    }\n    if (!_mongodb.ObjectId.isValid(projectId)) {\n      return {\n        success: false,\n        message: \"Invalid project ID format\",\n        errorCode: \"INVALID_PROJECT_ID\"\n      };\n    }\n    const projectObjectId = new _mongodb.ObjectId(projectId);\n    const project = await db.collection(\"projects\").findOne({\n      _id: projectObjectId\n    }, {\n      projection: {\n        files: 1,\n        name: 1\n      }\n    });\n    if (!project) {\n      return {\n        success: false,\n        message: \"Project not found\",\n        errorCode: \"PROJECT_NOT_FOUND\"\n      };\n    }\n    return {\n      success: true,\n      projectName: project.name,\n      files: project.files || []\n    };\n  } catch (error) {\n    console.error(\"Error fetching project files:\", error);\n    return {\n      success: false,\n      message: \"Failed to retrieve project files\",\n      errorCode: \"FETCH_FILES_ERROR\",\n      error: error.message\n    };\n  }\n}\n\n//# sourceURL=webpack://veyo_imy220_project/./backend/api.js?\n}");
 
-// api calls
+/***/ }),
 
-app.get("/api/projects", /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(req, res) {
-    var projects;
-    return _regenerator().w(function (_context) {
-      while (1) switch (_context.n) {
-        case 0:
-          _context.n = 1;
-          return api.getAllProjects();
-        case 1:
-          projects = _context.v;
-          res.json(projects);
-        case 2:
-          return _context.a(2);
-      }
-    }, _callee);
-  }));
-  return function (_x, _x2) {
-    return _ref.apply(this, arguments);
-  };
-}());
-app.get("/api/projects/:userid", /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(req, res) {
-    var userid, projects;
-    return _regenerator().w(function (_context2) {
-      while (1) switch (_context2.n) {
-        case 0:
-          userid = req.params.userid;
-          _context2.n = 1;
-          return api.userProjects(userid);
-        case 1:
-          projects = _context2.v;
-          res.json(projects);
-        case 2:
-          return _context2.a(2);
-      }
-    }, _callee2);
-  }));
-  return function (_x3, _x4) {
-    return _ref2.apply(this, arguments);
-  };
-}());
-app.post("/api/signup", /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(req, res) {
-    var newuser;
-    return _regenerator().w(function (_context3) {
-      while (1) switch (_context3.n) {
-        case 0:
-          _context3.n = 1;
-          return api.signupUser(req.body);
-        case 1:
-          newuser = _context3.v;
-          res.json(newuser);
-        case 2:
-          return _context3.a(2);
-      }
-    }, _callee3);
-  }));
-  return function (_x5, _x6) {
-    return _ref3.apply(this, arguments);
-  };
-}());
-app.post("/api/login", /*#__PURE__*/function () {
-  var _ref4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4(req, res) {
-    var newuser;
-    return _regenerator().w(function (_context4) {
-      while (1) switch (_context4.n) {
-        case 0:
-          _context4.n = 1;
-          return api.authenticateUser(req.body);
-        case 1:
-          newuser = _context4.v;
-          res.json(newuser);
-        case 2:
-          return _context4.a(2);
-      }
-    }, _callee4);
-  }));
-  return function (_x7, _x8) {
-    return _ref4.apply(this, arguments);
-  };
-}());
-app.post("/api/project/feed", /*#__PURE__*/function () {
-  var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5(req, res) {
-    var feed;
-    return _regenerator().w(function (_context5) {
-      while (1) switch (_context5.n) {
-        case 0:
-          _context5.n = 1;
-          return api.getActivityFeed(req.body);
-        case 1:
-          feed = _context5.v;
-          res.json(feed);
-        case 2:
-          return _context5.a(2);
-      }
-    }, _callee5);
-  }));
-  return function (_x9, _x0) {
-    return _ref5.apply(this, arguments);
-  };
-}());
-app.post("/api/project/discussions", /*#__PURE__*/function () {
-  var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6(req, res) {
-    var feed;
-    return _regenerator().w(function (_context6) {
-      while (1) switch (_context6.n) {
-        case 0:
-          _context6.n = 1;
-          return api.getDiscussions(req.body);
-        case 1:
-          feed = _context6.v;
-          res.json(feed);
-        case 2:
-          return _context6.a(2);
-      }
-    }, _callee6);
-  }));
-  return function (_x1, _x10) {
-    return _ref6.apply(this, arguments);
-  };
-}());
-app.get("/api/types", /*#__PURE__*/function () {
-  var _ref7 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(req, res) {
-    var projects;
-    return _regenerator().w(function (_context7) {
-      while (1) switch (_context7.n) {
-        case 0:
-          _context7.n = 1;
-          return api.getAllTypes();
-        case 1:
-          projects = _context7.v;
-          res.json(projects);
-        case 2:
-          return _context7.a(2);
-      }
-    }, _callee7);
-  }));
-  return function (_x11, _x12) {
-    return _ref7.apply(this, arguments);
-  };
-}());
-app.get("/api/types/:typeid", /*#__PURE__*/function () {
-  var _ref8 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8(req, res) {
-    var typeid, projects;
-    return _regenerator().w(function (_context8) {
-      while (1) switch (_context8.n) {
-        case 0:
-          typeid = req.params.typeid;
-          _context8.n = 1;
-          return api.getProjectType(typeid);
-        case 1:
-          projects = _context8.v;
-          res.json(projects);
-        case 2:
-          return _context8.a(2);
-      }
-    }, _callee8);
-  }));
-  return function (_x13, _x14) {
-    return _ref8.apply(this, arguments);
-  };
-}());
-app.get("/api/user/:userid", /*#__PURE__*/function () {
-  var _ref9 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9(req, res) {
-    var userid, user;
-    return _regenerator().w(function (_context9) {
-      while (1) switch (_context9.n) {
-        case 0:
-          userid = req.params.userid;
-          _context9.n = 1;
-          return api.getUser(userid);
-        case 1:
-          user = _context9.v;
-          res.json(user);
-        case 2:
-          return _context9.a(2);
-      }
-    }, _callee9);
-  }));
-  return function (_x15, _x16) {
-    return _ref9.apply(this, arguments);
-  };
-}());
-app.get("/ap/project/:projectId", /*#__PURE__*/function () {
-  var _ref0 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0(req, res) {
-    var projectId, user;
-    return _regenerator().w(function (_context0) {
-      while (1) switch (_context0.n) {
-        case 0:
-          projectId = req.params.projectId;
-          _context0.n = 1;
-          return api.getProject(projectId);
-        case 1:
-          user = _context0.v;
-          res.json(user);
-        case 2:
-          return _context0.a(2);
-      }
-    }, _callee0);
-  }));
-  return function (_x17, _x18) {
-    return _ref0.apply(this, arguments);
-  };
-}());
-app.put("/api/user", /*#__PURE__*/function () {
-  var _ref1 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee1(req, res) {
-    var _req$body, _id, updateData, response, _t;
-    return _regenerator().w(function (_context1) {
-      while (1) switch (_context1.p = _context1.n) {
-        case 0:
-          _context1.p = 0;
-          _req$body = req.body, _id = _req$body._id, updateData = _objectWithoutProperties(_req$body, _excluded);
-          if (!(!_id || typeof _id !== 'string')) {
-            _context1.n = 1;
-            break;
-          }
-          return _context1.a(2, res.status(400).json({
-            success: false,
-            message: 'User  ID is required and must be a string'
-          }));
-        case 1:
-          _context1.n = 2;
-          return api.updateUserInfo(req.body);
-        case 2:
-          response = _context1.v;
-          if (response.success) {
-            res.status(200).json(response);
-          } else {
-            res.status(400).json(response);
-          }
-          _context1.n = 4;
-          break;
-        case 3:
-          _context1.p = 3;
-          _t = _context1.v;
-          console.error("Error updating user: ", _t);
-          res.status(500).json({
-            success: false,
-            message: 'Internal server error'
-          });
-        case 4:
-          return _context1.a(2);
-      }
-    }, _callee1, null, [[0, 3]]);
-  }));
-  return function (_x19, _x20) {
-    return _ref1.apply(this, arguments);
-  };
-}());
-app.put("/api/project", /*#__PURE__*/function () {
-  var _ref10 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee10(req, res) {
-    var response;
-    return _regenerator().w(function (_context10) {
-      while (1) switch (_context10.n) {
-        case 0:
-          _context10.n = 1;
-          return api.updateProject(req.body);
-        case 1:
-          response = _context10.v;
-          res.json(response);
-        case 2:
-          return _context10.a(2);
-      }
-    }, _callee10);
-  }));
-  return function (_x21, _x22) {
-    return _ref10.apply(this, arguments);
-  };
-}());
-app.post("/api/projects/create", /*#__PURE__*/function () {
-  var _ref11 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee11(req, res) {
-    var ownerId, response;
-    return _regenerator().w(function (_context11) {
-      while (1) switch (_context11.n) {
-        case 0:
-          ownerId = req.body.ownerId;
-          _context11.n = 1;
-          return api.createProject(req.body, ownerId);
-        case 1:
-          response = _context11.v;
-          res.json(response);
-        case 2:
-          return _context11.a(2);
-      }
-    }, _callee11);
-  }));
-  return function (_x23, _x24) {
-    return _ref11.apply(this, arguments);
-  };
-}());
-app.post('/api/friends/request', /*#__PURE__*/function () {
-  var _ref12 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee12(req, res) {
-    var _req$body2, receiverId, senderId, response, _t2;
-    return _regenerator().w(function (_context12) {
-      while (1) switch (_context12.p = _context12.n) {
-        case 0:
-          _context12.p = 0;
-          _req$body2 = req.body, receiverId = _req$body2.receiverId, senderId = _req$body2.senderId; // Check for self-request
-          if (!(senderId === receiverId)) {
-            _context12.n = 1;
-            break;
-          }
-          return _context12.a(2, res.status(400).json({
-            success: false,
-            message: 'Cannot send friend request to yourself'
-          }));
-        case 1:
-          _context12.n = 2;
-          return api.sendFriendRequest(senderId, receiverId);
-        case 2:
-          response = _context12.v;
-          res.status(response.success ? 200 : 400).json(response);
-          _context12.n = 4;
-          break;
-        case 3:
-          _context12.p = 3;
-          _t2 = _context12.v;
-          console.error('Error in send friend request route:', _t2);
-          res.status(500).json({
-            success: false,
-            message: 'Server error'
-          });
-        case 4:
-          return _context12.a(2);
-      }
-    }, _callee12, null, [[0, 3]]);
-  }));
-  return function (_x25, _x26) {
-    return _ref12.apply(this, arguments);
-  };
-}());
-app.post('/api/friends/accept', /*#__PURE__*/function () {
-  var _ref13 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee13(req, res) {
-    var _req$body3, senderId, receiverId, response, _t3;
-    return _regenerator().w(function (_context13) {
-      while (1) switch (_context13.p = _context13.n) {
-        case 0:
-          _context13.p = 0;
-          _req$body3 = req.body, senderId = _req$body3.senderId, receiverId = _req$body3.receiverId; // Check for self-accept
-          if (!(receiverId === senderId)) {
-            _context13.n = 1;
-            break;
-          }
-          return _context13.a(2, res.status(400).json({
-            success: false,
-            message: 'Cannot accept your own request'
-          }));
-        case 1:
-          _context13.n = 2;
-          return api.acceptFriendRequest(receiverId, senderId);
-        case 2:
-          response = _context13.v;
-          res.status(response.success ? 200 : 400).json(response);
-          _context13.n = 4;
-          break;
-        case 3:
-          _context13.p = 3;
-          _t3 = _context13.v;
-          console.error('Error in accept friend request route:', _t3);
-          res.status(500).json({
-            success: false,
-            message: 'Server error'
-          });
-        case 4:
-          return _context13.a(2);
-      }
-    }, _callee13, null, [[0, 3]]);
-  }));
-  return function (_x27, _x28) {
-    return _ref13.apply(this, arguments);
-  };
-}());
-app.post('/api/friends/decline', /*#__PURE__*/function () {
-  var _ref14 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee14(req, res) {
-    var _req$body4, senderId, receiverId, response, _t4;
-    return _regenerator().w(function (_context14) {
-      while (1) switch (_context14.p = _context14.n) {
-        case 0:
-          _context14.p = 0;
-          _req$body4 = req.body, senderId = _req$body4.senderId, receiverId = _req$body4.receiverId; // Check for self-decline
-          if (!(receiverId === senderId)) {
-            _context14.n = 1;
-            break;
-          }
-          return _context14.a(2, res.status(400).json({
-            success: false,
-            message: 'Cannot decline your own request'
-          }));
-        case 1:
-          _context14.n = 2;
-          return api.declineFriendRequest(receiverId, senderId);
-        case 2:
-          response = _context14.v;
-          res.status(response.success ? 200 : 400).json(response);
-          _context14.n = 4;
-          break;
-        case 3:
-          _context14.p = 3;
-          _t4 = _context14.v;
-          console.error('Error in decline friend request route:', _t4);
-          res.status(500).json({
-            success: false,
-            message: 'Server error'
-          });
-        case 4:
-          return _context14.a(2);
-      }
-    }, _callee14, null, [[0, 3]]);
-  }));
-  return function (_x29, _x30) {
-    return _ref14.apply(this, arguments);
-  };
-}());
-app.post('/api/friends/remove', /*#__PURE__*/function () {
-  var _ref15 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee15(req, res) {
-    var _req$body5, friendId, userId, response, _t5;
-    return _regenerator().w(function (_context15) {
-      while (1) switch (_context15.p = _context15.n) {
-        case 0:
-          _context15.p = 0;
-          _req$body5 = req.body, friendId = _req$body5.friendId, userId = _req$body5.userId; // Check for self-remove
-          if (!(userId === friendId)) {
-            _context15.n = 1;
-            break;
-          }
-          return _context15.a(2, res.status(400).json({
-            success: false,
-            message: 'Cannot remove yourself as a friend'
-          }));
-        case 1:
-          _context15.n = 2;
-          return api.removeFriend(userId, friendId);
-        case 2:
-          response = _context15.v;
-          res.status(response.success ? 200 : 400).json(response);
-          _context15.n = 4;
-          break;
-        case 3:
-          _context15.p = 3;
-          _t5 = _context15.v;
-          console.error('Error in remove friend route:', _t5);
-          res.status(500).json({
-            success: false,
-            message: 'Server error'
-          });
-        case 4:
-          return _context15.a(2);
-      }
-    }, _callee15, null, [[0, 3]]);
-  }));
-  return function (_x31, _x32) {
-    return _ref15.apply(this, arguments);
-  };
-}());
-app.post("/api/activity", /*#__PURE__*/function () {
-  var _ref16 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee16(req, res) {
-    var response, _t6;
-    return _regenerator().w(function (_context16) {
-      while (1) switch (_context16.p = _context16.n) {
-        case 0:
-          _context16.p = 0;
-          _context16.n = 1;
-          return api.addActivityEntry(req.body);
-        case 1:
-          response = _context16.v;
-          res.status(response.success ? 200 : 400).json(response);
-          _context16.n = 3;
-          break;
-        case 2:
-          _context16.p = 2;
-          _t6 = _context16.v;
-          console.error('Error in remove friend route:', _t6);
-          res.status(500).json({
-            success: false,
-            message: 'Server error'
-          });
-        case 3:
-          return _context16.a(2);
-      }
-    }, _callee16, null, [[0, 2]]);
-  }));
-  return function (_x33, _x34) {
-    return _ref16.apply(this, arguments);
-  };
-}());
-app.post("/api/discussion", /*#__PURE__*/function () {
-  var _ref17 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee17(req, res) {
-    var response, _t7;
-    return _regenerator().w(function (_context17) {
-      while (1) switch (_context17.p = _context17.n) {
-        case 0:
-          _context17.p = 0;
-          _context17.n = 1;
-          return api.addDiscussionEntry(req.body);
-        case 1:
-          response = _context17.v;
-          res.status(response.success ? 200 : 400).json(response);
-          _context17.n = 3;
-          break;
-        case 2:
-          _context17.p = 2;
-          _t7 = _context17.v;
-          console.error('Error in remove friend route:', _t7);
-          res.status(500).json({
-            success: false,
-            message: 'Server error'
-          });
-        case 3:
-          return _context17.a(2);
-      }
-    }, _callee17, null, [[0, 2]]);
-  }));
-  return function (_x35, _x36) {
-    return _ref17.apply(this, arguments);
-  };
-}());
+/***/ "./backend/server.js":
+/*!***************************!*\
+  !*** ./backend/server.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-// DELETE /api/projects/:projectId - Delete a project (requires auth, must be owner)
-app["delete"]('/api/projects/:projectId/:requesterId', /*#__PURE__*/function () {
-  var _ref18 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee18(req, res) {
-    var _req$params, projectId, requesterId, response, _t8;
-    return _regenerator().w(function (_context18) {
-      while (1) switch (_context18.p = _context18.n) {
-        case 0:
-          _context18.p = 0;
-          _req$params = req.params, projectId = _req$params.projectId, requesterId = _req$params.requesterId; // Validate projectId format
-          if (projectId) {
-            _context18.n = 1;
-            break;
-          }
-          return _context18.a(2, res.status(400).json({
-            success: false,
-            message: 'project id needed'
-          }));
-        case 1:
-          _context18.n = 2;
-          return api.deleteProject(projectId, requesterId);
-        case 2:
-          response = _context18.v;
-          res.status(response.success ? 200 : 400).json(response);
-          _context18.n = 4;
-          break;
-        case 3:
-          _context18.p = 3;
-          _t8 = _context18.v;
-          console.error('Error in delete project route:', _t8);
-          res.status(500).json({
-            success: false,
-            message: 'Server error'
-          });
-        case 4:
-          return _context18.a(2);
-      }
-    }, _callee18, null, [[0, 3]]);
-  }));
-  return function (_x37, _x38) {
-    return _ref18.apply(this, arguments);
-  };
-}());
+eval("{\n\nvar _express = _interopRequireDefault(__webpack_require__(/*! express */ \"express\"));\nvar _path = _interopRequireDefault(__webpack_require__(/*! path */ \"path\"));\nvar _url = __webpack_require__(/*! url */ \"url\");\nvar api = _interopRequireWildcard(__webpack_require__(/*! ../backend/api */ \"./backend/api.js\"));\nvar _multer = _interopRequireDefault(__webpack_require__(/*! multer */ \"multer\"));\nvar _fs = _interopRequireDefault(__webpack_require__(/*! fs */ \"fs\"));\nvar _mongodb = __webpack_require__(/*! mongodb */ \"mongodb\");\nfunction _interopRequireWildcard(e, t) { if (\"function\" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function (e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, default: e }; if (null === e || \"object\" != typeof e && \"function\" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (const t in e) \"default\" !== t && {}.hasOwnProperty.call(e, t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, t)) && (i.get || i.set) ? o(f, t, i) : f[t] = e[t]); return f; })(e, t); }\nfunction _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }\nconst _filename = (0, _url.fileURLToPath)(\"file:///C:/Users/Okail/OneDrive/Desktop/IMY220/project/u23527685IMY220Project/backend/server.js\");\nconst _dirname = _path.default.dirname(_filename);\nconst app = (0, _express.default)();\nconst port = process.env.PORT || 3000;\napp.use(_express.default.json());\napp.use(_express.default.urlencoded({\n  extended: true\n}));\napp.use(_express.default.static(\"frontend/public\"));\n\n// Error code to HTTP status code mapping\nconst errorCodeToStatus = {\n  // 400 - Bad Request\n  MISSING_CREDENTIALS: 400,\n  MISSING_FIELDS: 400,\n  MISSING_USER_ID: 400,\n  MISSING_PROJECT_ID: 400,\n  MISSING_TYPE_ID: 400,\n  MISSING_IDS: 400,\n  MISSING_OWNER_ID: 400,\n  MISSING_PROJECT_NAME: 400,\n  MISSING_PROJECT_TYPE: 400,\n  MISSING_SEARCH_TERM: 400,\n  MISSING_FILE: 400,\n  MISSING_FILENAME: 400,\n  INVALID_EMAIL: 400,\n  INVALID_USER_ID: 400,\n  INVALID_PROJECT_ID: 400,\n  INVALID_TYPE_ID: 400,\n  INVALID_ID_FORMAT: 400,\n  INVALID_OWNER_ID: 400,\n  INVALID_FEED_FORMAT: 400,\n  INVALID_DISCUSSIONS_FORMAT: 400,\n  SELF_REQUEST: 400,\n  REQUEST_INCORRECT: 400,\n  // 401 - Unauthorized\n  INVALID_CREDENTIALS: 401,\n  // 403 - Forbidden\n  UNAUTHORIZED: 403,\n  // 404 - Not Found\n  USER_NOT_FOUND: 404,\n  PROJECT_NOT_FOUND: 404,\n  TYPE_NOT_FOUND: 404,\n  REQUEST_NOT_FOUND: 404,\n  FILE_NOT_FOUND: 404,\n  ENDPOINT_NOT_FOUND: 404,\n  // 409 - Conflict\n  USER_EXISTS: 409,\n  USERNAME_TAKEN: 409,\n  PROJECT_NAME_EXISTS: 409,\n  ALREADY_FRIENDS: 409,\n  ALREADY_MEMBER: 409,\n  REQUEST_EXISTS: 409,\n  // 422 - Unprocessable Entity\n  NOT_MEMBER: 422,\n  // 500 - Internal Server Error (default)\n  AUTH_ERROR: 500,\n  SIGNUP_ERROR: 500,\n  FETCH_PROJECTS_ERROR: 500,\n  FETCH_USER_PROJECTS_ERROR: 500,\n  FETCH_ACTIVITY_ERROR: 500,\n  FETCH_DISCUSSIONS_ERROR: 500,\n  FETCH_TYPES_ERROR: 500,\n  FETCH_PROJECT_TYPE_ERROR: 500,\n  FETCH_USER_ERROR: 500,\n  FETCH_PROJECT_ERROR: 500,\n  FETCH_FILES_ERROR: 500,\n  FETCH_FILE_ERROR: 500,\n  UPDATE_USER_ERROR: 500,\n  UPDATE_PROJECT_ERROR: 500,\n  CREATE_PROJECT_ERROR: 500,\n  PROJECT_INSERT_FAILED: 500,\n  USER_UPDATE_FAILED: 500,\n  FRIEND_REQUEST_ERROR: 500,\n  ACCEPT_REQUEST_ERROR: 500,\n  DECLINE_REQUEST_ERROR: 500,\n  REMOVE_FRIEND_ERROR: 500,\n  ADD_ACTIVITY_ERROR: 500,\n  ACTIVITY_INSERT_FAILED: 500,\n  ADD_DISCUSSION_ERROR: 500,\n  DISCUSSION_INSERT_FAILED: 500,\n  DELETE_PROJECT_ERROR: 500,\n  DELETE_USER_ERROR: 500,\n  DELETE_FAILED: 500,\n  SEARCH_USERS_ERROR: 500,\n  SEARCH_ALL_ERROR: 500,\n  ADD_MEMBER_ERROR: 500,\n  PROMOTE_MEMBER_ERROR: 500,\n  PIN_PROJECT_ERROR: 500,\n  ASP_ERROR: 500,\n  UPLOAD_ERROR: 500,\n  FILE_TOO_LARGE: 400,\n  SERVER_ERROR: 500\n};\n\n// Helper function to get appropriate status code\nfunction getStatusCode(errorCode) {\n  return errorCodeToStatus[errorCode] || 500;\n}\n\n// Handle all React Router routes\napp.get('/', (req, res) => {\n  res.sendFile(_path.default.resolve('frontend', 'public', 'index.html'));\n});\napp.get('/home', (req, res) => {\n  res.sendFile(_path.default.resolve('frontend', 'public', 'index.html'));\n});\napp.get('/profile', (req, res) => {\n  res.sendFile(_path.default.resolve('frontend', 'public', 'index.html'));\n});\napp.get('/profile/:username', (req, res) => {\n  res.sendFile(_path.default.resolve('frontend', 'public', 'index.html'));\n});\napp.get('/projects/:username', (req, res) => {\n  res.sendFile(_path.default.resolve('frontend', 'public', 'index.html'));\n});\napp.get('/projects/:owner/:name', (req, res) => {\n  res.sendFile(_path.default.resolve('frontend', 'public', 'index.html'));\n});\napp.get('/project/:name/:owner', (req, res) => {\n  res.sendFile(_path.default.resolve('frontend', 'public', 'index.html'));\n});\napp.use(\"/uploads\", _express.default.static(_path.default.join(process.cwd(), \"uploads\")));\n\n// File upload configuration\nconst uploadDir = _path.default.join(process.cwd(), \"uploads\");\nif (!_fs.default.existsSync(uploadDir)) _fs.default.mkdirSync(uploadDir);\nconst storage = _multer.default.diskStorage({\n  destination: function (req, file, cb) {\n    cb(null, uploadDir);\n  },\n  filename: function (req, file, cb) {\n    const projectId = req.params.projectId;\n    const uniqueName = `${projectId}_${file.originalname}`;\n    cb(null, uniqueName);\n  }\n});\nconst upload = (0, _multer.default)({\n  storage: storage\n});\n\n// API Routes\n\napp.get(\"/api/projects\", async (req, res) => {\n  try {\n    const projects = await api.getAllProjects();\n    if (projects.success) {\n      res.status(200).json(projects);\n    } else {\n      const statusCode = getStatusCode(projects.errorCode);\n      res.status(statusCode).json(projects);\n    }\n  } catch (error) {\n    console.error('Error in /api/projects:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.get(\"/api/projects/:userid\", async (req, res) => {\n  try {\n    const {\n      userid\n    } = req.params;\n    if (!userid) {\n      return res.status(400).json({\n        success: false,\n        message: 'User ID is required',\n        errorCode: 'MISSING_USER_ID'\n      });\n    }\n    const projects = await api.userProjects(userid);\n    if (projects.success) {\n      res.status(200).json(projects);\n    } else {\n      const statusCode = getStatusCode(projects.errorCode);\n      res.status(statusCode).json(projects);\n    }\n  } catch (error) {\n    console.error('Error in /api/projects/:userid:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.post(\"/api/signup\", async (req, res) => {\n  try {\n    const {\n      username,\n      password,\n      email\n    } = req.body;\n    if (!username || !password || !email) {\n      return res.status(400).json({\n        success: false,\n        message: 'Username, password, and email are required',\n        errorCode: 'MISSING_FIELDS'\n      });\n    }\n    const newuser = await api.signupUser(req.body);\n    if (newuser.success) {\n      res.status(201).json(newuser);\n    } else {\n      const statusCode = getStatusCode(newuser.errorCode);\n      res.status(statusCode).json(newuser);\n    }\n  } catch (error) {\n    console.error('Error in /api/signup:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.post(\"/api/login\", async (req, res) => {\n  try {\n    const {\n      username,\n      password\n    } = req.body;\n    if (!username || !password) {\n      return res.status(400).json({\n        success: false,\n        message: 'Username and password are required',\n        errorCode: 'MISSING_CREDENTIALS'\n      });\n    }\n    const result = await api.authenticateUser(req.body);\n    if (result.success) {\n      res.status(200).json(result);\n    } else {\n      const statusCode = getStatusCode(result.errorCode);\n      res.status(statusCode).json(result);\n    }\n  } catch (error) {\n    console.error('Error in /api/login:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.post(\"/api/project/feed\", async (req, res) => {\n  try {\n    if (!req.body || !Array.isArray(req.body)) {\n      return res.status(400).json({\n        success: false,\n        message: 'Invalid feed format',\n        errorCode: 'INVALID_FEED_FORMAT'\n      });\n    }\n    const feed = await api.getActivityFeed(req.body);\n    if (feed.success) {\n      res.status(200).json(feed);\n    } else {\n      const statusCode = getStatusCode(feed.errorCode);\n      res.status(statusCode).json(feed);\n    }\n  } catch (error) {\n    console.error('Error in /api/project/feed:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.post(\"/api/project/discussions\", async (req, res) => {\n  try {\n    if (!req.body || !Array.isArray(req.body)) {\n      return res.status(400).json({\n        success: false,\n        message: 'Invalid discussions format',\n        errorCode: 'INVALID_DISCUSSIONS_FORMAT'\n      });\n    }\n    const discussions = await api.getDiscussions(req.body);\n    if (discussions.success) {\n      res.status(200).json(discussions);\n    } else {\n      const statusCode = getStatusCode(discussions.errorCode);\n      res.status(statusCode).json(discussions);\n    }\n  } catch (error) {\n    console.error('Error in /api/project/discussions:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.get(\"/api/types\", async (req, res) => {\n  try {\n    const types = await api.getAllTypes();\n    if (types.success) {\n      res.status(200).json(types);\n    } else {\n      const statusCode = getStatusCode(types.errorCode);\n      res.status(statusCode).json(types);\n    }\n  } catch (error) {\n    console.error('Error in /api/types:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.get(\"/api/types/:typeid\", async (req, res) => {\n  try {\n    const {\n      typeid\n    } = req.params;\n    if (!typeid) {\n      return res.status(400).json({\n        success: false,\n        message: 'Type ID is required',\n        errorCode: 'MISSING_TYPE_ID'\n      });\n    }\n    const types = await api.getProjectType(typeid);\n    if (types.success) {\n      res.status(200).json(types);\n    } else {\n      const statusCode = getStatusCode(types.errorCode);\n      res.status(statusCode).json(types);\n    }\n  } catch (error) {\n    console.error('Error in /api/types/:typeid:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.get(\"/api/user/:userid\", async (req, res) => {\n  try {\n    const {\n      userid\n    } = req.params;\n    if (!userid) {\n      return res.status(400).json({\n        success: false,\n        message: 'User ID is required',\n        errorCode: 'MISSING_USER_ID'\n      });\n    }\n    const user = await api.getUser(userid);\n    if (user.success) {\n      res.status(200).json(user);\n    } else {\n      const statusCode = getStatusCode(user.errorCode);\n      res.status(statusCode).json(user);\n    }\n  } catch (error) {\n    console.error('Error in /api/user/:userid:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.get(\"/ap/project/:projectId\", async (req, res) => {\n  try {\n    const {\n      projectId\n    } = req.params;\n    if (!projectId) {\n      return res.status(400).json({\n        success: false,\n        message: 'Project ID is required',\n        errorCode: 'MISSING_PROJECT_ID'\n      });\n    }\n    const project = await api.getProject(projectId);\n    if (project.success) {\n      res.status(200).json(project);\n    } else {\n      const statusCode = getStatusCode(project.errorCode);\n      res.status(statusCode).json(project);\n    }\n  } catch (error) {\n    console.error('Error in /ap/project/:projectId:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.put(\"/api/user\", async (req, res) => {\n  try {\n    const {\n      _id,\n      ...updateData\n    } = req.body;\n    if (!_id || typeof _id !== 'string') {\n      return res.status(400).json({\n        success: false,\n        message: 'User ID is required and must be a string',\n        errorCode: 'MISSING_USER_ID'\n      });\n    }\n    const response = await api.updateUserInfo(req.body);\n    if (response.success) {\n      res.status(200).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error(\"Error in /api/user PUT:\", error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.put(\"/api/project\", async (req, res) => {\n  try {\n    if (!req.body._id) {\n      return res.status(400).json({\n        success: false,\n        message: 'Project ID is required',\n        errorCode: 'MISSING_PROJECT_ID'\n      });\n    }\n    const response = await api.updateProject(req.body);\n    if (response.success) {\n      res.status(200).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error(\"Error in /api/project PUT:\", error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.post(\"/api/projects/create\", async (req, res) => {\n  try {\n    const {\n      ownerId,\n      projectName,\n      projectType\n    } = req.body;\n    if (!ownerId) {\n      return res.status(400).json({\n        success: false,\n        message: 'Owner ID is required',\n        errorCode: 'MISSING_OWNER_ID'\n      });\n    }\n    if (!projectName) {\n      return res.status(400).json({\n        success: false,\n        message: 'Project name is required',\n        errorCode: 'MISSING_PROJECT_NAME'\n      });\n    }\n    if (!projectType) {\n      return res.status(400).json({\n        success: false,\n        message: 'Project type is required',\n        errorCode: 'MISSING_PROJECT_TYPE'\n      });\n    }\n    const response = await api.createProject(req.body, ownerId);\n    if (response.success) {\n      res.status(201).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error(\"Error in /api/projects/create:\", error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.post('/api/friends/request', async (req, res) => {\n  try {\n    const {\n      receiverId,\n      senderId\n    } = req.body;\n    if (!senderId || !receiverId) {\n      return res.status(400).json({\n        success: false,\n        message: 'Sender and receiver IDs are required',\n        errorCode: 'MISSING_IDS'\n      });\n    }\n    if (senderId === receiverId) {\n      return res.status(400).json({\n        success: false,\n        message: 'Cannot send friend request to yourself',\n        errorCode: 'SELF_REQUEST'\n      });\n    }\n    const response = await api.sendFriendRequest(senderId, receiverId);\n    if (response.success) {\n      res.status(200).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error('Error in /api/friends/request:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.post('/api/friends/accept', async (req, res) => {\n  try {\n    const {\n      senderId,\n      receiverId\n    } = req.body;\n    if (!senderId || !receiverId) {\n      return res.status(400).json({\n        success: false,\n        message: 'Sender and receiver IDs are required',\n        errorCode: 'MISSING_IDS'\n      });\n    }\n    if (receiverId === senderId) {\n      return res.status(400).json({\n        success: false,\n        message: 'Cannot accept your own request',\n        errorCode: 'SELF_REQUEST'\n      });\n    }\n    const response = await api.acceptFriendRequest(receiverId, senderId);\n    if (response.success) {\n      res.status(200).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error('Error in /api/friends/accept:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.post('/api/friends/decline', async (req, res) => {\n  try {\n    const {\n      senderId,\n      receiverId\n    } = req.body;\n    if (!senderId || !receiverId) {\n      return res.status(400).json({\n        success: false,\n        message: 'Sender and receiver IDs are required',\n        errorCode: 'MISSING_IDS'\n      });\n    }\n    if (receiverId === senderId) {\n      return res.status(400).json({\n        success: false,\n        message: 'Cannot decline your own request',\n        errorCode: 'SELF_REQUEST'\n      });\n    }\n    const response = await api.declineFriendRequest(receiverId, senderId);\n    if (response.success) {\n      res.status(200).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error('Error in /api/friends/decline:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.post('/api/friends/remove', async (req, res) => {\n  try {\n    const {\n      friendId,\n      userId\n    } = req.body;\n    if (!userId || !friendId) {\n      return res.status(400).json({\n        success: false,\n        message: 'User ID and friend ID are required',\n        errorCode: 'MISSING_IDS'\n      });\n    }\n    if (userId === friendId) {\n      return res.status(400).json({\n        success: false,\n        message: 'Cannot remove yourself as a friend',\n        errorCode: 'SELF_REQUEST'\n      });\n    }\n    const response = await api.removeFriend(userId, friendId);\n    if (response.success) {\n      res.status(200).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error('Error in /api/friends/remove:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.post(\"/api/activity\", async (req, res) => {\n  try {\n    const {\n      projectId,\n      userId,\n      type,\n      message\n    } = req.body;\n    if (!projectId || !userId || !type || !message) {\n      return res.status(400).json({\n        success: false,\n        message: 'Project ID, user ID, type, and message are required',\n        errorCode: 'MISSING_FIELDS'\n      });\n    }\n    const response = await api.addActivityEntry(req.body);\n    if (response.success) {\n      res.status(201).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error('Error in /api/activity:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.post(\"/api/discussion\", async (req, res) => {\n  try {\n    const {\n      projectId,\n      userId,\n      message\n    } = req.body;\n    if (!projectId || !userId || !message) {\n      return res.status(400).json({\n        success: false,\n        message: 'Project ID, user ID, and message are required',\n        errorCode: 'MISSING_FIELDS'\n      });\n    }\n    const response = await api.addDiscussionEntry(req.body);\n    if (response.success) {\n      res.status(201).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error('Error in /api/discussion:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.delete('/api/projects/:projectId/:requesterId', async (req, res) => {\n  try {\n    const {\n      projectId,\n      requesterId\n    } = req.params;\n    if (!projectId || !requesterId) {\n      return res.status(400).json({\n        success: false,\n        message: 'Project ID and requester ID are required',\n        errorCode: 'MISSING_IDS'\n      });\n    }\n    const response = await api.deleteProject(projectId, requesterId);\n    if (response.success) {\n      res.status(200).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error('Error in DELETE /api/projects/:projectId/:requesterId:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.delete('/api/users/:userId/:requesterId', async (req, res) => {\n  try {\n    const {\n      userId,\n      requesterId\n    } = req.params;\n    if (!userId || !requesterId) {\n      return res.status(400).json({\n        success: false,\n        message: 'User ID and requester ID are required',\n        errorCode: 'MISSING_IDS'\n      });\n    }\n    if (userId !== requesterId) {\n      return res.status(403).json({\n        success: false,\n        message: 'You can only delete your own account',\n        errorCode: 'UNAUTHORIZED'\n      });\n    }\n    const response = await api.deleteUser(userId, requesterId);\n    if (response.success) {\n      res.status(200).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error('Error in DELETE /api/users/:userId/:requesterId:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.get(\"/api/users/search\", async (req, res) => {\n  try {\n    const {\n      q\n    } = req.query;\n    if (!q) {\n      return res.status(400).json({\n        success: false,\n        message: \"Search term 'q' is required\",\n        errorCode: 'MISSING_SEARCH_TERM'\n      });\n    }\n    const response = await api.searchUsers(q);\n    if (response.success) {\n      res.status(200).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error('Error in /api/users/search:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.get(\"/api/search\", async (req, res) => {\n  try {\n    const {\n      q: searchTerm\n    } = req.query;\n    if (!searchTerm) {\n      return res.status(400).json({\n        success: false,\n        message: \"Search term 'q' is required\",\n        errorCode: 'MISSING_SEARCH_TERM'\n      });\n    }\n    const response = await api.searchAll(searchTerm);\n    if (response.success) {\n      res.status(200).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error('Error in /api/search:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.post(\"/api/projects/add-member\", async (req, res) => {\n  try {\n    const {\n      projectId,\n      userId\n    } = req.body;\n    if (!projectId || !userId) {\n      return res.status(400).json({\n        success: false,\n        message: 'Project ID and user ID are required',\n        errorCode: 'MISSING_IDS'\n      });\n    }\n    const response = await api.addMemberToProject(projectId, userId);\n    if (response.success) {\n      res.status(200).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error('Error in /api/projects/add-member:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.post(\"/api/projects/promote\", async (req, res) => {\n  try {\n    const {\n      projectId,\n      userId\n    } = req.body;\n    if (!projectId || !userId) {\n      return res.status(400).json({\n        success: false,\n        message: 'Project ID and user ID are required',\n        errorCode: 'MISSING_IDS'\n      });\n    }\n    const response = await api.promoteMemberToOwner(projectId, userId);\n    if (response.success) {\n      res.status(200).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error('Error in /api/projects/promote:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.post(\"/api/users/pin\", async (req, res) => {\n  try {\n    const {\n      userId,\n      projectId\n    } = req.body;\n    if (!userId || !projectId) {\n      return res.status(400).json({\n        success: false,\n        message: 'User ID and project ID are required',\n        errorCode: 'MISSING_IDS'\n      });\n    }\n    const response = await api.pinProjectToUser(userId, projectId);\n    if (response.success) {\n      res.status(200).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error('Error in /api/users/pin:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.post(\"/api/projects/upload\", upload.single(\"file\"), async (req, res) => {\n  try {\n    const {\n      projectId\n    } = req.body;\n    if (!projectId) {\n      if (req.file && req.file.path) {\n        _fs.default.unlinkSync(req.file.path);\n      }\n      return res.status(400).json({\n        success: false,\n        message: 'Project ID is required',\n        errorCode: 'MISSING_PROJECT_ID'\n      });\n    }\n    if (!req.file) {\n      return res.status(400).json({\n        success: false,\n        message: 'No file uploaded',\n        errorCode: 'MISSING_FILE'\n      });\n    }\n    if (!_mongodb.ObjectId.isValid(projectId)) {\n      if (req.file && req.file.path) {\n        _fs.default.unlinkSync(req.file.path);\n      }\n      return res.status(400).json({\n        success: false,\n        message: 'Invalid project ID format',\n        errorCode: 'INVALID_PROJECT_ID'\n      });\n    }\n    const projectObjectId = new _mongodb.ObjectId(projectId);\n\n    // Get database connection\n    const db = await api.connectToMongoDB();\n    const project = await db.collection(\"projects\").findOne({\n      _id: projectObjectId\n    });\n    if (!project) {\n      if (req.file && req.file.path) {\n        _fs.default.unlinkSync(req.file.path);\n      }\n      return res.status(404).json({\n        success: false,\n        message: \"Project not found\",\n        errorCode: 'PROJECT_NOT_FOUND'\n      });\n    }\n    const fileName = req.file.originalname;\n    const storedName = `${projectId}_${fileName}`;\n    const filePath = _path.default.join(process.cwd(), \"uploads\", storedName);\n\n    // If file already exists, delete old version\n    if (_fs.default.existsSync(filePath) && filePath !== req.file.path) {\n      _fs.default.unlinkSync(filePath);\n    }\n    const fileData = {\n      fileName,\n      filePath: `/uploads/${storedName}`,\n      fileSize: req.file.size,\n      uploadedAt: new Date(),\n      lastModifiedAt: new Date()\n    };\n    await db.collection(\"projects\").updateOne({\n      _id: projectObjectId\n    }, {\n      $pull: {\n        files: {\n          fileName\n        }\n      },\n      $push: {\n        files: fileData\n      }\n    });\n    res.status(201).json({\n      success: true,\n      message: \"File uploaded/updated successfully\",\n      file: fileData\n    });\n  } catch (error) {\n    console.error(\"Error uploading file:\", error);\n    if (req.file && req.file.path && _fs.default.existsSync(req.file.path)) {\n      try {\n        _fs.default.unlinkSync(req.file.path);\n      } catch (unlinkError) {\n        console.error(\"Error deleting uploaded file:\", unlinkError);\n      }\n    }\n    res.status(500).json({\n      success: false,\n      message: \"Error uploading file\",\n      errorCode: 'UPLOAD_ERROR',\n      error: error.message\n    });\n  }\n});\napp.get(\"/api/projects/:projectId/files\", async (req, res) => {\n  try {\n    const {\n      projectId\n    } = req.params;\n    if (!projectId) {\n      return res.status(400).json({\n        success: false,\n        message: 'Project ID is required',\n        errorCode: 'MISSING_PROJECT_ID'\n      });\n    }\n    const response = await api.getProjectFiles(projectId);\n    if (response.success) {\n      res.status(200).json(response);\n    } else {\n      const statusCode = getStatusCode(response.errorCode);\n      res.status(statusCode).json(response);\n    }\n  } catch (error) {\n    console.error('Error in /api/projects/:projectId/files:', error);\n    res.status(500).json({\n      success: false,\n      message: 'Internal server error',\n      errorCode: 'SERVER_ERROR'\n    });\n  }\n});\napp.get(\"/api/projects/:projectId/files/:filename\", async (req, res) => {\n  try {\n    const {\n      projectId,\n      filename\n    } = req.params;\n    if (!projectId) {\n      return res.status(400).json({\n        success: false,\n        message: 'Project ID is required',\n        errorCode: 'MISSING_PROJECT_ID'\n      });\n    }\n    if (!filename) {\n      return res.status(400).json({\n        success: false,\n        message: 'Filename is required',\n        errorCode: 'MISSING_FILENAME'\n      });\n    }\n    const filePath = _path.default.join(process.cwd(), \"uploads\", `${projectId}_${filename}`);\n    if (!_fs.default.existsSync(filePath)) {\n      return res.status(404).json({\n        success: false,\n        message: \"File not found\",\n        errorCode: 'FILE_NOT_FOUND'\n      });\n    }\n    res.sendFile(filePath);\n  } catch (error) {\n    console.error(\"Error serving file:\", error);\n    res.status(500).json({\n      success: false,\n      message: \"Error fetching file\",\n      errorCode: 'FETCH_FILE_ERROR',\n      error: error.message\n    });\n  }\n});\n\n// Global error handler middleware\napp.use((err, req, res, next) => {\n  console.error('Unhandled error:', err);\n\n  // Handle Multer errors\n  if (err instanceof _multer.default.MulterError) {\n    if (err.code === 'LIMIT_FILE_SIZE') {\n      return res.status(400).json({\n        success: false,\n        message: 'File too large',\n        errorCode: 'FILE_TOO_LARGE'\n      });\n    }\n    return res.status(400).json({\n      success: false,\n      message: err.message,\n      errorCode: 'UPLOAD_ERROR'\n    });\n  }\n\n  // Handle other errors\n  res.status(500).json({\n    success: false,\n    message: 'Internal server error',\n    errorCode: 'SERVER_ERROR',\n    error:  true ? err.message : 0\n  });\n});\n\n// 404 handler for API routes\napp.use('/api', (req, res) => {\n  res.status(404).json({\n    success: false,\n    message: 'API endpoint not found',\n    errorCode: 'ENDPOINT_NOT_FOUND'\n  });\n});\n\n// Start server\nasync function startServer() {\n  try {\n    await api.connectToMongoDB();\n    app.listen(port, () => {\n      console.log(`Server running on http://localhost:${port}`);\n    });\n  } catch (error) {\n    console.error('Failed to start server:', error);\n    process.exit(1);\n  }\n}\n\n// Graceful shutdown\nprocess.on('SIGINT', async () => {\n  console.log('\\nShutting down gracefully...');\n  try {\n    await api.closeDatabaseConnection();\n    console.log('Database connection closed');\n    process.exit(0);\n  } catch (error) {\n    console.error('Error during shutdown:', error);\n    process.exit(1);\n  }\n});\nprocess.on('SIGTERM', async () => {\n  console.log('\\nReceived SIGTERM, shutting down gracefully...');\n  try {\n    await api.closeDatabaseConnection();\n    console.log('Database connection closed');\n    process.exit(0);\n  } catch (error) {\n    console.error('Error during shutdown:', error);\n    process.exit(1);\n  }\n});\n\n// Handle uncaught exceptions\nprocess.on('uncaughtException', error => {\n  console.error('Uncaught Exception:', error);\n  process.exit(1);\n});\n\n// Handle unhandled promise rejections\nprocess.on('unhandledRejection', (reason, promise) => {\n  console.error('Unhandled Rejection at:', promise, 'reason:', reason);\n  process.exit(1);\n});\nstartServer();\n\n//# sourceURL=webpack://veyo_imy220_project/./backend/server.js?\n}");
 
-// DELETE /api/users/:userId - Delete a user (requires auth, must be self)
-app["delete"]('/api/users/:userId/:requesterId', /*#__PURE__*/function () {
-  var _ref19 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee19(req, res) {
-    var _req$params2, userId, requesterId, response, _t9;
-    return _regenerator().w(function (_context19) {
-      while (1) switch (_context19.p = _context19.n) {
-        case 0:
-          _context19.p = 0;
-          _req$params2 = req.params, userId = _req$params2.userId, requesterId = _req$params2.requesterId; // Validate userId format and ensure self-deletion
-          if (userId) {
-            _context19.n = 1;
-            break;
-          }
-          return _context19.a(2, res.status(400).json({
-            success: false,
-            message: 'UserId needed'
-          }));
-        case 1:
-          if (!(userId !== requesterId)) {
-            _context19.n = 2;
-            break;
-          }
-          return _context19.a(2, res.status(403).json({
-            success: false,
-            message: 'You can only delete your own account'
-          }));
-        case 2:
-          _context19.n = 3;
-          return api.deleteUser(userId, requesterId);
-        case 3:
-          response = _context19.v;
-          res.status(response.success ? 200 : 400).json(response);
-          _context19.n = 5;
-          break;
-        case 4:
-          _context19.p = 4;
-          _t9 = _context19.v;
-          console.error('Error in delete user route:', _t9);
-          res.status(500).json({
-            success: false,
-            message: 'Server error'
-          });
-        case 5:
-          return _context19.a(2);
-      }
-    }, _callee19, null, [[0, 4]]);
-  }));
-  return function (_x39, _x40) {
-    return _ref19.apply(this, arguments);
-  };
-}());
+/***/ }),
 
-// In server.js, add this new route
-app.get("/api/users/search", /*#__PURE__*/function () {
-  var _ref20 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee20(req, res) {
-    var q, response;
-    return _regenerator().w(function (_context20) {
-      while (1) switch (_context20.n) {
-        case 0:
-          q = req.query.q; // Get the search term from the query parameter 'q'
-          if (q) {
-            _context20.n = 1;
-            break;
-          }
-          return _context20.a(2, res.status(400).json({
-            success: false,
-            message: "Search term 'q' is required"
-          }));
-        case 1:
-          _context20.n = 2;
-          return api.searchUsers(q);
-        case 2:
-          response = _context20.v;
-          res.json(response);
-        case 3:
-          return _context20.a(2);
-      }
-    }, _callee20);
-  }));
-  return function (_x41, _x42) {
-    return _ref20.apply(this, arguments);
-  };
-}());
+/***/ "dotenv":
+/*!*************************!*\
+  !*** external "dotenv" ***!
+  \*************************/
+/***/ ((module) => {
 
-// In server.js, add this new route (place it with other GET routes)
-app.get("/api/search", /*#__PURE__*/function () {
-  var _ref21 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee21(req, res) {
-    var searchTerm, response;
-    return _regenerator().w(function (_context21) {
-      while (1) switch (_context21.n) {
-        case 0:
-          searchTerm = req.query.q; // Get search term from 'q' query param
-          if (searchTerm) {
-            _context21.n = 1;
-            break;
-          }
-          return _context21.a(2, res.status(400).json({
-            success: false,
-            message: "Search term 'q' is required"
-          }));
-        case 1:
-          _context21.n = 2;
-          return api.searchAll(searchTerm);
-        case 2:
-          response = _context21.v;
-          res.json(response);
-        case 3:
-          return _context21.a(2);
-      }
-    }, _callee21);
-  }));
-  return function (_x43, _x44) {
-    return _ref21.apply(this, arguments);
-  };
-}());
-app.post("/api/projects/add-member", /*#__PURE__*/function () {
-  var _ref22 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee22(req, res) {
-    var _req$body6, projectId, userId, response;
-    return _regenerator().w(function (_context22) {
-      while (1) switch (_context22.n) {
-        case 0:
-          _req$body6 = req.body, projectId = _req$body6.projectId, userId = _req$body6.userId;
-          _context22.n = 1;
-          return api.addMemberToProject(projectId, userId);
-        case 1:
-          response = _context22.v;
-          res.json(response);
-        case 2:
-          return _context22.a(2);
-      }
-    }, _callee22);
-  }));
-  return function (_x45, _x46) {
-    return _ref22.apply(this, arguments);
-  };
-}());
-app.post("/api/projects/promote", /*#__PURE__*/function () {
-  var _ref23 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee23(req, res) {
-    var _req$body7, projectId, userId, response;
-    return _regenerator().w(function (_context23) {
-      while (1) switch (_context23.n) {
-        case 0:
-          _req$body7 = req.body, projectId = _req$body7.projectId, userId = _req$body7.userId;
-          _context23.n = 1;
-          return api.promoteMemberToOwner(projectId, userId);
-        case 1:
-          response = _context23.v;
-          res.json(response);
-        case 2:
-          return _context23.a(2);
-      }
-    }, _callee23);
-  }));
-  return function (_x47, _x48) {
-    return _ref23.apply(this, arguments);
-  };
-}());
+module.exports = require("dotenv");
 
-//api end 
-function startServer() {
-  return _startServer.apply(this, arguments);
-}
-function _startServer() {
-  _startServer = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee25() {
-    var _t0;
-    return _regenerator().w(function (_context25) {
-      while (1) switch (_context25.p = _context25.n) {
-        case 0:
-          _context25.p = 0;
-          _context25.n = 1;
-          return api.connectToMongoDB();
-        case 1:
-          app.listen(port, function () {
-            console.log("Database running on http://localhost:".concat(port));
-          });
-          _context25.n = 3;
-          break;
-        case 2:
-          _context25.p = 2;
-          _t0 = _context25.v;
-          console.error('Failed to start server:', _t0);
-          process.exit(1);
-        case 3:
-          return _context25.a(2);
-      }
-    }, _callee25, null, [[0, 2]]);
-  }));
-  return _startServer.apply(this, arguments);
-}
-app.listen(port, function () {
-  console.log("Veyo app Listening on http://localhost:".concat(port));
-});
-process.on('SIGINT', /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee24() {
-  return _regenerator().w(function (_context24) {
-    while (1) switch (_context24.n) {
-      case 0:
-        console.log('\nShutting down gracefully...');
-        //localStorage.clear();
-        _context24.n = 1;
-        return api.closeDatabaseConnection();
-      case 1:
-        process.exit(0);
-      case 2:
-        return _context24.a(2);
-    }
-  }, _callee24);
-})));
-startServer();
+/***/ }),
+
+/***/ "express":
+/*!**************************!*\
+  !*** external "express" ***!
+  \**************************/
+/***/ ((module) => {
+
+module.exports = require("express");
+
+/***/ }),
+
+/***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/***/ ((module) => {
+
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ "mongodb":
+/*!**************************!*\
+  !*** external "mongodb" ***!
+  \**************************/
+/***/ ((module) => {
+
+module.exports = require("mongodb");
+
+/***/ }),
+
+/***/ "multer":
+/*!*************************!*\
+  !*** external "multer" ***!
+  \*************************/
+/***/ ((module) => {
+
+module.exports = require("multer");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("path");
+
+/***/ }),
+
+/***/ "url":
+/*!**********************!*\
+  !*** external "url" ***!
+  \**********************/
+/***/ ((module) => {
+
+module.exports = require("url");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = __webpack_require__("./backend/server.js");
+/******/ 	
+/******/ })()
+;
