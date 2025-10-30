@@ -4,7 +4,7 @@ import Hashtag from './Hashtag'; // Assuming Hashtag component exists
 import EditProjectForm from './EditProject';
 import "../../public/assets/css/projectdetails.css";
 
-function ProjectDetails({ project, isOwner, onProjectUpdated }) { 
+function ProjectDetails({ project, isOwner, onProjectUpdated, ondelete }) { 
     const [editing, setEditing] = useState(false);
     const [projectType, setProjectType] = useState('Loading...');
 
@@ -46,7 +46,10 @@ function ProjectDetails({ project, isOwner, onProjectUpdated }) {
                         ))}
                     </div>
                     {isOwner && (
+                        <>
                         <button onClick={() => setEditing(true)}>Edit Project</button>
+                        <button onClick={ondelete} >Delete</button>
+                        </>
                     )}
                 </>
             ) : (

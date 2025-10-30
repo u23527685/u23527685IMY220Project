@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ProjectPreview from "./ProjectPreview";
+import "../../public/assets/css/userprev.css"
 
 function UserProjectsView({ projectIds,pin,save, user }) { // Changed prop name to reflect it's IDs
     const [userProjects, setUserProjects] = useState([]);

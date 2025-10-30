@@ -196,55 +196,58 @@ function OtherProfile() {
     const isCurrentUserProfile = loggedInUserId === user._id;
 
     return (
-        <div id="otherprofile">
+        <div>
             <h1>VEYO Profile</h1>
-            <div id="otherprofile-sidebar">
-                <div id="otherprofile-header">
-                    <div id="otherprofile-image-name">
-                        <img width="200px" src={ptofileimage} alt="User Profile" />
-                        <div id="otherprofile-username">{user.username}</div>
-                    </div>
-                    <p id="otherprofile-followers">
-                        <span>{(user.friends || []).length} friends</span>
-                    </p>
-                    {!isCurrentUserProfile && (
-                        <div className="friend-action-buttons">
-                            {friendRequestStatus === 'none' && (
-                                <button onClick={() => handleFriendAction('send')}>Send Friend Request</button>
-                            )}
-                            {friendRequestStatus === 'sent' && (
-                                <button onClick={() => handleFriendAction('cancel')}>Cancel Request</button>
-                            )}
-                            {friendRequestStatus === 'received' && (
-                                <>
-                                    <button onClick={() => handleFriendAction('accept')}>Accept Request</button>
-                                    <button onClick={() => handleFriendAction('decline')}>Decline Request</button>
-                                </>
-                            )}
-                            {friendRequestStatus === 'friends' && (
-                                <button onClick={() => handleFriendAction('remove')}>Remove Friend</button>
-                            )}
+            <div id="otherprofile">
+                <div id="otherprofile-sidebar">
+                    <div id="otherprofile-header">
+                        <div id="otherprofile-image-name">
+                            <img width="200px" src={ptofileimage} alt="User Profile" />
+                            <div id="otherprofile-username">{user.username}</div>
                         </div>
-                    )}
+                        <p id="otherprofile-followers">
+                            <span>{(user.friends || []).length} friends</span>
+                        </p>
+                        {!isCurrentUserProfile && (
+                            <div className="friend-action-buttons">
+                                {friendRequestStatus === 'none' && (
+                                    <button onClick={() => handleFriendAction('send')}>Send Friend Request</button>
+                                )}
+                                {friendRequestStatus === 'sent' && (
+                                    <button onClick={() => handleFriendAction('cancel')}>Cancel Request</button>
+                                )}
+                                {friendRequestStatus === 'received' && (
+                                    <>
+                                        <button onClick={() => handleFriendAction('accept')}>Accept Request</button>
+                                        <button onClick={() => handleFriendAction('decline')}>Decline Request</button>
+                                    </>
+                                )}
+                                {friendRequestStatus === 'friends' && (
+                                    <button onClick={() => handleFriendAction('remove')}>Remove Friend</button>
+                                )}
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="otherprofile-home-icon" onClick={gotohome}>Home Icon</div>
+
+                    <h3>Pinned Projects</h3>
+                    <PinnedProjects pinprojectIds={pinnedProjectIds} />
+
+                    <div className="otherprofile-tabs">
+                        <h4 onClick={toggleDetails} className={details ? "isActive" : "inactive"}>Details</h4>
+                        <span>{" | "}</span>
+                        <h4 onClick={toggleProjects} className={projectstab ? "isActive" : "inactive"}>Projects</h4>
+                    </div>
                 </div>
 
-                <div className="otherprofile-home-icon" onClick={gotohome}>Home Icon</div>
-
-                <h3>Pinned Projects</h3>
-                <PinnedProjects pinprojectIds={pinnedProjectIds} />
-
-                <div className="otherprofile-tabs">
-                    <h4 onClick={toggleDetails} className={details ? "isActive" : "inactive"}>Details</h4>
-                    <span>{" | "}</span>
-                    <h4 onClick={toggleProjects} className={projectstab ? "isActive" : "inactive"}>Projects</h4>
+                <div id="otherprofile-info">
+                    {details && <ProfileText user={user} isReadOnly={true} />}
+                    {projectstab && <UserProjectsView projectIds={userProjectIds} />}
                 </div>
-            </div>
-
-            <div id="otherprofile-info">
-                {details && <ProfileText user={user} isReadOnly={true} />}
-                {projectstab && <UserProjectsView projectIds={userProjectIds} />}
             </div>
         </div>
+        
     );
 }
 

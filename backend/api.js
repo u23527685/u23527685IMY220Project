@@ -1554,6 +1554,11 @@ export async function promoteMemberToOwner(projectId, userId) {
                     $addToSet: { memberOfProjects: projectObjectId }
                 }
             );
+             await db.collection("projects").updateOne(
+            { _id: projectObjectId },
+            {
+                $addToSet:{members:prevOwnerId}
+            });
         }
 
         return { 

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-function ProjectFiles({ files = [], onUpload, onDownload }) {
+function ProjectFiles({ files = [], onUpload, onDownload, isOwner, isMember }) {
   const [isDragging, setIsDragging] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState({});
@@ -72,6 +72,7 @@ function ProjectFiles({ files = [], onUpload, onDownload }) {
       <h2>Project Files</h2>
 
       {/* Drag-and-drop zone */}
+      { (isOwner || isMember) &&(<>
       <div
         ref={dropRef}
         className={`drop-zone ${isDragging ? "dragging" : ""}`}
@@ -103,6 +104,7 @@ function ProjectFiles({ files = [], onUpload, onDownload }) {
         style={{ display: "none" }}
         onChange={handleFileInput}
       />
+        </>)}
 
       {/* File list */}
       {(!files || files.length === 0) ? (

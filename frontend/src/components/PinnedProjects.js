@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ProjectPreview from "./ProjectPreview";
+import"../../public/assets/css/pinned.css";
 
 function PinnedProjects({ pinprojectIds }) { // Changed prop name to reflect it's IDs
     const [pinnedProjects, setPinnedProjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const pinnedRef = useRef(null);
 
     useEffect(() => {
         const fetchPinnedProjects = async () => {
@@ -60,12 +62,15 @@ function PinnedProjects({ pinprojectIds }) { // Changed prop name to reflect it'
     }
 
     return (
-        <div className="pinned">
-            {pinnedProjects.map((pp, i) => (
-                <ProjectPreview key={pp._id || i} project={pp} />
-            ))}
+        <div className="pinned-projects-container">
+            <div className="pinned-scroll">
+                {pinnedProjects.map((pp, i) => (
+                    <ProjectPreview key={pp._id || i} project={pp} />
+                ))}
+            </div>
         </div>
     );
+
 }
 
 export default PinnedProjects;

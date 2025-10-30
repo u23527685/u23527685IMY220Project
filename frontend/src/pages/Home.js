@@ -146,25 +146,25 @@ class Home extends Component {
     }
 
     onSearch = async (search) => {
-    if (!search || search.trim().length < 2) {
-        this.setState({ searchResults: null });
-        return;
-    }
+        if (!search || search.trim().length < 2) {
+            this.setState({ searchResults: null });
+            return;
+        }
 
-    try {
-        const response = await fetch(`http://localhost:3000/api/search?q=${encodeURIComponent(search)}`);
-        const data = await response.json();
+        try {
+            const response = await fetch(`http://localhost:3000/api/search?q=${encodeURIComponent(search)}`);
+            const data = await response.json();
 
-        if (data.success) {
-            this.setState({ searchResults: data.results });
-        } else {
+            if (data.success) {
+                this.setState({ searchResults: data.results });
+            } else {
+                this.setState({ searchResults: null });
+            }
+        } catch (error) {
+            console.error('Search error:', error);
             this.setState({ searchResults: null });
         }
-    } catch (error) {
-        console.error('Search error:', error);
-        this.setState({ searchResults: null });
-    }
-};
+    };
 
 
     toggleLocal = () => {

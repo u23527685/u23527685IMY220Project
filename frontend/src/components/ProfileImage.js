@@ -31,7 +31,7 @@ function ProfileImage({ userId, size = 120, refreshKey }) {
         });
 
         if (!response.ok) {
-          throw new Error(`Image not found (${response.status})`);
+          console.log("profile image not foundt");
         }
 
         // Create object URL from blob

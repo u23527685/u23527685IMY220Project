@@ -75,14 +75,17 @@ class Projects extends Component {
         if (error) return <div className="projects" style={{ color: 'red' }}>Error: {error}</div>;
 
         return (
-            <div className="projects">
+            <div>
                 <h1>VEYO My Projects</h1>
-                <div className="list">
-                    <button onClick={this.handleAdd}>Add Project</button>
-                    {add && <AddProject onCancel={this.cancelAdd} onProjectAdded={this.handleProjectAdded} ownerId={this.currentUserId} />}
-                    <ProjectsList ownedProjects={ownedProjects} memberOfProjects={memberOfProjects} />
+                <div className="projects">
+                    <div className="list">
+                        <button onClick={this.handleAdd}>Add Project</button>
+                        {add && <AddProject onCancel={this.cancelAdd} onProjectAdded={this.handleProjectAdded} ownerId={this.currentUserId} />}
+                        <ProjectsList ownedProjects={ownedProjects} memberOfProjects={memberOfProjects} />
+                    </div>
                 </div>
             </div>
+            
         );
     }
 }

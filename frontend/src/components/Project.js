@@ -1,6 +1,6 @@
 // frontend/src/components/Project.js
 import React, { useState, useEffect, useCallback, } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import ProjectCheckInOut from "./ProjectCheckinout"; // Assuming this component is self-contained
 import ProjectDiscussion from "./ProjectDiscussion";
 import ProjectFiles from "./ProjectFiles";
@@ -10,6 +10,7 @@ import ProjectMembers from './ProjectMemebers.js';
 import "../../public/assets/css/projectinfo.css";
 
 function Project() {
+    const navigate = useNavigate();
     const [projectFiles, setProjectFiles] = useState([]);
     const {projectId}  = useParams(); // Get projectId from URL params
     const [project, setProject] = useState(null);
@@ -106,41 +107,111 @@ function Project() {
     }, [projectId, currentUserId]);
 
     const downloadProjectFile = useCallback(async (fileName) => {
-    try {
-      const downloadUrl = `/uploads/${projectId}_${fileName}`;
+        try {
+        const downloadUrl = `/uploads/${projectId}_${fileName}`;
 
-      // Fetch the file as a blob
-      const response = await fetch(downloadUrl);
-      if (!response.ok) throw new Error(`Failed to download file: ${response.status}`);
-      const blob = await response.blob();
+        // Fetch the file as a blob
+        const response = await fetch(downloadUrl);
+        if (!response.ok) throw new Error(`Failed to download file: ${response.status}`);
+        const blob = await response.blob();
 
-      // Trigger browser download
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
+        // Trigger browser download
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
 
-      // Log activity
-      await fetch(`/api/activity`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          projectId,
-          userId: currentUserId,
-          type: 'download',
-          message: `Downloaded file "${fileName}"`,
-          timestamp: new Date()
-        }),
-      });
+        // Log activity
+        await fetch(`/api/activity`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+            projectId,
+            userId: currentUserId,
+            type: 'download',
+            message: `Downloaded file "${fileName}"`,
+            timestamp: new Date()
+            }),
+        });
 
-    } catch (err) {
-      console.error('Error downloading file:', err);
-    }
-  }, [projectId, currentUserId]);
+        } catch (err) {
+        console.error('Error downloading file:', err);
+        }
+    }, [projectId, currentUserId]);
+
+    const handleDeleteProject = useCallback(async () => {
+
+        const userId = sessionStorage.getItem("userId");
+        if (!userId || !projectId) {
+            alert("Missing user or project information.");
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/projects/${projectId}/${userId}`, {
+                method: 'DELETE',
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                navigate("/home");
+            } else {
+            }
+        } catch (error) {
+            console.error("Error deleting project:", error);
+        }
+    }, [projectId]);
+
+    const addMember = useCallback(async (newMemberId) => {
+        console.log(projectId);
+        console.log(newMemberId);
+        if (!projectId || !newMemberId) return;
+
+        try {
+        const response = await fetch(`/api/projects/add-member`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: newMemberId, projectId: projectId })
+        });
+
+        const result = await response.json();
+        if (result.success) {
+            console.log('Member added successfully:', newMemberId);
+            await fetchProjectData(); // Refresh project data
+        } else {
+            console.error('Failed to add member:', result.message);
+        }
+        } catch (error) {
+        console.error('Error adding member:', error);
+        }
+    }, [projectId, fetchProjectData]);
+
+    const promoteMemberToOwner = useCallback(async (userId) => {
+        if (!projectId || !userId) return;
+
+        try {
+            const response = await fetch(`/api/projects/promote`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ projectId, userId })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                await fetchProjectData();
+            } else {
+                console.log(`Failed to promote member: ${result.message}`);
+            }
+        } catch (err) {
+            console.error('Error promoting member:', err);
+        }
+    }, [projectId, fetchProjectData]);
 
 
     useEffect(() => {
@@ -160,6 +231,7 @@ function Project() {
         return <div id="projinfo">Project not found.</div>;
     }
 
+
     const isOwner = project.owner === currentUserId; // Check if current user is the project owner
 
     const isMember = project.owner === currentUserId || (project.members || []).includes(currentUserId);
@@ -170,7 +242,7 @@ function Project() {
             <h1>VEYO Project System</h1>
 
             <div className="project-section">
-                <ProjectDetails project={project} isOwner={isOwner} onProjectUpdated={fetchProjectData} />
+                <ProjectDetails ondelete={handleDeleteProject} project={project} isOwner={isOwner} onProjectUpdated={fetchProjectData} />
             </div>
 
             <div className="project-section">
@@ -178,11 +250,13 @@ function Project() {
             </div>
 
             <div className="project-section">
-                <ProjectFiles onUpload={uploadProjectFile} onDownload={downloadProjectFile} files={projectFiles} />
+                <ProjectFiles isMember={isMember} isOwner={isOwner} onUpload={uploadProjectFile} onDownload={downloadProjectFile} files={projectFiles} />
             </div>
 
             <div className="project-section">
                 <ProjectMembers
+                    onPromoteMember={promoteMemberToOwner}
+                    onadd={addMember}
                     ownerId={project.owner}
                     memberIds={project.members}
                     isOwner={isOwner}

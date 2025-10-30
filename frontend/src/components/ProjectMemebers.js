@@ -1,12 +1,19 @@
 // frontend/src/components/ProjectMembers.js
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "../../public/assets/css/projectmembers.css";
+import Search from "./Search";
 
-function ProjectMembers({ ownerId, memberIds, isOwner, onMembersUpdated }) { 
+function ProjectMembers({ ownerId, memberIds,onPromoteMember, isOwner, onMembersUpdated,onadd }) { 
+    const navigate=useNavigate();
     const [ownerDetails, setOwnerDetails] = useState(null);
     const [memberDetails, setMemberDetails] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const [showSearch, setShowSearch] = useState(false);
+    const [searchResults, setSearchResults] = useState([]);
+    const [searchLoading, setSearchLoading] = useState(false);
 
     const fetchUserDetails = useCallback(async (ids) => {
         const idArray = Array.isArray(ids) ? ids : [ids];
@@ -53,15 +60,43 @@ function ProjectMembers({ ownerId, memberIds, isOwner, onMembersUpdated }) {
         loadMembers();
     }, [ownerId, memberIds, fetchUserDetails]);
 
-    // TODO: Implement remove member and give ownership functionality
-    const handleRemoveMember = (memberId) => {
-        // Requires new backend endpoint: DELETE /api/project/:projectId/members/:memberId
-        // After successful API call, call onMembersUpdated()
+    const onSearch = async (search) => {
+        if (!search || search.trim().length < 2) {
+            setSearchResults(null);
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:3000/api/search?q=${encodeURIComponent(search)}`);
+            const data = await response.json();
+
+            if (data.success) {
+                setSearchResults(data.results);
+            } else {
+                setSearchResults(null);
+            }
+        } catch (error) {
+            console.error('Search error:', error);
+            setSearchResults(null);
+        }
     };
 
-    const handleGiveOwnership = (memberId) => {
-        // Requires new backend endpoint: PUT /api/project/:projectId/owner
-        // After successful API call, call onMembersUpdated()
+    const ToggleSearch =()=>{
+        if(showSearch)
+            setShowSearch(false);
+        else
+            setShowSearch(true);
+        console.log(showSearch);
+    }
+
+    const handlePromoteMember = async (memberId) => {
+        if (!onPromoteMember) return;
+        const confirmPromote = true;
+        if (confirmPromote) {
+            await onPromoteMember(memberId);
+            await onMembersUpdated();
+            navigate("/home");
+        }
     };
 
     if (loading) {
@@ -75,6 +110,26 @@ function ProjectMembers({ ownerId, memberIds, isOwner, onMembersUpdated }) {
     return (
         <section>
             <h2>Project Members</h2>
+            { isOwner && <button onClick={ToggleSearch} >Add member</button>}
+            {isOwner && showSearch && <Search onsearch={onSearch}/>}
+            {isOwner && searchResults.users && (
+                <div className="search-results">
+                        {/* USERS */}
+                        {searchResults.users.length > 0 && (
+                                <div>
+                                    <h3>Users</h3>
+                                    <ul>
+                                        {searchResults.users.map((user,index) => (
+                                            <li>
+                                                {user.username}
+                                                <button onClick={()=>onadd(user._id)} >Add</button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                </div>
+            )}
             <p><strong>Owner:</strong> {ownerDetails?.username || 'N/A'}</p>
             {memberDetails.length > 0 ? (
                 <ul>
@@ -83,8 +138,7 @@ function ProjectMembers({ ownerId, memberIds, isOwner, onMembersUpdated }) {
                             {member.username}
                             {isOwner && ( // Only owner can manage members
                                 <>
-                                    <button onClick={() => handleRemoveMember(member._id)}>Remove</button>
-                                    <button onClick={() => handleGiveOwnership(member._id)}>Give Ownership</button>
+                                    <button onClick={() => handlePromoteMember(member._id)}>Give Ownership</button>
                                 </>
                             )}
                         </li>
