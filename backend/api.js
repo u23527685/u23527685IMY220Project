@@ -1642,49 +1642,67 @@ export async function pinProjectToUser(userId, projectId) {
 }
 
 export async function getProjectFiles(projectId) {
-    try {
-        if (!projectId) {
-            return { 
-                success: false, 
-                message: "Project ID is required",
-                errorCode: "MISSING_PROJECT_ID"
-            };
-        }
-
-        if (!ObjectId.isValid(projectId)) {
-            return { 
-                success: false, 
-                message: "Invalid project ID format",
-                errorCode: "INVALID_PROJECT_ID"
-            };
-        }
-
-        const projectObjectId = new ObjectId(projectId);
-        const project = await db.collection("projects").findOne(
-            { _id: projectObjectId },
-            { projection: { files: 1, name: 1 } }
-        );
-
-        if (!project) {
-            return { 
-                success: false, 
-                message: "Project not found",
-                errorCode: "PROJECT_NOT_FOUND"
-            };
-        }
-
-        return {
-            success: true,
-            projectName: project.name,
-            files: project.files || []
-        };
-    } catch (error) {
-        console.error("Error fetching project files:", error);
-        return { 
-            success: false, 
-            message: "Failed to retrieve project files",
-            errorCode: "FETCH_FILES_ERROR",
-            error: error.message
-        };
+  try {
+    if (!ObjectId.isValid(projectId)) {
+      return {
+        success: false,
+        message: "Invalid project ID format",
+        errorCode: "INVALID_PROJECT_ID"
+      };
     }
+
+    const db = await connectToMongoDB();
+    const project = await db.collection("projects").findOne(
+      { _id: new ObjectId(projectId) },
+      { projection: { files: 1 } }
+    );
+
+    if (!project) {
+      return {
+        success: false,
+        message: "Project not found",
+        errorCode: "PROJECT_NOT_FOUND"
+      };
+    }
+
+    return {
+      success: true,
+      message: "Files fetched successfully",
+      files: project.files || []
+    };
+  } catch (error) {
+    console.error("Error in getProjectFiles:", error);
+    return {
+      success: false,
+      message: "Error fetching project files",
+      errorCode: "FETCH_FILES_ERROR",
+      error: error.message
+    };
+  }
+}
+
+export async function getUserById(userId) {
+  try {
+    if (!ObjectId.isValid(userId)) {
+      return { success: false, message: "Invalid user ID format" };
+    }
+    const user = await db.collection("users").findOne(
+      { _id: new ObjectId(userId) },
+      {
+        projection: {
+          password: 0,              // exclude sensitive data
+          verificationRequest: 0,
+        },
+      }
+    );
+
+    if (!user) {
+      return { success: false, message: "User not found" };
+    }
+
+    return { success: true, user };
+  } catch (error) {
+    console.error("Error fetching user by ID:", error);
+    return { success: false, message: error.message };
+  }
 }

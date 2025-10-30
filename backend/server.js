@@ -5,6 +5,7 @@ import * as api from "../backend/api";
 import multer from "multer";
 import fs from "fs";
 import { ObjectId } from 'mongodb';
+import { use } from "react";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -131,11 +132,7 @@ app.get('/profile/:username', (req, res) => {
   res.sendFile(path.resolve('frontend', 'public', 'index.html'));
 });
 
-app.get('/projects/:username', (req, res) => {
-  res.sendFile(path.resolve('frontend', 'public', 'index.html'));
-});
-
-app.get('/projects/:owner/:name', (req, res) => {
+app.get('/project/:name/:owner/:projectId', (req, res) => {
   res.sendFile(path.resolve('frontend', 'public', 'index.html'));
 });
 
@@ -160,8 +157,24 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage: storage });
+export const upload = multer({ storage });
 
+// ---------- PROFILE UPLOADS ----------
+const profileUploadDir = path.join(process.cwd(), "profiles");
+if (!fs.existsSync(profileUploadDir)) fs.mkdirSync(profileUploadDir);
+
+const profileStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, profileUploadDir);
+  },
+  filename: function (req, file, cb) {
+    const userId = req.params.userId;
+    const uniqueName = `${userId}_profile${path.extname(file.originalname)}`;
+    cb(null, uniqueName);
+  }
+});
+
+export const profileUpload = multer({ storage: profileStorage });
 // API Routes
 
 app.get("/api/projects", async (req, res) => {
@@ -973,62 +986,32 @@ app.post("/api/users/pin", async (req, res) => {
   }
 });
 
-app.post("/api/projects/upload", upload.single("file"), async (req, res) => {
+app.post("/api/projects/:projectId/upload", upload.single("file"), async (req, res) => {
   try {
-    const { projectId } = req.body;
+    const { projectId } = req.params;
 
-    if (!projectId) {
-      if (req.file && req.file.path) {
-        fs.unlinkSync(req.file.path);
-      }
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Project ID is required',
-        errorCode: 'MISSING_PROJECT_ID'
-      });
+    if (!ObjectId.isValid(projectId)) {
+      return res.status(400).json({ success: false, message: "Invalid project ID" });
     }
 
     if (!req.file) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'No file uploaded',
-        errorCode: 'MISSING_FILE'
-      });
+      return res.status(400).json({ success: false, message: "No file uploaded" });
     }
 
-    if (!ObjectId.isValid(projectId)) {
-      if (req.file && req.file.path) {
-        fs.unlinkSync(req.file.path);
-      }
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Invalid project ID format',
-        errorCode: 'INVALID_PROJECT_ID'
-      });
-    }
-
-    const projectObjectId = new ObjectId(projectId);
-
-    // Get database connection
     const db = await api.connectToMongoDB();
+    const projectObjectId = new ObjectId(projectId);
     const project = await db.collection("projects").findOne({ _id: projectObjectId });
-    
+
     if (!project) {
-      if (req.file && req.file.path) {
-        fs.unlinkSync(req.file.path);
-      }
-      return res.status(404).json({ 
-        success: false, 
-        message: "Project not found",
-        errorCode: 'PROJECT_NOT_FOUND'
-      });
+      fs.unlinkSync(req.file.path);
+      return res.status(404).json({ success: false, message: "Project not found" });
     }
 
     const fileName = req.file.originalname;
     const storedName = `${projectId}_${fileName}`;
-    const filePath = path.join(process.cwd(), "uploads", storedName);
+    const filePath = path.join(uploadDir, storedName);
 
-    // If file already exists, delete old version
+    // If existing file with same name, delete it first
     if (fs.existsSync(filePath) && filePath !== req.file.path) {
       fs.unlinkSync(filePath);
     }
@@ -1041,6 +1024,7 @@ app.post("/api/projects/upload", upload.single("file"), async (req, res) => {
       lastModifiedAt: new Date()
     };
 
+    // Update DB: replace old file entry if it exists
     await db.collection("projects").updateOne(
       { _id: projectObjectId },
       {
@@ -1055,22 +1039,64 @@ app.post("/api/projects/upload", upload.single("file"), async (req, res) => {
       file: fileData
     });
   } catch (error) {
-    console.error("Error uploading file:", error);
-    
-    if (req.file && req.file.path && fs.existsSync(req.file.path)) {
-      try {
-        fs.unlinkSync(req.file.path);
-      } catch (unlinkError) {
-        console.error("Error deleting uploaded file:", unlinkError);
-      }
+    console.error("Error uploading project file:", error);
+    if (req.file && fs.existsSync(req.file.path)) fs.unlinkSync(req.file.path);
+    res.status(500).json({ success: false, message: "Upload failed", error: error.message });
+  }
+});
+
+app.post("/api/user/:userId/upload", profileUpload.single("file"), async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (!ObjectId.isValid(userId)) {
+      return res.status(400).json({ success: false, message: "Invalid user ID" });
     }
-    
-    res.status(500).json({ 
-      success: false, 
-      message: "Error uploading file",
-      errorCode: 'UPLOAD_ERROR',
-      error: error.message
+
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "No file uploaded" });
+    }
+
+    const db = await api.connectToMongoDB();
+    const userObjectId = new ObjectId(userId);
+    const user = await db.collection("users").findOne({ _id: userObjectId });
+
+    if (!user) {
+      fs.unlinkSync(req.file.path);
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    const storedName = `${userId}_profile${path.extname(req.file.originalname)}`;
+    const filePath = path.join(profileUploadDir, storedName);
+
+    // Overwrite existing file if it exists
+    if (fs.existsSync(filePath) && filePath !== req.file.path) {
+      fs.unlinkSync(filePath);
+    }
+
+    const fileData = {
+      fileName: req.file.originalname,
+      filePath: `/profiles/${storedName}`,
+      fileSize: req.file.size,
+      uploadedAt: new Date(),
+      lastModifiedAt: new Date()
+    };
+
+    // Update user's profile picture in DB
+    await db.collection("users").updateOne(
+      { _id: userObjectId },
+      { $set: { profilePicture: fileData } }
+    );
+
+    res.status(201).json({
+      success: true,
+      message: "Profile picture uploaded/updated successfully",
+      file: fileData
     });
+  } catch (error) {
+    console.error("Error uploading profile picture:", error);
+    if (req.file && fs.existsSync(req.file.path)) fs.unlinkSync(req.file.path);
+    res.status(500).json({ success: false, message: "Upload failed", error: error.message });
   }
 });
 
@@ -1081,28 +1107,31 @@ app.get("/api/projects/:projectId/files", async (req, res) => {
     if (!projectId) {
       return res.status(400).json({ 
         success: false, 
-        message: 'Project ID is required',
-        errorCode: 'MISSING_PROJECT_ID'
+        message: "Project ID is required",
+        errorCode: "MISSING_PROJECT_ID"
       });
     }
 
     const response = await api.getProjectFiles(projectId);
-    
+
     if (response.success) {
-      res.status(200).json(response);
-    } else {
-      const statusCode = getStatusCode(response.errorCode);
-      res.status(statusCode).json(response);
+      return res.status(200).json(response);
     }
+
+    const statusCode = getStatusCode(response.errorCode);
+    return res.status(statusCode).json(response);
+
   } catch (error) {
-    console.error('Error in /api/projects/:projectId/files:', error);
-    res.status(500).json({ 
+    console.error("Error in /api/projects/:projectId/files:", error);
+    return res.status(500).json({ 
       success: false, 
-      message: 'Internal server error',
-      errorCode: 'SERVER_ERROR'
+      message: "Internal server error",
+      errorCode: "SERVER_ERROR",
+      error: error.message
     });
   }
 });
+
 
 app.get("/api/projects/:projectId/files/:filename", async (req, res) => {
   try {
@@ -1145,6 +1174,82 @@ app.get("/api/projects/:projectId/files/:filename", async (req, res) => {
     });
   }
 });
+
+app.get("/api/users/:userId/profile", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (!userId) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "User ID is required",
+        errorCode: "MISSING_USER_ID"
+      });
+    }
+
+    const profileDir = path.join(process.cwd(), "profiles");
+    if (!fs.existsSync(profileDir)) {
+      return res.status(404).json({
+        success: false,
+        message: "Profile directory not found",
+        errorCode: "DIR_NOT_FOUND"
+      });
+    }
+
+    // Dynamically find the correct file (any extension)
+    const files = fs.readdirSync(profileDir);
+    const matchingFile = files.find(f => f.startsWith(`${userId}_profile`));
+
+    if (!matchingFile) {
+      return res.status(404).json({
+        success: false,
+        message: "Profile image not found",
+        errorCode: "FILE_NOT_FOUND"
+      });
+    }
+
+    const filePath = path.join(profileDir, matchingFile);
+    res.sendFile(filePath);
+  } catch (error) {
+    console.error("Error serving profile image:", error);
+    res.status(500).json({
+      success: false,
+      message: "Error fetching file",
+      errorCode: "FETCH_FILE_ERROR",
+      error: error.message
+    });
+  }
+});
+
+app.get("/api/user/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: "User ID is required",
+      });
+    }
+
+    const response = await api.getUserById(userId);
+
+    if (!response.success) {
+      const status = response.message === "User not found" ? 404 : 400;
+      return res.status(status).json(response);
+    }
+
+    res.json(response);
+  } catch (error) {
+    console.error("Error in GET /api/user/:userId:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+});
+
 
 // Global error handler middleware
 app.use((err, req, res, next) => {

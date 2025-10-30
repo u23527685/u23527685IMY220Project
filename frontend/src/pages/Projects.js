@@ -17,8 +17,7 @@ function Projects() {
     const location = useLocation();
     const { username } = useParams();
 
-    const currentUserId = localStorage.getItem('userId'); 
-    console.log(currentUserId);
+    const currentUserId = sessionStorage.getItem('userId'); 
 
     const fetchUserProjects = useCallback(async () => {
         if (!currentUserId) {
@@ -85,7 +84,6 @@ function Projects() {
                 {add && <AddProject onCancel={cancelAdd} onProjectAdded={handleProjectAdded} ownerId={currentUserId} />}
                 <ProjectsList ownedProjects={ownedProjects} memberOfProjects={memberOfProjects} />
             </div>
-            <Outlet />
         </div>
     );
 }

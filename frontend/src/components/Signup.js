@@ -69,6 +69,7 @@ function Signup({oncancel, onsignup, toggleLogin }) {
 
         if (data.success) {
           // Pass user data to parent component
+          sessionStorage.setItem('userId', data.user._id);
           onsignup(data.user);
         } else {
           setApiError(data.message || "Signup failed. Please try again.");
