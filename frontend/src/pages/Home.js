@@ -24,23 +24,8 @@ class Home extends Component {
     constructor(props) {
         super(props);
         
-        let user = null;
-        try {
-            if (props.location.state?.user) {
-                user = props.location.state.user;
-            } else {
-                const storedUser = localStorage.getItem('user');
-                if (storedUser) {
-                    user = JSON.parse(storedUser);
-                }
-            }
-            localStorage.setItem("userId",user._id);
-        } catch (error) {
-            console.error('Error parsing user data:', error);
-        }
-        
         this.state = {
-            user: user,
+            user: null,
             allProjects: [],
             localProjects: [],
             filter: false,
@@ -52,8 +37,31 @@ class Home extends Component {
         };
     }
 
-    componentDidMount() {
-        this.fetchProjects();
+    async componentDidMount() {
+        const userId = sessionStorage.getItem("userId");
+        if (!userId) {
+            console.warn("No userId found in sessionStorage. Redirecting...");
+            this.props.navigate("/");
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:3000/api/user/${userId}`);
+            const data = await response.json();
+
+            if (!data.success || !data.user) {
+                throw new Error("Failed to fetch user info");
+            }
+
+            // Save user to state and to session storage
+            this.setState({ user: data.user }, () => {
+                sessionStorage.setItem("user", JSON.stringify(data.user));
+                this.fetchProjects();
+            });
+        } catch (error) {
+            console.error("Error fetching user:", error);
+            this.props.navigate("/");
+        }
     }
 
     fetchProjects = async () => {
@@ -138,25 +146,25 @@ class Home extends Component {
     }
 
     onSearch = async (search) => {
-    if (!search || search.trim().length < 2) {
-        this.setState({ searchResults: null });
-        return;
-    }
+        if (!search || search.trim().length < 2) {
+            this.setState({ searchResults: null });
+            return;
+        }
 
-    try {
-        const response = await fetch(`http://localhost:3000/api/search?q=${encodeURIComponent(search)}`);
-        const data = await response.json();
+        try {
+            const response = await fetch(`http://localhost:3000/api/search?q=${encodeURIComponent(search)}`);
+            const data = await response.json();
 
-        if (data.success) {
-            this.setState({ searchResults: data.results });
-        } else {
+            if (data.success) {
+                this.setState({ searchResults: data.results });
+            } else {
+                this.setState({ searchResults: null });
+            }
+        } catch (error) {
+            console.error('Search error:', error);
             this.setState({ searchResults: null });
         }
-    } catch (error) {
-        console.error('Search error:', error);
-        this.setState({ searchResults: null });
-    }
-};
+    };
 
 
     toggleLocal = () => {
@@ -172,38 +180,65 @@ class Home extends Component {
     }
 
     handleDownload = async (projectId) => {
-        if (!this.state.user?._id) {
-            alert('Please login to download projects');
+        const { user } = this.state;
+
+        if (!user?._id) {
+            this.props.navigate("/");
             return;
         }
 
         try {
-            const response = await fetch('http://localhost:3000/api/activity', {
+            // Get project files
+            const filesResponse = await fetch(`http://localhost:3000/api/projects/${projectId}/files`);
+            const filesData = await filesResponse.json();
+
+            if (!filesData.success || !Array.isArray(filesData.files) || filesData.files.length === 0) {
+                return;
+            }
+
+            // Download each file to user's computer
+            for (const file of filesData.files) {
+                const fileUrl = `http://localhost:3000${file.filePath}`;
+                const fileName = file.fileName || 'file.txt';
+
+                const response = await fetch(fileUrl);
+                if (!response.ok) {
+                    console.warn(`Failed to fetch file: ${fileUrl}`);
+                    continue;
+                }
+
+                const blob = await response.blob();
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            // Send activity to backend (track the download)
+            const activityResponse = await fetch('http://localhost:3000/api/activity', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     projectId: projectId,
-                    userId: this.state.user._id,
+                    userId: user._id,
                     type: 'download',
                     message: 'Project downloaded',
                     projectVersion: '1.0.0'
                 })
             });
 
-            const data = await response.json();
-            
-            if (data.success) {
-                console.log('Download tracked successfully');
-                alert('Download started!');
+            const activityData = await activityResponse.json();
+            if (activityData.success) {
+                console.log('Download activity logged successfully');
             } else {
-                console.error('Failed to track download:', data.message);
+                console.error('Failed to log download activity:', activityData.message);
             }
         } catch (error) {
-            console.error('Error tracking download:', error);
+            console.error('Error during project download:', error);
         }
-    }
+    };
 
     render() {
         const { user, allProjects, localProjects, filter, local, global, isLoading, error } = this.state;
@@ -211,7 +246,7 @@ class Home extends Component {
         if (isLoading) {
             return (
                 <main>
-                    <h1>Home Page</h1>
+                    <h1>VEYO Home Page</h1>
                     <p>Loading projects...</p>
                 </main>
             );
@@ -220,7 +255,7 @@ class Home extends Component {
         if (error) {
             return (
                 <main>
-                    <h1>Home Page</h1>
+                    <h1>VEYO Home Page</h1>
                     <p style={{ color: 'red' }}>{String(error)}</p>
                     <button onClick={() => window.location.reload()}>Retry</button>
                 </main>
@@ -229,7 +264,7 @@ class Home extends Component {
 
         return (
             <main>
-                <h1>Home Page</h1>
+                <h1>VEYO Home Page</h1>
                 <div id="homeitems">
                     <div className="LocGlobchoose">
                         <h2 className={local ? "isActive" : "inactive"} onClick={this.toggleLocal}>Local</h2>
@@ -257,7 +292,6 @@ class Home extends Component {
                                     <h3>Users</h3>
                                     <ul>
                                         {this.state.searchResults.users.map((user,index) => (
-                                            //var userId = typeof user._id === 'object' ? (user._id.$oid || user._id.toString()) : user._id;
                                             <ProfilePreview key={index} user={user} onAction={null}/>
                                         ))}
                                     </ul>

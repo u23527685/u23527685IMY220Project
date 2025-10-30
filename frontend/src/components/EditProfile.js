@@ -1,25 +1,24 @@
-// frontend/src/components/EditProfile.js
 import React, { useState, useEffect } from "react";
 import "../../public/assets/css/editprofile.css";
 
 function EditProfile({ user, onSave, onCancel }) {
-    // Initialize formData with user's current personalInfo fields
     const [formData, setFormData] = useState({
-        _id: user._id || '', // Crucial for API update
+        _id: user._id || '',
         username: user.username || '',
         email: user.email || '',
         name: user.name || '',
         surname: user.surname || '',
-        bio: user.personalInfo?.bio || '', // Access nested personalInfo
-        website: user.personalInfo?.website || '', // Access nested personalInfo
-        socials: user.personalInfo?.socials?.join(', ') || '' // Assuming socials is an array, join for editing
+        bio: user.personalInfo?.bio || '',
+        website: user.personalInfo?.website || '',
+        socials: user.personalInfo?.socials?.join(', ') || ''
     });
 
+    const [profileImage, setProfileImage] = useState(null); // File object for upload
+    const [previewUrl, setPreviewUrl] = useState(null); // To show preview of selected image
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 
-    // Effect to update formData if the user prop changes (e.g., after a save)
     useEffect(() => {
         setFormData({
             _id: user._id || '',
@@ -31,32 +30,32 @@ function EditProfile({ user, onSave, onCancel }) {
             website: user.personalInfo?.website || '',
             socials: user.personalInfo?.socials?.join(', ') || ''
         });
+
+        // Load existing profile image if available
+        setPreviewUrl(`/api/users/${user._id}/profile`);
     }, [user]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-        if (error) setError(''); // Clear error when user starts typing
-        if (successMessage) setSuccessMessage(''); // Clear success message
+        setFormData(prev => ({ ...prev, [name]: value }));
+        if (error) setError('');
+        if (successMessage) setSuccessMessage('');
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setProfileImage(file);
+            setPreviewUrl(URL.createObjectURL(file));
+        }
     };
 
     const validateForm = () => {
-        if (!formData.username.trim()) {
-            return 'Username is required';
-        }
-        if (!formData.email.trim()) {
-            return 'Email is required';
-        }
+        if (!formData.username.trim()) return 'Username is required';
+        if (!formData.email.trim()) return 'Email is required';
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.email)) {
-            return 'Please enter a valid email address';
-        }
-        if (formData.username.length < 3) {
-            return 'Username must be at least 3 characters long';
-        }
+        if (!emailRegex.test(formData.email)) return 'Please enter a valid email';
+        if (formData.username.length < 3) return 'Username must be at least 3 characters';
         return null;
     };
 
@@ -74,8 +73,7 @@ function EditProfile({ user, onSave, onCancel }) {
         }
 
         try {
-
-            // Prepare data for API, matching backend structure
+            // Update user data
             const dataToSend = {
                 _id: formData._id,
                 username: formData.username,
@@ -85,33 +83,43 @@ function EditProfile({ user, onSave, onCancel }) {
                 personalInfo: {
                     bio: formData.bio,
                     website: formData.website,
-                    socials: formData.socials.split(',').map(s => s.trim()).filter(s => s.length > 0) // Convert back to array
+                    socials: formData.socials.split(',').map(s => s.trim()).filter(s => s.length > 0)
                 }
             };
 
-            const response = await fetch('/api/user', {
+            const updateResponse = await fetch('/api/user', {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dataToSend)
             });
 
-            const result = await response.json();
+            const updateResult = await updateResponse.json();
+            if (!updateResult.success) throw new Error(updateResult.message);
 
-            if (result.success) {
-                setSuccessMessage(result.message);
-                // Call the onSave function passed from parent with the updated data
-                // The parent (MyProfile) should then refetch the user or update its state
-                onSave(dataToSend); // Pass the data that was sent, or refetch in parent
-                // Optionally, close the editing form after a short delay
-                setTimeout(onCancel, 1500);
-            } else {
-                setError(result.message || 'Failed to update profile.');
+            //  Upload profile image (if selected)
+            if (profileImage) {
+                const formDataToUpload = new FormData();
+                formDataToUpload.append("file", profileImage);
+
+                const uploadResponse = await fetch(`/api/user/${formData._id}/upload`, {
+                    method: 'POST',
+                    body: formDataToUpload
+                });
+
+                const uploadResult = await uploadResponse.json();
+                if (!uploadResult.success) throw new Error(uploadResult.message);
+
+                setSuccessMessage("Profile picture uploaded successfully!");
             }
+
+            // All done
+            setSuccessMessage(updateResult.message || "Profile updated successfully!");
+            onSave(dataToSend);
+            setTimeout(onCancel, 1500);
+
         } catch (err) {
             console.error('Profile update error:', err);
-            setError('Failed to connect to server. Please try again later.');
+            setError(err.message || 'Failed to connect to server.');
         } finally {
             setLoading(false);
         }
@@ -122,17 +130,26 @@ function EditProfile({ user, onSave, onCancel }) {
             <form onSubmit={handleSubmit} className="edit-user-form">
                 <h3>Edit Profile</h3>
 
-                {error && (
-                    <div className="error-message" style={{ color: 'red', marginBottom: '15px' }}>
-                        {error}
-                    </div>
-                )}
-                {successMessage && (
-                    <div className="success-message" style={{ color: 'green', marginBottom: '15px' }}>
-                        {successMessage}
-                    </div>
-                )}
+                {error && <div className="error-message">{error}</div>}
+                {successMessage && <div className="success-message">{successMessage}</div>}
 
+                {/* PROFILE IMAGE UPLOAD */}
+                <div className="form-group image-upload">
+                    <label>Profile Picture</label>
+                    {previewUrl && (
+                        <div className="image-preview">
+                            <img src={previewUrl} alt="Profile Preview" width="120" height="120" />
+                        </div>
+                    )}
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        disabled={loading}
+                    />
+                </div>
+
+                {/* OTHER FIELDS */}
                 <div className="form-group">
                     <label htmlFor="username">Username *</label>
                     <input
@@ -142,7 +159,6 @@ function EditProfile({ user, onSave, onCancel }) {
                         value={formData.username}
                         onChange={handleChange}
                         disabled={loading}
-                        required
                     />
                 </div>
 
@@ -155,7 +171,6 @@ function EditProfile({ user, onSave, onCancel }) {
                         value={formData.email}
                         onChange={handleChange}
                         disabled={loading}
-                        required
                     />
                 </div>
 
@@ -169,7 +184,6 @@ function EditProfile({ user, onSave, onCancel }) {
                             value={formData.name}
                             onChange={handleChange}
                             disabled={loading}
-                            placeholder="Enter first name"
                         />
                     </div>
 
@@ -182,7 +196,6 @@ function EditProfile({ user, onSave, onCancel }) {
                             value={formData.surname}
                             onChange={handleChange}
                             disabled={loading}
-                            placeholder="Enter last name"
                         />
                     </div>
                 </div>
@@ -195,8 +208,7 @@ function EditProfile({ user, onSave, onCancel }) {
                         value={formData.bio}
                         onChange={handleChange}
                         disabled={loading}
-                        placeholder="Tell us about yourself..."
-                        rows="4"
+                        rows="3"
                     />
                 </div>
 
@@ -209,7 +221,6 @@ function EditProfile({ user, onSave, onCancel }) {
                         value={formData.website}
                         onChange={handleChange}
                         disabled={loading}
-                        placeholder="https://yourwebsite.com"
                     />
                 </div>
 
@@ -222,24 +233,14 @@ function EditProfile({ user, onSave, onCancel }) {
                         value={formData.socials}
                         onChange={handleChange}
                         disabled={loading}
-                        placeholder="@yourusername, link, another link"
                     />
                 </div>
 
                 <div className="form-actions">
-                    <button
-                        type="button"
-                        onClick={onCancel}
-                        disabled={loading}
-                        className="cancel-button"
-                    >
+                    <button type="button" onClick={onCancel} disabled={loading} className="cancel-button">
                         Cancel
                     </button>
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="save-button"
-                    >
+                    <button type="submit" disabled={loading} className="save-button">
                         {loading ? 'Saving...' : 'Save Changes'}
                     </button>
                 </div>
@@ -249,5 +250,3 @@ function EditProfile({ user, onSave, onCancel }) {
 }
 
 export default EditProfile;
-
-//23527685 18

@@ -34,13 +34,10 @@ const router = createBrowserRouter([
       { path: "profile", element: <MyProfile /> },
       { path: "profile/:userId", element: <OtherProfile /> },
       {
-        path: "/projects/:username",
-        element: <Projects />,
-        children: [
-          { path: ":name/:owner", element: <Project /> }
-        ]
+        path: "/projects/:userId",
+        element: <Projects />
       },
-      { path: "/project/:name/:owner/:projectId", element: <Project /> }
+      { path: "/project/:name/:projectId", element: <Project /> }
     ]
   }
 ]);

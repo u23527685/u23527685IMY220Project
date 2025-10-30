@@ -62,6 +62,9 @@ function Login({ onlogin, toggleSignup, oncancel }) {
 
         if (data.success) {
           // Pass user data to parent component
+          if (data.user && data.user._id) {
+          sessionStorage.setItem('userId', data.user._id);
+          }
           onlogin(data.user);
         } else {
           setApiError(data.message || "Login failed. Please check your credentials.");

@@ -4,15 +4,22 @@
   "description": "My imy 220 project",
   "main": "frontend/src/index.js",
   "scripts": {
-    "build": "webpack && babel backend/server.js -d backend/dist",
-    "start": "npm run build && node backend/dist/server.js"
+    "build:frontend": "webpack --config webpack.config.js",
+    "build:backend": "webpack --config webpack.backend.config.js",
+    "build": "npm run build:frontend && npm run build:backend",
+    "start": " npm run build && node backend/dist/server.js",
+    "watch:frontend": "webpack --watch --config webpack.config.js",
+    "watch:backend": "webpack --watch --config webpack.backend.config.js"
   },
   "dependencies": {
+    "console": "^0.7.2",
     "cors": "^2.8.5",
     "docker": "^1.0.0",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "fx": "^39.1.0",
     "mongodb": "^6.20.0",
+    "multer": "^2.0.2",
     "path": "^0.12.7",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
@@ -34,10 +41,12 @@
     "@babel/preset-react": "^7.27.1",
     "babel-loader": "^10.0.0",
     "css-loader": "^7.1.2",
+    "file-loader": "^6.2.0",
     "nodemon": "^3.1.10",
+    "null-loader": "^4.0.1",
     "style-loader": "^4.0.0",
-    "webpack": "^5.101.3",
-    "webpack-cli": "^6.0.1"
+    "webpack-cli": "^6.0.1",
+    "webpack-node-externals": "^3.0.0"
   },
   "homepage": "https://github.com/u23527685/u23527685IMY220Project#readme"
 }

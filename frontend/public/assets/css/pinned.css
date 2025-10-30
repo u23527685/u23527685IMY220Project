@@ -1,0 +1,47 @@
+/* Outer container: centers and defines width */
+.pinned-projects-container {
+  width: 100%;
+  overflow: hidden; /* hide overflow edges */
+  position: relative;
+  margin: 20px 0;
+}
+
+/* Inner scroll area */
+.pinned-scroll {
+  display: flex;
+  overflow-x: auto;          /* horizontal scroll */
+  scroll-snap-type: x mandatory; /* snap to each project */
+  gap: 20px;
+  padding-bottom: 10px;
+  scrollbar-width: thin;     /* for Firefox */
+  scrollbar-color: #ccc transparent;
+}
+
+/* For Chrome / Edge scrollbar style */
+.pinned-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.pinned-scroll::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.pinned-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Each project card */
+.pinned-scroll > * {
+  flex: 0 0 90%;             /* show only one at a time */
+  scroll-snap-align: center; /* snap project to center when scrolling */
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  background: #fff;
+  transition: transform 0.3s ease;
+}
+
+/* Optional hover scale for visual feedback */
+.pinned-scroll > *:hover {
+  transform: scale(1.02);
+}

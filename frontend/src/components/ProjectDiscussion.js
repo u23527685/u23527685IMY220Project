@@ -85,7 +85,8 @@ function ProjectDiscussion({ projectId, discussionIds, currentUserId, ismember }
 
             if (result.success) {
                 setNewMessage('');
-                await fetchDiscussion(); // Refetch discussion to show new message
+                const newDiscussion=result.entry;
+                setDiscussion(prev => [...prev, newDiscussion]);
             } else {
                 setPostError(result.message || 'Failed to post message.');
             }
