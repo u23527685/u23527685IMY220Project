@@ -10,11 +10,12 @@ import ProjectMembers from './ProjectMemebers.js';
 import "../../public/assets/css/projectinfo.css";
 
 function Project() {
-    const { projectId } = useParams(); // Get projectId from URL params
+    const [projectFiles, setProjectFiles] = useState([]);
+    const {projectId}  = useParams(); // Get projectId from URL params
     const [project, setProject] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const currentUserId = localStorage.getItem('userId'); // Get the logged-in user's ID
+    const currentUserId = sessionStorage.getItem('userId'); // Get the logged-in user's ID
 
     const fetchProjectData = useCallback(async () => {
         if (!projectId) {
@@ -49,9 +50,103 @@ function Project() {
         }
     }, [projectId]);
 
+    const fetchAllProjectFiles = useCallback(async () => {
+        try {
+        const response = await fetch(`/api/projects/${projectId}/files`);
+        const result = await response.json();
+
+        if (result.success && Array.isArray(result.files)) {
+            setProjectFiles(result.files);
+        } else {
+            console.warn('Unexpected files response:', result);
+        }
+        } catch (err) {
+        console.error('Error fetching project files:', err);
+        }
+    }, [projectId]);
+
+    const uploadProjectFile = useCallback(async (file) => {
+        if (!file) return;
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+        // Step 1: Upload file
+        const uploadResponse = await fetch(`/api/projects/${projectId}/upload`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        const uploadResult = await uploadResponse.json();
+
+        if (uploadResult.success && uploadResult.file) {
+            // Add to state
+            setProjectFiles(prev => [...prev, uploadResult.file]);
+
+            // Step 2: Log upload activity
+            const activityPayload = {
+            projectId,
+            userId: currentUserId,
+            type: 'upload',
+            message: `Uploaded file "${uploadResult.file.fileName}"`,
+            timestamp: new Date()
+            };
+
+            await fetch(`/api/activity`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(activityPayload),
+            });
+        } else {
+            console.warn('Upload failed:', uploadResult.message);
+        }
+        } catch (err) {
+        console.error('Error uploading file:', err);
+        }
+    }, [projectId, currentUserId]);
+
+    const downloadProjectFile = useCallback(async (fileName) => {
+    try {
+      const downloadUrl = `/uploads/${projectId}_${fileName}`;
+
+      // Fetch the file as a blob
+      const response = await fetch(downloadUrl);
+      if (!response.ok) throw new Error(`Failed to download file: ${response.status}`);
+      const blob = await response.blob();
+
+      // Trigger browser download
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+
+      // Log activity
+      await fetch(`/api/activity`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          projectId,
+          userId: currentUserId,
+          type: 'download',
+          message: `Downloaded file "${fileName}"`,
+          timestamp: new Date()
+        }),
+      });
+
+    } catch (err) {
+      console.error('Error downloading file:', err);
+    }
+  }, [projectId, currentUserId]);
+
+
     useEffect(() => {
         fetchProjectData();
-    }, [fetchProjectData]);
+        fetchAllProjectFiles();
+    }, [fetchProjectData, fetchAllProjectFiles]);;
 
     if (loading) {
         return <div id="projinfo">Loading project...</div>;
@@ -83,7 +178,7 @@ function Project() {
             </div>
 
             <div className="project-section">
-                <ProjectFiles files={project.files} />
+                <ProjectFiles onUpload={uploadProjectFile} onDownload={downloadProjectFile} files={projectFiles} />
             </div>
 
             <div className="project-section">

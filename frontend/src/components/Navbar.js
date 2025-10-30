@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../public/assets/svg/logo.svg";
 import "../../public/assets/css/navbar.css";
 import profileimg from "../../public/assets/svg/default user.svg";
+import ProfileImage from "./ProfileImage";
 
 function Navbar(){
     const navigate = useNavigate();
@@ -39,16 +40,13 @@ function Navbar(){
 
     fetchUser();
   }, []);
-
-    const handleLogout=()=>{
-        sessionStorage.clear();
-        navigate("/");
-    }
     return(
         <nav>
       {/* LEFT: Logo */}
       <div id="logo" style={{ cursor: "pointer" }} onClick={() => navigate("/home")}>
-        <img width="100px" src={logo} alt="Logo" />
+        <NavLink className={({ isActive }) => (isActive ? "isActive" : undefined)} to="/home">
+          <img width="100px" src={logo} alt="Logo" />
+        </NavLink>
       </div>
 
       {/* MIDDLE: Navigation links */}
@@ -69,7 +67,6 @@ function Navbar(){
 
       {/* RIGHT: Profile info and logout */}
       <div id="profilelink">
-        <button onClick={handleLogout} className="logout-btn">Logout</button>
 
         {user ? (
           <NavLink
@@ -77,8 +74,7 @@ function Navbar(){
             to="/profile"
           >
             <h2>{user.username || "User"}</h2>
-            <img height="50px" src={profileImageUrl} alt="Profile" onError={(e) => (e.target.src = profileimg)}
-            />
+            <ProfileImage userId={user._id} size={50}  />
           </NavLink>
         ) : (
           <h2>Loading...</h2>

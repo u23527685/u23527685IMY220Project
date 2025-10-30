@@ -64,17 +64,25 @@ class ProjectPreview extends Component {
 
     toproject = () => {
         const { project, user, navigate } = this.props;
+        const projectid = (() => {
+            if (!project._id) return '';
+            if (typeof project._id === "string") return project._id;
+            if (project._id.$oid) return project._id.$oid;
+            if (project._id._id) return project._id._id;
+            return project._id.toString();
+        })();
+
         const ownerId = typeof project.owner === 'object' ? 
             (project.owner.$oid || project.owner._id || project.owner.toString()) : 
             project.owner;
         const projectName = project.name || 'unnamed';
-        const projectid= typeof project._id ==="object" ? (project._id.$oid || project._id || project._id.toString()) : project._id
-        navigate(`/project/${projectName}/${ownerId}/${projectid}`, { state: { project, user } });
+        const pid=projectid;
+        navigate(`/project/${projectName}/${pid}`, { state: { project, user } });
     }
 
     touser = ()=>{
         const { navigate } = this.props;
-        const {project}= this.props;
+        const {project,pin, save }= this.props;
         const ownerId = typeof project.owner === 'object' ? 
             (project.owner.$oid || project.owner._id || project.owner.toString()) : 
             project.owner;
@@ -122,10 +130,25 @@ class ProjectPreview extends Component {
         return b;
     }
 
-    render() {
-        const { project, ondownload } = this.props;
-        const { ownerUsername } = this.state;
+    onPin=()=>{
+        const userId= sessionStorage.getItem("userId");
+        const {project}= this.props;
+        if (this.props.pin) {
+            this.props.pin(userId, project._id);
+        }
+    }
 
+    onSave=()=>{
+        const{save}= this.props;
+        const userId= sessionStorage.getItem("userId");
+        const {project}= this.props;
+        if(save)
+            save(userId,project._id)
+    }
+
+    render() {
+        const { project, ondownload, pin, save} = this.props;
+        const { ownerUsername } = this.state;
 
         return (
             <div className="projectprev">
@@ -133,10 +156,11 @@ class ProjectPreview extends Component {
                     <div onClick={this.touser} style={{ cursor: 'pointer', fontWeight: 'bold' }} className="userName">{String(ownerUsername)}</div>
                 </div>
                 <div className="projectinf">
-                    <p onClick={this.toproject} style={{ cursor: 'pointer', fontWeight: 'bold' }}>
+                    <h3 onClick={this.toproject} style={{ cursor: 'pointer', fontWeight: 'bold' }}>
                         {String(project.name || 'Unnamed Project')}
-                    </p>
+                    </h3>
                     <p>{String(project.description || '')}</p>
+                    <p>{String(project.status || '')}</p>
                     <div>
                         {Array.isArray(project.hashtags) && project.hashtags.map((tag, i) => (
                             <span key={i} style={{ marginRight: '8px', color: '#007bff' }}>
@@ -145,6 +169,8 @@ class ProjectPreview extends Component {
                         ))}
                     </div>
                     <div style={{ marginTop: '8px' }}>
+                        {pin&& <button onClick={this.onPin}>Pin</button>}
+                        {save&& <button onClick={this.onSave}>Save</button>}
                         {ondownload && <button onClick={this.download}>Download</button>}
                         <span style={{ marginLeft: '12px' }}>
                             {Array.isArray(project.activityFeed) ? project.activityFeed.length : 0} Activities

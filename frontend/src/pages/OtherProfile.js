@@ -197,6 +197,7 @@ function OtherProfile() {
 
     return (
         <div id="otherprofile">
+            <h1>Profile</h1>
             <div id="otherprofile-sidebar">
                 <div id="otherprofile-header">
                     <div id="otherprofile-image-name">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProjectPreview from "./ProjectPreview";
 
-function UserProjectsView({ projectIds }) { // Changed prop name to reflect it's IDs
+function UserProjectsView({ projectIds,pin,save, user }) { // Changed prop name to reflect it's IDs
     const [userProjects, setUserProjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -60,7 +60,7 @@ function UserProjectsView({ projectIds }) { // Changed prop name to reflect it's
     return (
         <div id="userProjectView">
             {userProjects.map((up, i) => (
-                <ProjectPreview key={up._id || i} project={up} />
+                <ProjectPreview user={user} pin={pin} save={save} key={up._id || i} project={up} />
             ))}
         </div>
     );

@@ -6,6 +6,7 @@ import multer from "multer";
 import fs from "fs";
 import { ObjectId } from 'mongodb';
 import { use } from "react";
+import ProfileImage from "../frontend/src/components/ProfileImage";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -132,7 +133,10 @@ app.get('/profile/:username', (req, res) => {
   res.sendFile(path.resolve('frontend', 'public', 'index.html'));
 });
 
-app.get('/project/:name/:owner/:projectId', (req, res) => {
+app.get('/project/:name/:projectId', (req, res) => {
+  res.sendFile(path.resolve('frontend', 'public', 'index.html'));
+});
+app.get('/projects/:username', (req, res) => {
   res.sendFile(path.resolve('frontend', 'public', 'index.html'));
 });
 
@@ -160,7 +164,7 @@ const storage = multer.diskStorage({
 export const upload = multer({ storage });
 
 // ---------- PROFILE UPLOADS ----------
-const profileUploadDir = path.join(process.cwd(), "profiles");
+const profileUploadDir = path.join(process.cwd(), "/backend/profiles");
 if (!fs.existsSync(profileUploadDir)) fs.mkdirSync(profileUploadDir);
 
 const profileStorage = multer.diskStorage({
@@ -986,6 +990,36 @@ app.post("/api/users/pin", async (req, res) => {
   }
 });
 
+app.post("/api/users/save", async (req, res) => {
+  try {
+    const { userId, projectId } = req.body;
+
+    if (!userId || !projectId) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'User ID and project ID are required',
+        errorCode: 'MISSING_IDS'
+      });
+    }
+
+    const response = await api.SaveProject(userId, projectId);
+    
+    if (response.success) {
+      res.status(200).json(response);
+    } else {
+      const statusCode = getStatusCode(response.errorCode);
+      res.status(statusCode).json(response);
+    }
+  } catch (error) {
+    console.error('Error in /api/users/pin:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Internal server error',
+      errorCode: 'SERVER_ERROR'
+    });
+  }
+});
+
 app.post("/api/projects/:projectId/upload", upload.single("file"), async (req, res) => {
   try {
     const { projectId } = req.params;
@@ -1024,14 +1058,18 @@ app.post("/api/projects/:projectId/upload", upload.single("file"), async (req, r
       lastModifiedAt: new Date()
     };
 
-    // Update DB: replace old file entry if it exists
-    await db.collection("projects").updateOne(
-      { _id: projectObjectId },
-      {
-        $pull: { files: { fileName } },
-        $push: { files: fileData }
-      }
-    );
+    //  Remove any existing file with the same name
+  await db.collection("projects").updateOne(
+    { _id: projectObjectId },
+    { $pull: { files: { fileName } } }
+  );
+
+  //  Add the new file entry
+  await db.collection("projects").updateOne(
+    { _id: projectObjectId },
+    { $push: { files: fileData } }
+  );
+
 
     res.status(201).json({
       success: true,
@@ -1062,17 +1100,19 @@ app.post("/api/user/:userId/upload", profileUpload.single("file"), async (req, r
     const user = await db.collection("users").findOne({ _id: userObjectId });
 
     if (!user) {
-      fs.unlinkSync(req.file.path);
+      if (fs.existsSync(req.file.path)) fs.unlinkSync(req.file.path);
       return res.status(404).json({ success: false, message: "User not found" });
     }
-
-    const storedName = `${userId}_profile${path.extname(req.file.originalname)}`;
+    
+    const storedName = `${userId}_profile`;
     const filePath = path.join(profileUploadDir, storedName);
 
-    // Overwrite existing file if it exists
-    if (fs.existsSync(filePath) && filePath !== req.file.path) {
-      fs.unlinkSync(filePath);
+    // Replace existing file
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath); // delete old image
     }
+
+    fs.renameSync(req.file.path, filePath); // move uploaded file to final nam
 
     const fileData = {
       fileName: req.file.originalname,
@@ -1085,7 +1125,7 @@ app.post("/api/user/:userId/upload", profileUpload.single("file"), async (req, r
     // Update user's profile picture in DB
     await db.collection("users").updateOne(
       { _id: userObjectId },
-      { $set: { profilePicture: fileData } }
+      { $set: { profileImage: fileData } }
     );
 
     res.status(201).json({
@@ -1187,7 +1227,7 @@ app.get("/api/users/:userId/profile", async (req, res) => {
       });
     }
 
-    const profileDir = path.join(process.cwd(), "profiles");
+    const profileDir = path.join(process.cwd(), "/backend/profiles");
     if (!fs.existsSync(profileDir)) {
       return res.status(404).json({
         success: false,

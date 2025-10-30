@@ -33,7 +33,11 @@ const router = createBrowserRouter([
       { path: "home", element: <Home /> },
       { path: "profile", element: <MyProfile /> },
       { path: "profile/:userId", element: <OtherProfile /> },
-      { path: "/project/:name/:owner/:projectId", element: <Project /> }
+      {
+        path: "/projects/:userId",
+        element: <Projects />
+      },
+      { path: "/project/:name/:projectId", element: <Project /> }
     ]
   }
 ]);

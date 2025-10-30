@@ -55,13 +55,11 @@ function ProjectMembers({ ownerId, memberIds, isOwner, onMembersUpdated }) {
 
     // TODO: Implement remove member and give ownership functionality
     const handleRemoveMember = (memberId) => {
-        alert(`Remove member ${memberId} - NOT IMPLEMENTED`);
         // Requires new backend endpoint: DELETE /api/project/:projectId/members/:memberId
         // After successful API call, call onMembersUpdated()
     };
 
     const handleGiveOwnership = (memberId) => {
-        alert(`Give ownership to ${memberId} - NOT IMPLEMENTED`);
         // Requires new backend endpoint: PUT /api/project/:projectId/owner
         // After successful API call, call onMembersUpdated()
     };

@@ -1271,13 +1271,13 @@ export async function getProject(projectId){
             };
         }
 
-        if (!ObjectId.isValid(projectId)) {
+        /*if (!ObjectId.isValid(projectId)) {
             return { 
                 success: false, 
                 message: "Invalid project ID format",
                 errorCode: "INVALID_PROJECT_ID"
             };
-        }
+        }*/
 
         const objectid = new ObjectId(projectId);
         const project = await db.collection('projects').findOne({
@@ -1635,6 +1635,65 @@ export async function pinProjectToUser(userId, projectId) {
         return { 
             success: false, 
             message: "Failed to pin project",
+            errorCode: "PIN_PROJECT_ERROR",
+            error: error.message
+        };
+    }
+}
+
+export async function SaveProject(userId, projectId){
+    try {
+        if (!userId || !projectId) {
+            return { 
+                success: false, 
+                message: "User ID and project ID are required",
+                errorCode: "MISSING_IDS"
+            };
+        }
+
+        if (!ObjectId.isValid(userId) || !ObjectId.isValid(projectId)) {
+            return { 
+                success: false, 
+                message: "Invalid ID format",
+                errorCode: "INVALID_ID_FORMAT"
+            };
+        }
+
+        const userObjectId = new ObjectId(userId);
+        const projectObjectId = new ObjectId(projectId);
+
+        const user = await db.collection("users").findOne({ _id: userObjectId });
+        if (!user) {
+            return { 
+                success: false, 
+                message: "User not found",
+                errorCode: "USER_NOT_FOUND"
+            };
+        }
+
+        const project = await db.collection("projects").findOne({ _id: projectObjectId });
+        if (!project) {
+            return { 
+                success: false, 
+                message: "Project not found",
+                errorCode: "PROJECT_NOT_FOUND"
+            };
+        }
+
+        await db.collection("users").updateOne(
+            { _id: userObjectId },
+            { $addToSet: { savedProjects: projectObjectId } }
+        );
+
+        return { 
+            success: true, 
+            message: "Project saved successfully"
+        };
+    } catch (error) {
+        console.error("Error pinning project:", error);
+        return { 
+            success: false, 
+            message: "Failed to save project",
             errorCode: "PIN_PROJECT_ERROR",
             error: error.message
         };
