@@ -167,7 +167,7 @@ function Project() {
 
     return (
         <div id="projinfo">
-            <h1>Project System</h1>
+            <h1>VEYO Project System</h1>
 
             <div className="project-section">
                 <ProjectDetails project={project} isOwner={isOwner} onProjectUpdated={fetchProjectData} />

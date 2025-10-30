@@ -246,7 +246,7 @@ class Home extends Component {
         if (isLoading) {
             return (
                 <main>
-                    <h1>Home Page</h1>
+                    <h1>VEYO Home Page</h1>
                     <p>Loading projects...</p>
                 </main>
             );
@@ -255,7 +255,7 @@ class Home extends Component {
         if (error) {
             return (
                 <main>
-                    <h1>Home Page</h1>
+                    <h1>VEYO Home Page</h1>
                     <p style={{ color: 'red' }}>{String(error)}</p>
                     <button onClick={() => window.location.reload()}>Retry</button>
                 </main>
@@ -264,7 +264,7 @@ class Home extends Component {
 
         return (
             <main>
-                <h1>Home Page</h1>
+                <h1>VEYO Home Page</h1>
                 <div id="homeitems">
                     <div className="LocGlobchoose">
                         <h2 className={local ? "isActive" : "inactive"} onClick={this.toggleLocal}>Local</h2>

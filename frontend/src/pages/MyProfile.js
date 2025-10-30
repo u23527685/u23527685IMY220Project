@@ -151,7 +151,7 @@ function MyProfile() {
 
     return (
         <div id="profile">
-            <h1>My Profile</h1>
+            <h1>VEYO My Profile</h1>
             <div id="profileallpages">
                 <div id="profileheader">
                     <div id="profileimagename">
