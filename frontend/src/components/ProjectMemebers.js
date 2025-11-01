@@ -112,7 +112,7 @@ function ProjectMembers({ ownerId, memberIds,onPromoteMember, isOwner, onMembers
             <h2>Project Members</h2>
             { isOwner && <button onClick={ToggleSearch} >Add member</button>}
             {isOwner && showSearch && <Search onsearch={onSearch}/>}
-            {isOwner && searchResults.users && (
+            {isOwner && searchResults?.users && (
                 <div className="search-results">
                         {/* USERS */}
                         {searchResults.users.length > 0 && (
