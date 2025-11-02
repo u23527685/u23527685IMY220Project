@@ -1,8 +1,8 @@
-build
-docker build -t deliverable2 .
+to run: 
+docker compose up -d --build
 
-run
-docker run --name  d2demo -p 3000:3000 deliverable2
+to stop:
+docker compose down
 
 git-repository:https://github.com/u23527685/u23527685IMY220Project.git
 
