@@ -147,7 +147,6 @@ function Project() {
 
         const userId = sessionStorage.getItem("userId");
         if (!userId || !projectId) {
-            alert("Missing user or project information.");
             return;
         }
 
